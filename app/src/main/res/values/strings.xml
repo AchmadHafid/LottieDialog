@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Lottie Dialog</string>
+    <string name="menu_dark_theme">Dark Theme</string>
+
+    <string name="switch_show_lottie_animation">Show Lottie Animation</string>
+    <string name="switch_show_negative_button">Show Negative Button</string>
+    <string name="switch_show_button_icon">Show Action Button Icon</string>
+    <string name="button_show_dialog">Show me a dialog</string>
+
+    <string name="message_on_positive">Thank you</string>
+    <string name="message_on_negative">OK that\'s fine</string>
+    <string name="negative_button">Not Now</string>
+    <string name="dialog_location_title">Location Not Found</string>
+    <string name="dialog_location_content">Please enable location services in your devices to continue</string>
+    <string name="dialog_notification_title">Notification Access Required</string>
+    <string name="dialog_notification_content">Please allow this application to access device notification in order to coninue</string>
+    <string name="switch_use_custom_text">Use Custom Text</string>
+    <string name="switch_enable_auto_dismiss">Enable Auto Dismiss</string>
+    <string name="switch_cancel_on_back_pressed">Cancel On Back Pressed</string>
+    <string name="switch_cancel_on_touch_outside">Cancel On Touch Outside</string>
+    <string name="btn_animation_centered">Centered</string>
+    <string name="btn_animation_full">Full Size</string>
+    <string name="btn_dialog_type_bottom_sheet">Bottom Sheet</string>
+    <string name="btn_dialog_type_dialog">Dialog</string>
+    <string name="btn_icon_svg">SVG</string>
+    <string name="btn_icon_bitmap">Bitmap</string>
+    <string name="label_ui_type">UI Type</string>
+</resources>

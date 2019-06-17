@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="LottieDialogTheme.BottomSheet" parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/color_surface_elevation_16_dp</item>
+        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
+    </style>
+
+</resources>

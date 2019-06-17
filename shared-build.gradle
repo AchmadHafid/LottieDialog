@@ -1,0 +1,54 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion AndroidSdk.COMPILE
+    defaultConfig {
+        minSdkVersion AndroidSdk.MIN
+        targetSdkVersion AndroidSdk.TARGET
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            shrinkResources false
+            minifyEnabled false
+            ext.enableCrashlytics = false
+        }
+        release {
+            crunchPngs false
+            shrinkResources false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+    lintOptions {
+        warningsAsErrors true
+    }
+    sourceSets {
+        androidTest {
+            java.srcDirs += "src/uiTest/java"
+        }
+        test {
+            java.srcDirs += "src/uiTest/java"
+        }
+    }
+    packagingOptions {
+        pickFirst("META-INF/atomicfu.kotlin_module")
+        exclude 'META-INF/LICENSE'
+    }
+}
