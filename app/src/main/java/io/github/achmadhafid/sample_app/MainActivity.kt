@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.switchmaterial.SwitchMaterial
 import io.github.achmadhafid.lottie_dialog.*
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     //region View Binding
 
     private val appBarLayout: AppBarLayout by bindView(R.id.appBarLayout)
+    private val toolbar: MaterialToolbar by bindView(R.id.toolbar)
     private val scrollView: NestedScrollView by bindView(R.id.scrollView)
     private val btnDialogTypeDialog: MaterialButton by bindView(R.id.btn_dialog_type_dialog)
     private val btnDialogTypeBottomSheet: MaterialButton by bindView(R.id.btn_dialog_type_bottom_sheet)
@@ -67,119 +69,46 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     @Suppress("LongMethod", "ComplexMethod")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(findViewById(R.id.toolbar))
+
+        //region setup app bar & toolbar
+
+        setSupportActionBar(toolbar)
         scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, _, _, _ ->
             appBarLayout.isSelected = scrollView.canScrollVertically(-1)
         })
 
+        //endregion
         //region setup dialog type selection
 
-        btnDialogTypeDialog.addOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                btnDialogTypeDialog.isCheckable      = false
-                btnDialogTypeBottomSheet.isCheckable = true
-            }
-        }
-        btnDialogTypeBottomSheet.addOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                btnDialogTypeDialog.isCheckable      = true
-                btnDialogTypeBottomSheet.isCheckable = false
-            }
-        }
+        atLeastOneIsChecked(btnDialogTypeDialog, btnDialogTypeBottomSheet)
         btnDialogTypeDialog.isChecked = true
 
         //endregion
         //region setup animation type selection
 
-        val onCheckedListenerCentered = MaterialButton.OnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                btnAnimationCentered.isCheckable = false
-                btnAnimationFull.isCheckable     = true
-            }
-        }
-        val onCheckedListenerFullSize = MaterialButton.OnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                btnAnimationFull.isCheckable     = false
-                btnAnimationCentered.isCheckable = true
-            }
-        }
-        smShowLottieAnimation.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                btnAnimationCentered.isEnabled   = true
-                btnAnimationCentered.isCheckable = true
-                btnAnimationFull.isEnabled       = true
-                btnAnimationFull.isCheckable     = true
-
-                btnAnimationCentered.addOnCheckedChangeListener(onCheckedListenerCentered)
-                btnAnimationFull.addOnCheckedChangeListener(onCheckedListenerFullSize)
-
-                btnAnimationCentered.isChecked   = true
-            } else {
-                btnAnimationCentered.removeOnCheckedChangeListener(onCheckedListenerCentered)
-                btnAnimationFull.removeOnCheckedChangeListener(onCheckedListenerFullSize)
-
-                btnAnimationCentered.isCheckable   = true
-                btnAnimationCentered.isChecked = false
-                btnAnimationCentered.isEnabled = false
-                btnAnimationFull.isCheckable   = true
-                btnAnimationFull.isChecked     = false
-                btnAnimationFull.isEnabled     = false
-            }
-        }
+        atLeastOneIsCheckedWithConstraint(
+            smShowLottieAnimation,
+            btnAnimationCentered,
+            btnAnimationFull
+        )
 
         //endregion
         //region setup icon type selection
 
-        val onCheckedListenerSvg = MaterialButton.OnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                btnIconSvg.isCheckable    = false
-                btnIconBitmap.isCheckable = true
-            }
-        }
-        val onCheckedListenerBitmap = MaterialButton.OnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                btnIconBitmap.isCheckable = false
-                btnIconSvg.isCheckable    = true
-            }
-        }
-        smShowButtonIcon.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                btnIconSvg.isEnabled   = true
-                btnIconSvg.isCheckable = true
-                btnIconBitmap.isEnabled       = true
-                btnIconBitmap.isCheckable     = true
-
-                btnIconSvg.addOnCheckedChangeListener(onCheckedListenerCentered)
-                btnIconBitmap.addOnCheckedChangeListener(onCheckedListenerFullSize)
-
-                btnIconSvg.isChecked   = true
-            } else {
-                btnIconSvg.removeOnCheckedChangeListener(onCheckedListenerSvg)
-                btnIconBitmap.removeOnCheckedChangeListener(onCheckedListenerBitmap)
-
-                btnIconSvg.isCheckable   = true
-                btnIconSvg.isChecked = false
-                btnIconSvg.isEnabled = false
-                btnIconBitmap.isCheckable   = true
-                btnIconBitmap.isChecked     = false
-                btnIconBitmap.isEnabled     = false
-            }
-        }
+        atLeastOneIsCheckedWithConstraint(
+            smShowButtonIcon,
+            btnIconSvg,
+            btnIconBitmap
+        )
 
         //endregion
         //region setup auto dismiss & cancel options
 
-        arrayOf(smEnableAutoDismiss, smCancelOnBackPressed, smCancelOnTouchOutside)
-            .forEach {
-                it.setOnCheckedChangeListener { _, isChecked ->
-                    if (!isChecked && !shouldCancelOnBackPressed && !shouldCancelOnTouchOutside) {
-                        when (it) {
-                            smEnableAutoDismiss -> smCancelOnBackPressed.isChecked = true
-                            else -> smEnableAutoDismiss.isChecked = true
-                        }
-                    }
-                }
-            }
+        atLeastOneIsCheckedV2(
+            smEnableAutoDismiss,
+            smCancelOnBackPressed,
+            smCancelOnTouchOutside
+        )
 
         //endregion
         //region build & show dialog
@@ -201,14 +130,20 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     }
                 }
                 title {
-                    textRes = R.string.dialog_location_title
+                    textRes = if (fullSizeAnimation)
+                        R.string.dialog_notification_title
+                    else
+                        R.string.dialog_location_title
                     if (shouldUseCustomText) {
                         fontRes  = R.font.lobster_two_bold
                         styleRes = R.style.AppTheme_TextAppearance
                     }
                 }
                 content {
-                    textRes = R.string.dialog_location_content
+                    textRes = if (fullSizeAnimation)
+                        R.string.dialog_notification_content
+                    else
+                        R.string.dialog_location_content
                     if (shouldUseCustomText) {
                         fontRes = R.font.sofia
                     }
