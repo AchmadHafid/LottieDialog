@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion AndroidSdk.COMPILE
+    compileSdkVersion 28
     defaultConfig {
-        minSdkVersion AndroidSdk.MIN
-        targetSdkVersion AndroidSdk.TARGET
-        versionCode 2
-        versionName "1.0.1"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 3
+        versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
