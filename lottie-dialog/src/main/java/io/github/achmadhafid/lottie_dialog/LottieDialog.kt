@@ -176,11 +176,10 @@ data class LottieDialogButton internal constructor(
         button.text = text ?: dialog.context.getString(textRes)
         iconRes?.let { button.icon = ContextCompat.getDrawable(dialog.context, it) }
         iconGravity?.let { button.iconGravity = it }
-        onClickListener?.let {
-            button.setOnClickListener {
-                it(dialog)
-                if (autoDismiss) dialog.dismiss()
-            }
+
+        button.setOnClickListener {
+            onClickListener?.let { it(dialog) }
+            if (autoDismiss) dialog.dismiss()
         }
     }
 }
