@@ -2,7 +2,6 @@
 
 package io.github.achmadhafid.lottie_dialog
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Outline
@@ -26,15 +25,18 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 //region Main DSL Builder & Extension
 
 data class LottieDialog(
-    var type: Type = Type.Dialog,
+    var type: Type = Type.DIALOG,
+    var theme: Theme = Theme.DAY_NIGHT,
     var autoDismiss: Boolean = true,
+    internal var animation: LottiDialogAnimation = LottiDialogAnimation(),
     internal var title: LottieDialogText = LottieDialogText(),
     internal var content: LottieDialogText = LottieDialogText(),
-    internal var animation: LottiDialogAnimation = LottiDialogAnimation(),
     internal var positiveButton: LottieDialogButton = LottieDialogButton(textRes = android.R.string.ok),
     internal var negativeButton: LottieDialogButton? = null,
     internal var cancelAbility: LottieDialogCancelAbility = LottieDialogCancelAbility(),
-    internal var listener: LottieDialogListener = LottieDialogListener()
+    internal var onShowListener: LottieDialogOnShowListener = LottieDialogOnShowListener(),
+    internal var onDismissListener: LottieDialogOnDismissListener = LottieDialogOnDismissListener(),
+    internal var onCancelListener: LottieDialogOnCancelListener = LottieDialogOnCancelListener()
 ) {
     internal operator fun invoke(dialog: AppCompatDialog, view: View) {
         val lav: LottieAnimationView? = animation.lottieFileRes?.let {
@@ -51,27 +53,44 @@ data class LottieDialog(
         positiveButton(dialog, btnPositive, autoDismiss)
         negativeButton?.invoke(dialog, btnNegative, autoDismiss)
         cancelAbility(dialog)
-        listener(dialog)
+        onShowListener(dialog)
+        onDismissListener(dialog)
+        onCancelListener(dialog)
 
         dialog.show()
     }
 
-    enum class Type { Dialog, BottomSheet }
+    enum class Type { DIALOG, BOTTOM_SHEET }
+    enum class Theme { LIGHT, DARK, DAY_NIGHT }
 }
 
-@SuppressLint("InflateParams")
+@Suppress("ComplexMethod", "InflateParams")
 private fun lottieDialog(context: Context, layoutInflater: LayoutInflater, builder: LottieDialog.() -> Unit) {
     val lottieDialog = LottieDialog().apply(builder)
     val layout       = lottieDialog.animation.lottieFileRes?.let { R.layout.lottie_dialog } ?: R.layout.no_lottie_dialog
     val view         = layoutInflater.inflate(layout, null)
-    val dialog       = when (lottieDialog.type) {
-        LottieDialog.Type.Dialog -> MaterialAlertDialogBuilder(context)
-            .setView(view)
-            .create()
-        LottieDialog.Type.BottomSheet -> BottomSheetDialog(context, R.style.LottieDialogTheme_BottomSheet)
-            .apply { setContentView(view) }
-    }
 
+    val dialog = when (lottieDialog.type) {
+        LottieDialog.Type.DIALOG -> {
+            val theme = when (lottieDialog.theme) {
+                LottieDialog.Theme.LIGHT     -> R.style.LottieDialogTheme_Dialog_Light
+                LottieDialog.Theme.DARK      -> R.style.LottieDialogTheme_Dialog_Dark
+                LottieDialog.Theme.DAY_NIGHT -> R.style.LottieDialogTheme_Dialog_DayNight
+            }
+            MaterialAlertDialogBuilder(context, theme)
+                .setView(view)
+                .create()
+        }
+        LottieDialog.Type.BOTTOM_SHEET -> {
+            val theme = when (lottieDialog.theme) {
+                LottieDialog.Theme.LIGHT     -> R.style.LottieDialogTheme_BottomSheet_Light
+                LottieDialog.Theme.DARK      -> R.style.LottieDialogTheme_BottomSheet_Dark
+                LottieDialog.Theme.DAY_NIGHT -> R.style.LottieDialogTheme_BottomSheet_DayNight
+            }
+            BottomSheetDialog(context, theme)
+                .apply { setContentView(view) }
+        }
+    }
     lottieDialog(dialog, view)
 }
 
@@ -108,7 +127,7 @@ data class LottiDialogAnimation internal constructor(
         lottieFileRes?.let { view.setAnimation(it) }
         bgColorRes?.let {
             view.setBackgroundColor(ContextCompat.getColor(view.context, it))
-            if (type == LottieDialog.Type.BottomSheet) {
+            if (type == LottieDialog.Type.BOTTOM_SHEET) {
                 view.outlineProvider = object : ViewOutlineProvider() {
                     override fun getOutline(view: View?, outline: Outline?) {
                         val radius = view?.resources?.getDimension(R.dimen.bottom_sheet_corner_radius) ?: return
@@ -125,6 +144,10 @@ data class LottiDialogAnimation internal constructor(
         }
         paddingRes?.let { view.setPadding(view.resources.getDimension(it).toInt()) }
     }
+}
+
+fun LottieDialog.animation(@RawRes lottieFileRes: Int) {
+    animation = LottiDialogAnimation(lottieFileRes = lottieFileRes)
 }
 
 fun LottieDialog.animation(builder: LottiDialogAnimation.() -> Unit) {
@@ -150,8 +173,24 @@ data class LottieDialogText internal constructor(
     }
 }
 
+fun LottieDialog.title(@StringRes textRes: Int) {
+    title = LottieDialogText(textRes = textRes)
+}
+
+fun LottieDialog.title(text: CharSequence) {
+    title = LottieDialogText(text = text)
+}
+
 fun LottieDialog.title(builder: LottieDialogText.() -> Unit) {
     title = LottieDialogText().apply(builder)
+}
+
+fun LottieDialog.content(@StringRes textRes: Int) {
+    title = LottieDialogText(textRes = textRes)
+}
+
+fun LottieDialog.content(text: CharSequence) {
+    title = LottieDialogText(text = text)
 }
 
 fun LottieDialog.content(builder: LottieDialogText.() -> Unit) {
@@ -164,7 +203,7 @@ fun LottieDialog.content(builder: LottieDialogText.() -> Unit) {
 data class LottieDialogButton internal constructor(
     @StringRes
     var textRes: Int,
-    var text: String? = null,
+    var text: CharSequence? = null,
     @DrawableRes
     var iconRes: Int? = null,
     @MaterialButton.IconGravity
@@ -184,8 +223,24 @@ data class LottieDialogButton internal constructor(
     }
 }
 
+fun LottieDialog.positiveButton(@StringRes textRes: Int) {
+    positiveButton = LottieDialogButton(textRes = textRes)
+}
+
+fun LottieDialog.positiveButton(text: CharSequence) {
+    positiveButton = LottieDialogButton(textRes = android.R.string.ok, text = text)
+}
+
 fun LottieDialog.positiveButton(builder: LottieDialogButton.() -> Unit) {
     positiveButton = LottieDialogButton(textRes = android.R.string.ok).apply(builder)
+}
+
+fun LottieDialog.negativeButton(@StringRes textRes: Int) {
+    positiveButton = LottieDialogButton(textRes = textRes)
+}
+
+fun LottieDialog.negativeButton(text: CharSequence) {
+    positiveButton = LottieDialogButton(textRes = android.R.string.cancel, text = text)
 }
 
 fun LottieDialog.negativeButton(builder: LottieDialogButton.() -> Unit) {
@@ -216,32 +271,40 @@ fun LottieDialog.cancel(builder: LottieDialogCancelAbility.() -> Unit) {
 //endregion
 //region Listener DSL Builder & Extension
 
-data class LottieDialogListener internal constructor(
-    internal var onShowListener: ((DialogInterface) -> Unit)? = null,
-    internal var onDismissListener: ((DialogInterface) -> Unit)? = null,
-    internal var onCancelListener: ((DialogInterface) -> Unit)? = null
+data class LottieDialogOnShowListener internal constructor(
+    internal var onShowListener: ((DialogInterface) -> Unit)? = null
 ) {
     internal operator fun invoke(dialog: AppCompatDialog) {
-        onShowListener?.let { dialog.setOnShowListener(it) }
-        onDismissListener?.let { dialog.setOnDismissListener(it) }
-        onCancelListener?.let { dialog.setOnCancelListener(it) }
+        dialog.setOnShowListener(onShowListener)
     }
 }
 
-fun LottieDialog.listener(builder: LottieDialogListener.() -> Unit) {
-    listener = LottieDialogListener().apply(builder)
+data class LottieDialogOnDismissListener internal constructor(
+    internal var onDismissListener: ((DialogInterface) -> Unit)? = null
+) {
+    internal operator fun invoke(dialog: AppCompatDialog) {
+        dialog.setOnDismissListener(onDismissListener)
+    }
 }
 
-fun LottieDialogListener.onShow(builder: (DialogInterface) -> Unit) {
-    onShowListener = builder
+data class LottieDialogOnCancelListener internal constructor(
+    internal var onCancelListener: ((DialogInterface) -> Unit)? = null
+) {
+    internal operator fun invoke(dialog: AppCompatDialog) {
+        dialog.setOnCancelListener(onCancelListener)
+    }
 }
 
-fun LottieDialogListener.onDismiss(builder: (DialogInterface) -> Unit) {
-    onDismissListener = builder
+fun LottieDialog.onShow(builder: (DialogInterface) -> Unit) {
+    onShowListener = LottieDialogOnShowListener(builder)
 }
 
-fun LottieDialogListener.onCancel(builder: (DialogInterface) -> Unit) {
-    onCancelListener = builder
+fun LottieDialog.onDismiss(builder: (DialogInterface) -> Unit) {
+    onDismissListener = LottieDialogOnDismissListener(builder)
+}
+
+fun LottieDialog.onCancel(builder: (DialogInterface) -> Unit) {
+    onCancelListener = LottieDialogOnCancelListener(builder)
 }
 
 //endregion

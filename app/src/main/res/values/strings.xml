@@ -25,4 +25,8 @@
     <string name="btn_icon_svg">SVG</string>
     <string name="btn_icon_bitmap">Bitmap</string>
     <string name="label_ui_type">UI Type</string>
+    <string name="btn_theme_day_night">DayNight</string>
+    <string name="btn_theme_light">Light</string>
+    <string name="btn_theme_dark">Dark</string>
+    <string name="label_theme">Theme</string>
 </resources>

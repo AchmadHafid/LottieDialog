@@ -21,6 +21,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val appBarLayout: AppBarLayout by bindView(R.id.appBarLayout)
     private val toolbar: MaterialToolbar by bindView(R.id.toolbar)
     private val scrollView: NestedScrollView by bindView(R.id.scrollView)
+    private val btnThemeDayNight: MaterialButton by bindView(R.id.btn_theme_day_night)
+    private val btnThemeLight: MaterialButton by bindView(R.id.btn_theme_light)
+    private val btnThemeDark: MaterialButton by bindView(R.id.btn_theme_dark)
     private val btnDialogTypeDialog: MaterialButton by bindView(R.id.btn_dialog_type_dialog)
     private val btnDialogTypeBottomSheet: MaterialButton by bindView(R.id.btn_dialog_type_bottom_sheet)
     private val smShowLottieAnimation: SwitchMaterial by bindView(R.id.sm_showLottieAnimation)
@@ -39,6 +42,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     //endregion
     //region Properties
 
+    private val theme
+        get() = when {
+            btnThemeDayNight.isChecked -> LottieDialog.Theme.DAY_NIGHT
+            btnThemeLight.isChecked -> LottieDialog.Theme.LIGHT
+            else -> LottieDialog.Theme.DARK
+        }
     private val isBottomSheet
         get() = btnDialogTypeBottomSheet.isChecked
     private val shouldShowAnimation
@@ -84,6 +93,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         btnDialogTypeDialog.isChecked = true
 
         //endregion
+        //region setup theme selection
+
+        atLeastOneIsChecked(
+            btnThemeDayNight,
+            btnThemeLight,
+            btnThemeDark
+        )
+        btnThemeDayNight.isChecked = true
+
+        //endregion
         //region setup animation type selection
 
         atLeastOneIsCheckedWithConstraint(
@@ -115,7 +134,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         btnShowDialog.setOnClickListener {
             lottieDialog {
-                if (isBottomSheet) type = LottieDialog.Type.BottomSheet
+                if (isBottomSheet) type = LottieDialog.Type.BOTTOM_SHEET
+                theme = this@MainActivity.theme
                 autoDismiss = shouldEnableAutoDismiss
                 if (shouldShowAnimation) {
                     animation {
@@ -174,16 +194,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     onBackPressed  = shouldCancelOnBackPressed
                     onTouchOutside = shouldCancelOnTouchOutside
                 }
-                listener {
-                    onShow {
-                        Log.d("LottieDialog", "showing permission dialog")
-                    }
-                    onCancel {
-                        toastShort("You cancel the dialog")
-                    }
-                    onDismiss {
-                        Log.d("LottieDialog", "permission dialog dismissed")
-                    }
+                onShow {
+                    Log.d("LottieDialog", "showing permission dialog")
+                }
+                onCancel {
+                    toastShort("You cancel the dialog")
+                }
+                onDismiss {
+                    Log.d("LottieDialog", "permission dialog dismissed")
                 }
             }
         }
