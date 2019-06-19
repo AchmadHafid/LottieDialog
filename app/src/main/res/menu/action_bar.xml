@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_toggle_theme"
+        android:title="@string/menu_toggle_theme"
+        android:icon="@drawable/ic_theme_light_dark_24dp_svg"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_show_dialog"
+        android:title="@string/menu_show_dialog"
+        android:icon="@drawable/ic_play_arrow_black_24dp"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom"/>
+
+</menu>

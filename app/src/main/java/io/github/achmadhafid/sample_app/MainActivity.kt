@@ -3,11 +3,14 @@
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
@@ -19,7 +22,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     //region View Binding
 
     private val appBarLayout: AppBarLayout by bindView(R.id.appBarLayout)
-    private val toolbar: MaterialToolbar by bindView(R.id.toolbar)
+    val toolbar: MaterialToolbar by bindView(R.id.toolbar)
     private val scrollView: NestedScrollView by bindView(R.id.scrollView)
     private val btnThemeDayNight: MaterialButton by bindView(R.id.btn_theme_day_night)
     private val btnThemeLight: MaterialButton by bindView(R.id.btn_theme_light)
@@ -37,7 +40,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val smEnableAutoDismiss: SwitchMaterial by bindView(R.id.sm_enableAutoDismiss)
     private val smCancelOnBackPressed: SwitchMaterial by bindView(R.id.sm_cancelOnBackPressed)
     private val smCancelOnTouchOutside: SwitchMaterial by bindView(R.id.sm_cancelOnTouchOutside)
-    private val btnShowDialog: MaterialButton by bindView(R.id.btn_showDialog)
 
     //endregion
     //region Properties
@@ -75,7 +77,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     //region Lifecycle Callback
 
-    @Suppress("LongMethod", "ComplexMethod")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -130,10 +131,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         //endregion
-        //region build & show dialog
+    }
 
-        btnShowDialog.setOnClickListener {
-            lottieDialog {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.action_bar, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        showDialogTutorial()
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    @Suppress("LongMethod", "ComplexMethod")
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_show_dialog -> lottieDialog {
                 if (isBottomSheet) type = LottieDialog.Type.BOTTOM_SHEET
                 theme = this@MainActivity.theme
                 autoDismiss = shouldEnableAutoDismiss
@@ -155,7 +168,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     else
                         R.string.dialog_location_title
                     if (shouldUseCustomText) {
-                        fontRes  = R.font.lobster_two_bold
+                        fontRes = R.font.lobster_two_bold
                         styleRes = R.style.AppTheme_TextAppearance
                     }
                 }
@@ -191,7 +204,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     }
                 }
                 cancel {
-                    onBackPressed  = shouldCancelOnBackPressed
+                    onBackPressed = shouldCancelOnBackPressed
                     onTouchOutside = shouldCancelOnTouchOutside
                 }
                 onShow {
@@ -204,21 +217,65 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     Log.d("LottieDialog", "permission dialog dismissed")
                 }
             }
+            R.id.action_toggle_theme -> toggleTheme()
         }
-
-        //endregion
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.toolbar, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        toggleTheme()
         return true
     }
 
     //endregion
 
+}
+
+fun MainActivity.showDialogTutorial() {
+    doOnce("tutorial_show_dialog") {
+        Handler().post {
+            TapTargetView.showFor(
+                this,
+                TapTarget.forToolbarMenuItem(
+                    toolbar,
+                    R.id.action_show_dialog,
+                    getString(R.string.tutorial_show_dialog_title),
+                    getString(R.string.tutorial_show_dialog_description)
+                ).outerCircleColor(R.color.color_selection_overlay)
+                    .outerCircleAlpha(1f)
+                    .titleTextColorInt(resolveColor(R.attr.colorOnSurface))
+                    .descriptionTextColorInt(resolveColor(R.attr.colorOnSurface))
+                    .drawShadow(true)
+                    .cancelable(true)
+                    .tintTarget(true)
+                    .transparentTarget(false)
+                    .targetRadius(resources.getInteger(R.integer.tutorial_target_radius)),
+                object : TapTargetView.Listener() {
+                    override fun onTargetDismissed(view: TapTargetView?, userInitiated: Boolean) {
+                        toggleThemeTutorial()
+                        super.onTargetDismissed(view, userInitiated)
+                    }
+                }
+            )
+        }
+    }
+}
+
+fun MainActivity.toggleThemeTutorial() {
+    doOnce("tutorial_toggle_theme") {
+        Handler().post {
+            TapTargetView.showFor(
+                this,
+                TapTarget.forToolbarMenuItem(
+                    toolbar,
+                    R.id.action_toggle_theme,
+                    getString(R.string.tutorial_toggle_theme_title),
+                    getString(R.string.tutorial_toggle_theme_description)
+                ).outerCircleColor(R.color.color_selection_overlay)
+                    .outerCircleAlpha(1f)
+                    .titleTextColorInt(resolveColor(R.attr.colorOnSurface))
+                    .descriptionTextColorInt(resolveColor(R.attr.colorOnSurface))
+                    .drawShadow(true)
+                    .cancelable(true)
+                    .tintTarget(true)
+                    .transparentTarget(false)
+                    .targetRadius(resources.getInteger(R.integer.tutorial_target_radius))
+            )
+        }
+    }
 }

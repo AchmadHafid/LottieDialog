@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape android:shape="rectangle" android:padding="10dp">
+            <solid
+                android:color="@color/color_bg_rounded_corner_dialog"/>
+            <corners
+                android:radius="@dimen/lottie_dialog_corner_radius" />
+        </shape>
+    </item>
+</layer-list>

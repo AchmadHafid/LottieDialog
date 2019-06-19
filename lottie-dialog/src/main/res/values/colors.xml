@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_surface_elevation_16_dp">#353535</color>
+    <color name="color_bg_rounded_corner_dialog">?attr/colorSurface</color>
+    <color name="color_navigation_bar">?attr/colorSurface</color>
 </resources>

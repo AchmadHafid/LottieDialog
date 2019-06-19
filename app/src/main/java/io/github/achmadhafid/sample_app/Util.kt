@@ -1,21 +1,30 @@
-@file:Suppress("MagicNumber")
+@file:Suppress("TooManyFunctions", "WildcardImport", "MagicNumber")
 
 package io.github.achmadhafid.sample_app
 
+import android.content.Context
 import android.content.res.Configuration
+import android.util.TypedValue
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
-import androidx.annotation.IdRes
-import androidx.annotation.MainThread
-import androidx.annotation.StringRes
+import androidx.annotation.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 
 @MainThread
 inline fun <reified V : View> AppCompatActivity.bindView(@IdRes id: Int) =
     lazy(LazyThreadSafetyMode.NONE) { findViewById<V>(id) }
+
+fun Context.resolveColor(@ColorRes @AttrRes id: Int) = with(TypedValue()) {
+    if (theme.resolveAttribute(id, this, true)) {
+        data
+    } else {
+        ContextCompat.getColor(this@resolveColor, id)
+    }
+}
 
 fun AppCompatActivity.toastShort(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -86,5 +95,17 @@ fun atLeastOneIsCheckedWithConstraint(switch: CompoundButton, vararg buttons: Ma
                 it.isEnabled   = false
             }
         }
+    }
+}
+
+fun Context.doOnce(tag: String, block: () -> Unit) {
+    val sharedPreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+    val beenDone = sharedPreferences.getBoolean(tag, false)
+
+    if (!beenDone) {
+        block()
+        sharedPreferences.edit()
+            .putBoolean(tag, true)
+            .apply()
     }
 }

@@ -30,16 +30,11 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:orientation="vertical">
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/sm_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/view_margin"
                 app:cardCornerRadius="4dp"
                 app:contentPadding="16dp"
                 app:strokeColor="?attr/colorPrimary"
@@ -237,15 +232,6 @@
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_showDialog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/button_show_dialog" />
-
-        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 

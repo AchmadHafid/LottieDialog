@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bg_dialog_notification">#A6C0FF</color>
+    <color name="color_selection_overlay">#f3e5f5</color>
 </resources>

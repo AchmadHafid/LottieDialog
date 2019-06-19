@@ -16,7 +16,7 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">@color/color_navigation_bar</item>
         <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
     </style>
 
@@ -35,8 +35,8 @@
     <style name="LottieDialogTheme.BottomSheet.ShapeAppearanceOverlay" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <item name="cornerFamilyTopLeft">rounded</item>
         <item name="cornerFamilyTopRight">rounded</item>
-        <item name="cornerSizeTopLeft">@dimen/bottom_sheet_corner_radius</item>
-        <item name="cornerSizeTopRight">@dimen/bottom_sheet_corner_radius</item>
+        <item name="cornerSizeTopLeft">@dimen/lottie_dialog_corner_radius</item>
+        <item name="cornerSizeTopRight">@dimen/lottie_dialog_corner_radius</item>
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
     </style>

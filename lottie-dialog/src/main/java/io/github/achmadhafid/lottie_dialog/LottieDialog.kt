@@ -80,6 +80,9 @@ private fun lottieDialog(context: Context, layoutInflater: LayoutInflater, build
             MaterialAlertDialogBuilder(context, theme)
                 .setView(view)
                 .create()
+                .apply {
+                    window?.setBackgroundDrawableResource(R.drawable.bg_rounded_corner_dialog)
+                }
         }
         LottieDialog.Type.BOTTOM_SHEET -> {
             val theme = when (lottieDialog.theme) {
@@ -130,7 +133,7 @@ data class LottiDialogAnimation internal constructor(
             if (type == LottieDialog.Type.BOTTOM_SHEET) {
                 view.outlineProvider = object : ViewOutlineProvider() {
                     override fun getOutline(view: View?, outline: Outline?) {
-                        val radius = view?.resources?.getDimension(R.dimen.bottom_sheet_corner_radius) ?: return
+                        val radius = view?.resources?.getDimension(R.dimen.lottie_dialog_corner_radius) ?: return
                         outline?.setRoundRect(
                             0, 0,
                             view.width, view.height + radius.toInt(),
