@@ -13,3 +13,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         allWarningsAsErrors = true
     }
 }
+
+dependencies {
+    implementation "com.airbnb.android:lottie:3.0.7"
+}

@@ -34,7 +34,7 @@
                 android:id="@+id/sm_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/view_margin"
+                android:layout_margin="@dimen/lottie_dialog_view_margin"
                 app:cardCornerRadius="4dp"
                 app:contentPadding="16dp"
                 app:strokeColor="?attr/colorPrimary"
@@ -48,7 +48,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
                         android:text="@string/label_theme"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
@@ -56,6 +55,8 @@
                         android:id="@+id/toggle_button_group_theme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_gravity="center"
                         app:singleSelection="true">
 
@@ -88,7 +89,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
                         android:text="@string/label_ui_type"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
@@ -96,6 +96,7 @@
                         android:id="@+id/toggle_button_group_dialog_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:layout_gravity="center"
                         app:singleSelection="true">
 

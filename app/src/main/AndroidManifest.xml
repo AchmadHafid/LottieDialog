@@ -4,6 +4,7 @@
     package="io.github.achmadhafid.sample_app">
 
     <application
+        android:name=".LottieDialogApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

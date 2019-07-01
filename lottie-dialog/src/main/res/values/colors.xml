@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_bg_rounded_corner_dialog">?attr/colorSurface</color>
-    <color name="color_navigation_bar">?attr/colorSurface</color>
+    <color name="ld_color_bg_rounded_corner_dialog">?attr/colorSurface</color>
+    <color name="ld_color_navigation_bar_dark">#353535</color>
 </resources>

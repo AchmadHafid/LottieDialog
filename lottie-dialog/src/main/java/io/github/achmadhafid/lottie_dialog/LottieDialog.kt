@@ -1,4 +1,4 @@
-@file:Suppress("TooManyFunctions", "WildcardImport")
+@file:Suppress("TooManyFunctions", "WildcardImport", "unused")
 
 package io.github.achmadhafid.lottie_dialog
 
@@ -81,7 +81,7 @@ private fun lottieDialog(context: Context, layoutInflater: LayoutInflater, build
                 .setView(view)
                 .create()
                 .apply {
-                    window?.setBackgroundDrawableResource(R.drawable.bg_rounded_corner_dialog)
+                    window?.setBackgroundDrawableResource(R.drawable.ld_bg_rounded_corner_dialog)
                 }
         }
         LottieDialog.Type.BOTTOM_SHEET -> {
@@ -133,7 +133,9 @@ data class LottiDialogAnimation internal constructor(
             if (type == LottieDialog.Type.BOTTOM_SHEET) {
                 view.outlineProvider = object : ViewOutlineProvider() {
                     override fun getOutline(view: View?, outline: Outline?) {
-                        val radius = view?.resources?.getDimension(R.dimen.lottie_dialog_corner_radius) ?: return
+                        val radius = view?.resources?.getDimension(
+                            R.dimen.lottie_dialog_corner_radius_bottom_sheet
+                        ) ?: return
                         outline?.setRoundRect(
                             0, 0,
                             view.width, view.height + radius.toInt(),

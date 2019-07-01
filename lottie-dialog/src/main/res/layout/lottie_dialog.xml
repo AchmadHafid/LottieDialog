@@ -7,7 +7,7 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_dialog_animation_view"
-        android:layout_width="@dimen/match_constraint"
+        android:layout_width="0dp"
         android:layout_height="192dp"
         app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_tv_title"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,11 +19,11 @@
 
     <TextView
         android:id="@+id/lottie_dialog_tv_title"
-        android:layout_width="@dimen/match_constraint"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/view_margin"
-        android:layout_marginTop="@dimen/view_margin"
-        android:layout_marginEnd="@dimen/view_margin"
+        android:layout_marginStart="@dimen/lottie_dialog_view_margin"
+        android:layout_marginTop="@dimen/lottie_dialog_view_margin"
+        android:layout_marginEnd="@dimen/lottie_dialog_view_margin"
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
@@ -35,11 +35,11 @@
 
     <TextView
         android:id="@+id/lottie_dialog_tv_content"
-        android:layout_width="@dimen/match_constraint"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/view_margin"
-        android:layout_marginEnd="@dimen/view_margin"
-        android:layout_marginBottom="@dimen/view_margin"
+        android:layout_marginStart="@dimen/lottie_dialog_view_margin"
+        android:layout_marginEnd="@dimen/lottie_dialog_view_margin"
+        android:layout_marginBottom="@dimen/lottie_dialog_view_margin"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_btn_positive"
@@ -53,11 +53,11 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/lottie_dialog_btn_positive"
         app:layout_constraintEnd_toStartOf="@+id/lottie_dialog_btn_positive"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/lottie_dialog_btn_positive"
-        android:visibility="gone"
         tools:text="@android:string/cancel" />
 
     <com.google.android.material.button.MaterialButton
@@ -65,12 +65,13 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/view_margin"
+        android:layout_marginTop="@dimen/lottie_dialog_action_button_margin"
+        android:layout_marginBottom="@dimen/lottie_dialog_view_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toEndOf="@+id/lottie_dialog_btn_negative"
         app:layout_constraintTop_toBottomOf="@+id/lottie_dialog_tv_content"
-        app:layout_constraintHorizontal_chainStyle="spread"
         tools:text="@android:string/ok" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

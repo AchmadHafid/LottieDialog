@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/view_padding">
+    android:padding="@dimen/lottie_dialog_view_padding">
 
     <TextView
         android:id="@+id/lottie_dialog_tv_title"
-        android:layout_width="@dimen/match_constraint"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
@@ -21,9 +21,9 @@
 
     <TextView
         android:id="@+id/lottie_dialog_tv_content"
-        android:layout_width="@dimen/match_constraint"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/view_margin"
+        android:layout_marginBottom="@dimen/lottie_dialog_view_margin"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_btn_positive"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,11 +36,11 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/view_margin"
+        android:layout_marginEnd="@dimen/lottie_dialog_view_margin"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/lottie_dialog_btn_positive"
         app:layout_constraintEnd_toStartOf="@+id/lottie_dialog_btn_positive"
         app:layout_constraintTop_toTopOf="@+id/lottie_dialog_btn_positive"
-        android:visibility="gone"
         tools:text="@android:string/cancel" />
 
     <com.google.android.material.button.MaterialButton
@@ -48,6 +48,7 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/lottie_dialog_action_button_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
