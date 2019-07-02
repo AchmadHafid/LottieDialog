@@ -252,14 +252,25 @@ fun LottieDialog.positiveButton(builder: LottieDialogButton.() -> Unit) {
 }
 
 fun LottieDialog.negativeButton(@StringRes textRes: Int) {
-    negativeButton?.textRes = textRes
+    if (negativeButton == null) {
+        negativeButton = LottieDialogButton(textRes = textRes)
+    } else {
+        negativeButton?.textRes = textRes
+    }
 }
 
 fun LottieDialog.negativeButton(text: CharSequence) {
-    negativeButton?.text = text
+    if (negativeButton == null) {
+        negativeButton = LottieDialogButton(textRes = android.R.string.cancel, text = text)
+    } else {
+        negativeButton?.text = text
+    }
 }
 
 fun LottieDialog.negativeButton(builder: LottieDialogButton.() -> Unit) {
+    if (negativeButton == null) {
+        negativeButton = LottieDialogButton(textRes = android.R.string.cancel)
+    }
     negativeButton?.apply(builder)
 }
 
