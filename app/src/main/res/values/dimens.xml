@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <dimen name="lottie_dialog_animation_padding">16dp</dimen>
 <!--    Uncomment below to change corner radius -->
 <!--    <dimen name="lottie_dialog_corner_radius_bottom_sheet">default is 16dp</dimen>-->
 <!--    <dimen name="lottie_dialog_corner_radius_dialog">default is 16dp</dimen>-->

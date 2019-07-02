@@ -5,6 +5,8 @@ package io.github.achmadhafid.lottie_dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Outline
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewOutlineProvider
@@ -21,6 +23,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlin.math.max
 
 //region Main DSL Builder & Extension
 
@@ -65,10 +68,12 @@ data class LottieDialog(
 }
 
 @Suppress("ComplexMethod", "InflateParams")
-private fun lottieDialog(context: Context, layoutInflater: LayoutInflater, builder: LottieDialog.() -> Unit) {
-    val lottieDialog = LottieDialog().apply(builder)
-    val layout       = lottieDialog.animation.lottieFileRes?.let { R.layout.lottie_dialog } ?: R.layout.no_lottie_dialog
-    val view         = layoutInflater.inflate(layout, null)
+private fun lottieDialog(context: Context, layoutInflater: LayoutInflater, vararg builders: LottieDialog.() -> Unit) {
+    val lottieDialog = LottieDialog()
+    builders.forEach { lottieDialog.apply(it) }
+
+    val layout = lottieDialog.animation.lottieFileRes?.let { R.layout.lottie_dialog } ?: R.layout.no_lottie_dialog
+    val view   = layoutInflater.inflate(layout, null)
 
     val dialog = when (lottieDialog.type) {
         LottieDialog.Type.DIALOG -> {
@@ -81,7 +86,7 @@ private fun lottieDialog(context: Context, layoutInflater: LayoutInflater, build
                 .setView(view)
                 .create()
                 .apply {
-                    window?.setBackgroundDrawableResource(R.drawable.ld_bg_rounded_corner_dialog)
+                    window?.setBackgroundDrawableResource(R.drawable.lottie_dialog_bg_rounded_corner_dialog)
                 }
         }
         LottieDialog.Type.BOTTOM_SHEET -> {
@@ -101,19 +106,19 @@ fun AppCompatActivity.lottieDialog(builder: LottieDialog.() -> Unit) {
     lottieDialog(this, layoutInflater, builder)
 }
 
+fun AppCompatActivity.lottieDialog(defaultBuilder: LottieDialog.() -> Unit, customBuilder: LottieDialog.() -> Unit) {
+    lottieDialog(this, layoutInflater, defaultBuilder, customBuilder)
+}
+
 fun Fragment.lottieDialog(builder: LottieDialog.() -> Unit) {
     context?.let { lottieDialog(it, layoutInflater, builder) }
 }
 
-fun <T: View> T.lottieDialogOnClick(activity: AppCompatActivity, builder: LottieDialog.() -> Unit) : T {
-    setOnClickListener { activity.lottieDialog(builder) }
-    return this
+fun Fragment.lottieDialog(defaultBuilder: LottieDialog.() -> Unit, customBuilder: LottieDialog.() -> Unit) {
+    context?.let { lottieDialog(it, layoutInflater, defaultBuilder, customBuilder) }
 }
 
-fun <T: View> T.lottieDialogOnClick(fragment: Fragment, builder: LottieDialog.() -> Unit) : T {
-    setOnClickListener { fragment.lottieDialog(builder) }
-    return this
-}
+fun lottieDialogBuilder(builder: LottieDialog.() -> Unit) = builder
 
 //endregion
 //region Animation DSL Builder & Extension
@@ -152,11 +157,11 @@ data class LottiDialogAnimation internal constructor(
 }
 
 fun LottieDialog.animation(@RawRes lottieFileRes: Int) {
-    animation = LottiDialogAnimation(lottieFileRes = lottieFileRes)
+    animation.lottieFileRes = lottieFileRes
 }
 
 fun LottieDialog.animation(builder: LottiDialogAnimation.() -> Unit) {
-    animation = LottiDialogAnimation().apply(builder)
+    animation.apply(builder)
 }
 
 //endregion
@@ -179,27 +184,27 @@ data class LottieDialogText internal constructor(
 }
 
 fun LottieDialog.title(@StringRes textRes: Int) {
-    title = LottieDialogText(textRes = textRes)
+    title.textRes = textRes
 }
 
 fun LottieDialog.title(text: CharSequence) {
-    title = LottieDialogText(text = text)
+    title.text = text
 }
 
 fun LottieDialog.title(builder: LottieDialogText.() -> Unit) {
-    title = LottieDialogText().apply(builder)
+    title.apply(builder)
 }
 
 fun LottieDialog.content(@StringRes textRes: Int) {
-    title = LottieDialogText(textRes = textRes)
+    content.textRes = textRes
 }
 
 fun LottieDialog.content(text: CharSequence) {
-    title = LottieDialogText(text = text)
+    content.text = text
 }
 
 fun LottieDialog.content(builder: LottieDialogText.() -> Unit) {
-    content = LottieDialogText().apply(builder)
+    content.apply(builder)
 }
 
 //endregion
@@ -213,6 +218,7 @@ data class LottieDialogButton internal constructor(
     var iconRes: Int? = null,
     @MaterialButton.IconGravity
     var iconGravity: Int? = null,
+    var delayAutoDismiss: Long = 200,
     internal var onClickListener: ((AppCompatDialog) -> Unit)? = null
 ) {
     internal operator fun invoke(dialog: AppCompatDialog, button: MaterialButton, autoDismiss: Boolean) {
@@ -222,34 +228,39 @@ data class LottieDialogButton internal constructor(
         iconGravity?.let { button.iconGravity = it }
 
         button.setOnClickListener {
-            onClickListener?.let { it(dialog) }
+            button.isClickable = false
+            Handler(Looper.getMainLooper())
+                .postDelayed(
+                    { onClickListener?.let { it(dialog) } },
+                    max(0L, delayAutoDismiss)
+                )
             if (autoDismiss) dialog.dismiss()
         }
     }
 }
 
 fun LottieDialog.positiveButton(@StringRes textRes: Int) {
-    positiveButton = LottieDialogButton(textRes = textRes)
+    positiveButton.textRes = textRes
 }
 
 fun LottieDialog.positiveButton(text: CharSequence) {
-    positiveButton = LottieDialogButton(textRes = android.R.string.ok, text = text)
+    positiveButton.text = text
 }
 
 fun LottieDialog.positiveButton(builder: LottieDialogButton.() -> Unit) {
-    positiveButton = LottieDialogButton(textRes = android.R.string.ok).apply(builder)
+    positiveButton.apply(builder)
 }
 
 fun LottieDialog.negativeButton(@StringRes textRes: Int) {
-    positiveButton = LottieDialogButton(textRes = textRes)
+    negativeButton?.textRes = textRes
 }
 
 fun LottieDialog.negativeButton(text: CharSequence) {
-    positiveButton = LottieDialogButton(textRes = android.R.string.cancel, text = text)
+    negativeButton?.text = text
 }
 
 fun LottieDialog.negativeButton(builder: LottieDialogButton.() -> Unit) {
-    negativeButton = LottieDialogButton(textRes = android.R.string.cancel).apply(builder)
+    negativeButton?.apply(builder)
 }
 
 fun LottieDialogButton.onClick(builder: (AppCompatDialog) -> Unit) {
@@ -270,7 +281,7 @@ data class LottieDialogCancelAbility internal constructor(
 }
 
 fun LottieDialog.cancel(builder: LottieDialogCancelAbility.() -> Unit) {
-    cancelAbility = LottieDialogCancelAbility().apply(builder)
+    cancelAbility.apply(builder)
 }
 
 //endregion

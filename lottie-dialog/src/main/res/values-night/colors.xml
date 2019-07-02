@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ld_color_bg_rounded_corner_dialog">#353535</color>
-    <color name="ld_color_navigation_bar_dark">#353535</color>
+
+    <color name="lottie_dialog_color_bg_rounded_corner_dialog">#353535</color>
+    <color name="lottie_dialog_color_navigation_bar_dark">#353535</color>
+
 </resources>

@@ -3,9 +3,5 @@
 
     <dimen name="lottie_dialog_corner_radius_bottom_sheet">16dp</dimen>
     <dimen name="lottie_dialog_corner_radius_dialog">16dp</dimen>
-    <dimen name="lottie_dialog_corner_radius_dialog_padding">8dp</dimen>
-    <dimen name="lottie_dialog_action_button_margin">16dp</dimen>
-    <dimen name="lottie_dialog_view_margin">16dp</dimen>
-    <dimen name="lottie_dialog_view_padding">16dp</dimen>
 
 </resources>

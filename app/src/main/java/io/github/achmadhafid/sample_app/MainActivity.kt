@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     @Suppress("LongMethod", "ComplexMethod")
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_show_dialog -> lottieDialog {
+            R.id.action_show_dialog -> lottieDialog(ConfirmationDialog.requestPermission) {
                 if (btnDialogTypeBottomSheet.isChecked) type = LottieDialog.Type.BOTTOM_SHEET
                 theme = when {
                     btnThemeDayNight.isChecked -> LottieDialog.Theme.DAY_NIGHT
@@ -228,7 +228,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     animation {
                         if (btnAnimationCentered.isChecked) {
                             lottieFileRes = R.raw.lottie_animation_location
-                            paddingRes    = R.dimen.lottie_dialog_view_padding
+                            paddingRes    = R.dimen.lottie_dialog_animation_padding
                         }
                         if (btnAnimationFull.isChecked) {
                             lottieFileRes = R.raw.lottie_animation_notification
@@ -281,15 +281,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     onBackPressed  = smCancelOnBackPressed.isChecked
                     onTouchOutside = smCancelOnTouchOutside.isChecked
                 }
-                onShow {
-                    Log.d("LottieDialog", "showing permission dialog")
-                }
                 onCancel {
                     Log.d("LottieDialog", "permission dialog canceled")
                     toastShort("You cancel the dialog")
-                }
-                onDismiss {
-                    Log.d("LottieDialog", "permission dialog dismissed")
                 }
             }
             R.id.action_toggle_theme -> appTheme = toggleTheme()
