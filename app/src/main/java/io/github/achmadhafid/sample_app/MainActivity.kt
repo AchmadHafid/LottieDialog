@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private var smShowButtonIconIsChecked by simplePref { false }
     private var btnIconSvgIsChecked by simplePref { true }
     private var btnIconBitmapIsChecked by simplePref { false }
-    private var sbActionDelayValue by simplePref { 200L }
+    private var sbActionDelayValue by simplePref { 0L }
     private var smUseCustomTextIsChecked by simplePref { false }
     private var smEnableAutoDismissIsChecked by simplePref { true }
     private var smCancelOnBackPressedIsChecked by simplePref { false }
@@ -192,25 +192,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             colorBubbleText = resolveColor(R.attr.colorOnPrimary)
             colorBar        = colorBubble
 
-            position   = sbActionDelayValue / 1000F
-            bubbleText = "$sbActionDelayValue"
+            position         = sbActionDelayValue / 1000F
+            bubbleText       = "$sbActionDelayValue"
             positionListener = {
                 sbActionDelayValue = (floor(1000 * position / 50) * 50).toLong()
-                bubbleText = "$sbActionDelayValue"
+                bubbleText         = "$sbActionDelayValue"
             }
 
+            val height by lazy { tvActionDelay.height.toFloat() }
+            val animation by lazy { ViewAnimator.animate(tvActionDelay) }
             beginTrackingListener = {
-                val height = tvActionDelay.height.toFloat()
-                ViewAnimator.animate(tvActionDelay)
-                    .translationY(0F, -height)
+                animation.translationY(0F, -height)
                     .alpha(1F, 0F)
                     .duration(200L)
                     .start()
             }
             endTrackingListener = {
-                val height = tvActionDelay.height.toFloat()
-                ViewAnimator.animate(tvActionDelay)
-                    .translationY(-height, 0F)
+                animation.translationY(-height, 0F)
                     .alpha(0F, 1F)
                     .duration(400L)
                     .start()
