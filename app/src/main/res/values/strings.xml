@@ -34,4 +34,5 @@
     <string name="tutorial_show_dialog_description">Tap here to show your dialog based on settings</string>
     <string name="tutorial_toggle_theme_title">Switch Theme</string>
     <string name="tutorial_toggle_theme_description"><![CDATA[Tap here to switch between light & dark theme]]></string>
+    <string name="label_action_delay">Action Delay</string>
 </resources>

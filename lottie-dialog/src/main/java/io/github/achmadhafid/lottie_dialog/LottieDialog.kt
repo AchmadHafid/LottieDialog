@@ -4,6 +4,7 @@ package io.github.achmadhafid.lottie_dialog
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.Resources
 import android.graphics.Outline
 import android.os.Handler
 import android.os.Looper
@@ -218,7 +219,7 @@ data class LottieDialogButton internal constructor(
     var iconRes: Int? = null,
     @MaterialButton.IconGravity
     var iconGravity: Int? = null,
-    var delayAutoDismiss: Long = 200,
+    var actionDelay: Long? = null,
     internal var onClickListener: ((AppCompatDialog) -> Unit)? = null
 ) {
     internal operator fun invoke(dialog: AppCompatDialog, button: MaterialButton, autoDismiss: Boolean) {
@@ -232,7 +233,9 @@ data class LottieDialogButton internal constructor(
             Handler(Looper.getMainLooper())
                 .postDelayed(
                     { onClickListener?.let { it(dialog) } },
-                    max(0L, delayAutoDismiss)
+                    max(
+                        0L, actionDelay ?: defaultActionDelay(button.resources)
+                    )
                 )
             if (autoDismiss) dialog.dismiss()
         }
@@ -335,3 +338,7 @@ fun LottieDialog.onCancel(builder: (DialogInterface) -> Unit) {
 }
 
 //endregion
+
+private fun defaultActionDelay(resources: Resources) =
+    resources.getInteger(R.integer.lottie_dialog_default_action_delay)
+        .toLong()

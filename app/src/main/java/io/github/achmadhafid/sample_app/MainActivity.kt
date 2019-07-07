@@ -7,19 +7,23 @@ import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetView
+import com.github.florent37.viewanimator.ViewAnimator
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.ramotion.fluidslider.FluidSlider
 import io.github.achmadhafid.lottie_dialog.*
 import io.github.achmadhafid.simplepref.extension.simplePref
 import io.github.achmadhafid.simplepref.extension.simplePrefNullable
 import io.github.achmadhafid.zpack.ktx.*
+import kotlin.math.floor
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -44,6 +48,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val tglGroupIconType: MaterialButtonToggleGroup by bindView(R.id.toggle_button_group_icon_type)
     private val btnIconSvg: MaterialButton by bindView(R.id.btn_icon_svg)
     private val btnIconBitmap: MaterialButton by bindView(R.id.btn_icon_bitmap)
+    private val tvActionDelay: TextView by bindView(R.id.tv_actionDelay)
+    private val sbActionDelay: FluidSlider by bindView(R.id.sb_actionDelay)
     private val smUseCustomText: SwitchMaterial by bindView(R.id.sm_useCustomText)
     private val smEnableAutoDismiss: SwitchMaterial by bindView(R.id.sm_enableAutoDismiss)
     private val smCancelOnBackPressed: SwitchMaterial by bindView(R.id.sm_cancelOnBackPressed)
@@ -67,6 +73,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private var smShowButtonIconIsChecked by simplePref { false }
     private var btnIconSvgIsChecked by simplePref { true }
     private var btnIconBitmapIsChecked by simplePref { false }
+    private var sbActionDelayValue by simplePref { 200L }
     private var smUseCustomTextIsChecked by simplePref { false }
     private var smEnableAutoDismissIsChecked by simplePref { true }
     private var smCancelOnBackPressedIsChecked by simplePref { false }
@@ -178,6 +185,39 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             )
 
         //endregion
+        //region setup action delay
+
+        with(sbActionDelay) {
+            colorBubble     = resolveColor(R.attr.colorPrimary)
+            colorBubbleText = resolveColor(R.attr.colorOnPrimary)
+            colorBar        = colorBubble
+
+            position   = sbActionDelayValue / 1000F
+            bubbleText = "$sbActionDelayValue"
+            positionListener = {
+                sbActionDelayValue = (floor(1000 * position / 50) * 50).toLong()
+                bubbleText = "$sbActionDelayValue"
+            }
+
+            beginTrackingListener = {
+                val height = tvActionDelay.height.toFloat()
+                ViewAnimator.animate(tvActionDelay)
+                    .translationY(0F, -height)
+                    .alpha(1F, 0F)
+                    .duration(200L)
+                    .start()
+            }
+            endTrackingListener = {
+                val height = tvActionDelay.height.toFloat()
+                ViewAnimator.animate(tvActionDelay)
+                    .translationY(-height, 0F)
+                    .alpha(0F, 1F)
+                    .duration(400L)
+                    .start()
+            }
+        }
+
+        //endregion
         //region setup custom text options
 
         smUseCustomText.setOnCheckedChangeListener { _, isChecked ->
@@ -208,14 +248,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         showDialogTutorial()
         return super.onPrepareOptionsMenu(menu)
     }
 
     @Suppress("LongMethod", "ComplexMethod")
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.action_show_dialog -> lottieDialog(ConfirmationDialog.requestPermission) {
                 if (btnDialogTypeBottomSheet.isChecked) type = LottieDialog.Type.BOTTOM_SHEET
                 theme = when {
@@ -257,6 +297,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
                 positiveButton {
                     textRes = android.R.string.ok
+                    actionDelay = sbActionDelayValue
                     if (smShowButtonIcon.isChecked) {
                         iconRes = if (btnIconSvg.isChecked)
                             R.drawable.ic_check_black_18dp_svg
@@ -268,6 +309,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 if (smShowNegativeButton.isChecked) {
                     negativeButton {
                         textRes = R.string.negative_button
+                        actionDelay = sbActionDelayValue
                         if (smShowButtonIcon.isChecked) {
                             iconRes = if (btnIconSvg.isChecked)
                                 R.drawable.ic_close_black_18dp_svg
@@ -349,7 +391,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }
     }
-
 
     //endregion
 
