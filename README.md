@@ -8,7 +8,7 @@ LottieDialog
 
 Display a beautiful confirmation dialog with Lottie animation inside easily using new material design components.
 
-
+![image](https://github.com/AchmadHafid/LottieDialog/blob/master/art/demo_part1.gif)![image](https://github.com/AchmadHafid/LottieDialog/blob/master/art/demo_part2.gif)<br />
 [**Download Demo App Here**](https://github.com/AchmadHafid/LottieDialog/releases/download/v2.4.0/LottieDialog.v2.4.0.apk)
 
 Main Features
@@ -46,7 +46,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation 'implementation 'com.github.AchmadHafid:LottieDialog:2.4.0'
+  implementation "com.github.AchmadHafid:LottieDialog:2.4.0"
   ...
 }
 ```
