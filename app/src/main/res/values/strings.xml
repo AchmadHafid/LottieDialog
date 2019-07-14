@@ -5,7 +5,6 @@
     <string name="switch_show_lottie_animation">Show Lottie Animation</string>
     <string name="switch_show_negative_button">Show Negative Button</string>
     <string name="switch_show_button_icon">Show Button Icon</string>
-    <string name="button_show_dialog">Show me a dialog</string>
 
     <string name="message_on_positive">Thank you</string>
     <string name="message_on_negative">OK that\'s fine</string>

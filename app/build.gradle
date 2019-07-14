@@ -22,20 +22,13 @@ android {
     }
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = '1.8'
-        allWarningsAsErrors = true
-    }
-}
-
 dependencies {
     implementation project(":lottie-dialog")
 
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta2"
-    implementation "com.github.AchmadHafid:Zpack:0.3.0"
-    implementation "com.github.AchmadHafid:SimplePref:1.2.0"
-    implementation "com.getkeepsafe.taptargetview:taptargetview:1.12.0"
-    implementation "com.ramotion.fluidslider:fluid-slider:0.3.1"
-    implementation "com.github.florent37:viewanimator:1.1.1"
+    implementation deps.constraintlayout
+    implementation deps.zpack
+    implementation deps.simplepref
+    implementation deps.taptargetview
+    implementation deps.viewanimator
+    implementation deps.fluidslider
 }

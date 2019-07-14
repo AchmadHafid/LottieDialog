@@ -3,8 +3,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 12
-        versionName "2.4.0"
+        versionCode 13
+        versionName "2.5.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     dexOptions {
@@ -37,21 +37,19 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation deps.stdlib
+    implementation deps.material
+    implementation deps.core
+    implementation deps.appcompat
 
-    implementation "com.google.android.material:material:1.1.0-alpha07"
+    testImplementation deps.test_core
+    testImplementation deps.test_runner
+    testImplementation deps.test_rules
+    testImplementation deps.test_junit_ktx
+    testImplementation deps.robolectric
 
-    implementation "androidx.core:core-ktx:1.2.0-alpha02"
-    implementation "androidx.appcompat:appcompat:1.1.0-rc01"
-
-    testImplementation "androidx.test:core-ktx:1.2.1-alpha01"
-    testImplementation "androidx.test:runner:1.3.0-alpha01"
-    testImplementation "androidx.test:rules:1.3.0-alpha01"
-    testImplementation "androidx.test.ext:junit-ktx:1.1.2-alpha01"
-    testImplementation "org.robolectric:robolectric:4.3"
-
-    androidTestImplementation "androidx.test:core-ktx:1.2.1-alpha01"
-    androidTestImplementation "androidx.test:runner:1.3.0-alpha01"
-    androidTestImplementation "androidx.test:rules:1.3.0-alpha01"
-    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.2-alpha01"
+    androidTestImplementation deps.test_core
+    androidTestImplementation deps.test_runner
+    androidTestImplementation deps.test_rules
+    androidTestImplementation deps.test_junit_ktx
 }

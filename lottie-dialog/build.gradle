@@ -7,13 +7,10 @@ apply from: '../shared_build.gradle'
 
 group = 'com.github.AchmadHafid'
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = '1.8'
-        allWarningsAsErrors = true
-    }
-}
-
 dependencies {
-    implementation "com.airbnb.android:lottie:3.0.7"
+    implementation deps.coroutines
+    implementation deps.lifecycle
+    implementation deps.activity
+    implementation deps.fragment
+    implementation deps.lottie
 }

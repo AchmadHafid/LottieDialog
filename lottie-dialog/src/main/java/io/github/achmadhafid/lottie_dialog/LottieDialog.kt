@@ -5,8 +5,6 @@ package io.github.achmadhafid.lottie_dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Outline
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewOutlineProvider
@@ -19,10 +17,14 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.max
 
 //region Main DSL Builder & Extension
@@ -41,7 +43,7 @@ data class LottieDialog(
     internal var onDismissListener: LottieDialogOnDismissListener = LottieDialogOnDismissListener(),
     internal var onCancelListener: LottieDialogOnCancelListener = LottieDialogOnCancelListener()
 ) {
-    internal operator fun invoke(dialog: AppCompatDialog, view: View) {
+    internal operator fun invoke(dialog: AppCompatDialog, view: View, lifecycleScope: LifecycleCoroutineScope) {
         val lav: LottieAnimationView? = animation.lottieFileRes?.let {
             view.findViewById(R.id.lottie_dialog_animation_view)
         }
@@ -53,8 +55,8 @@ data class LottieDialog(
         lav?.let { animation(type, it) }
         title(tvTitle)
         content(tvContent)
-        positiveButton(dialog, btnPositive, autoDismiss)
-        negativeButton?.invoke(dialog, btnNegative, autoDismiss)
+        positiveButton(dialog, btnPositive, autoDismiss, lifecycleScope)
+        negativeButton?.invoke(dialog, btnNegative, autoDismiss, lifecycleScope)
         cancelAbility(dialog)
         onShowListener(dialog)
         onDismissListener(dialog)
@@ -68,12 +70,20 @@ data class LottieDialog(
 }
 
 @Suppress("ComplexMethod", "InflateParams")
-private fun lottieDialog(context: Context, layoutInflater: LayoutInflater, vararg builders: LottieDialog.() -> Unit) {
+private fun lottieDialog(
+    context: Context,
+    lifecycleScope: LifecycleCoroutineScope,
+    layoutInflater: LayoutInflater,
+    vararg builders: LottieDialog.() -> Unit
+) {
     val lottieDialog = LottieDialog()
     builders.forEach { lottieDialog.apply(it) }
 
-    val layout = lottieDialog.animation.lottieFileRes?.let { R.layout.lottie_dialog } ?: R.layout.no_lottie_dialog
-    val view   = layoutInflater.inflate(layout, null)
+    val layout = lottieDialog.animation.lottieFileRes?.let {
+        R.layout.lottie_dialog
+    } ?: R.layout.no_lottie_dialog
+
+    val view = layoutInflater.inflate(layout, null)
 
     val dialog = when (lottieDialog.type) {
         LottieDialog.Type.DIALOG -> {
@@ -99,23 +109,23 @@ private fun lottieDialog(context: Context, layoutInflater: LayoutInflater, varar
                 .apply { setContentView(view) }
         }
     }
-    lottieDialog(dialog, view)
+    lottieDialog(dialog, view, lifecycleScope)
 }
 
 fun AppCompatActivity.lottieDialog(builder: LottieDialog.() -> Unit) {
-    lottieDialog(this, layoutInflater, builder)
+    lottieDialog(this, lifecycleScope, layoutInflater, builder)
 }
 
 fun AppCompatActivity.lottieDialog(defaultBuilder: LottieDialog.() -> Unit, customBuilder: LottieDialog.() -> Unit) {
-    lottieDialog(this, layoutInflater, defaultBuilder, customBuilder)
+    lottieDialog(this, lifecycleScope, layoutInflater, defaultBuilder, customBuilder)
 }
 
 fun Fragment.lottieDialog(builder: LottieDialog.() -> Unit) {
-    context?.let { lottieDialog(it, layoutInflater, builder) }
+    context?.let { lottieDialog(it, viewLifecycleOwner.lifecycleScope, layoutInflater, builder) }
 }
 
 fun Fragment.lottieDialog(defaultBuilder: LottieDialog.() -> Unit, customBuilder: LottieDialog.() -> Unit) {
-    context?.let { lottieDialog(it, layoutInflater, defaultBuilder, customBuilder) }
+    context?.let { lottieDialog(it, viewLifecycleOwner.lifecycleScope, layoutInflater, defaultBuilder, customBuilder) }
 }
 
 fun lottieDialogBuilder(builder: LottieDialog.() -> Unit) = builder
@@ -221,7 +231,12 @@ data class LottieDialogButton internal constructor(
     var actionDelay: Long? = null,
     internal var onClickListener: ((AppCompatDialog) -> Unit)? = null
 ) {
-    internal operator fun invoke(dialog: AppCompatDialog, button: MaterialButton, autoDismiss: Boolean) {
+    internal operator fun invoke(
+        dialog: AppCompatDialog,
+        button: MaterialButton,
+        autoDismiss: Boolean,
+        lifecycleScope: LifecycleCoroutineScope
+    ) {
         button.visibility = View.VISIBLE
         button.text = text ?: dialog.context.getString(textRes)
         iconRes?.let { button.icon = ContextCompat.getDrawable(dialog.context, it) }
@@ -229,13 +244,12 @@ data class LottieDialogButton internal constructor(
 
         button.setOnClickListener {
             button.isClickable = false
-            Handler(Looper.getMainLooper())
-                .postDelayed(
-                    { onClickListener?.let { it(dialog) } },
-                    max(
-                        0L, actionDelay ?: 0L
-                    )
-                )
+            onClickListener?.let {
+                lifecycleScope.launch {
+                    delay(max(0L, actionDelay ?: 0L))
+                    it(dialog)
+                }
+            }
             if (autoDismiss) dialog.dismiss()
         }
     }
@@ -274,6 +288,10 @@ fun LottieDialog.negativeButton(builder: LottieDialogButton.() -> Unit) {
         negativeButton = LottieDialogButton(textRes = android.R.string.cancel)
     }
     negativeButton?.apply(builder)
+}
+
+fun LottieDialog.noNegativeButton() {
+    negativeButton = null
 }
 
 fun LottieDialogButton.onClick(builder: (AppCompatDialog) -> Unit) {

@@ -187,6 +187,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         //endregion
         //region setup action delay
 
+        @Suppress("MagicNumber")
         with(sbActionDelay) {
             colorBubble     = resolveColor(R.attr.colorPrimary)
             colorBubbleText = resolveColor(R.attr.colorOnPrimary)
