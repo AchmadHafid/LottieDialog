@@ -55,7 +55,7 @@ dependencies {
 Live Template
 -------------
 Add live template for this library to your Android Studio to get started quickly. <br />
-[Download Live Template Here](https://github.com/AchmadHafid/LottieDialog/releases/download/v2.4.0/LottieDialog_live_templates_v2.4.0.zip)
+[Download Live Template Here](https://github.com/AchmadHafid/LottieDialog/releases/download/v2.5.0/LottieDialog_live_templates_v2.5.0.zip)
 <br />
 Import via: `File` > `Import Settings...` <br />
 
