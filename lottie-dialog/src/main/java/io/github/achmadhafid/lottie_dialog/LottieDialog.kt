@@ -4,10 +4,12 @@ package io.github.achmadhafid.lottie_dialog
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.graphics.Outline
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewOutlineProvider
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.*
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +25,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import io.github.achmadhafid.zpack.ktx.resolveColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.max
@@ -52,7 +55,7 @@ data class LottieDialog(
         val btnPositive: MaterialButton = view.findViewById(R.id.lottie_dialog_btn_positive)
         val btnNegative: MaterialButton = view.findViewById(R.id.lottie_dialog_btn_negative)
 
-        lav?.let { animation(type, it) }
+        lav?.let { animation(view, it, dialog, type) }
         title(tvTitle)
         content(tvContent)
         positiveButton(dialog, btnPositive, autoDismiss, lifecycleScope)
@@ -139,14 +142,22 @@ data class LottiDialogAnimation internal constructor(
     @ColorRes
     var bgColorRes: Int? = null,
     @DrawableRes
-    var paddingRes: Int? = null
+    var paddingRes: Int? = null,
+    var showCloseButton: Boolean = true,
+    @ColorRes @AttrRes
+    var closeButtonColorRes: Int? = null
 ) {
-    internal operator fun invoke(type: LottieDialog.Type, view: LottieAnimationView) {
-        lottieFileRes?.let { view.setAnimation(it) }
+    internal operator fun invoke(
+        view: View,
+        animationView: LottieAnimationView,
+        dialog: AppCompatDialog,
+        type: LottieDialog.Type
+    ) {
+        lottieFileRes?.let { animationView.setAnimation(it) }
         bgColorRes?.let {
-            view.setBackgroundColor(ContextCompat.getColor(view.context, it))
+            animationView.setBackgroundColor(ContextCompat.getColor(animationView.context, it))
             if (type == LottieDialog.Type.BOTTOM_SHEET) {
-                view.outlineProvider = object : ViewOutlineProvider() {
+                animationView.outlineProvider = object : ViewOutlineProvider() {
                     override fun getOutline(view: View?, outline: Outline?) {
                         val radius = view?.resources?.getDimension(
                             R.dimen.lottie_dialog_corner_radius_bottom_sheet
@@ -159,10 +170,23 @@ data class LottiDialogAnimation internal constructor(
 
                     }
                 }
-                view.clipToOutline = true
+                animationView.clipToOutline = true
             }
         }
-        paddingRes?.let { view.setPadding(view.resources.getDimension(it).toInt()) }
+        paddingRes?.let { animationView.setPadding(animationView.resources.getDimension(it).toInt()) }
+
+        val btnClose: ImageButton = view.findViewById(R.id.lottie_dialog_btn_close)
+        if (showCloseButton) {
+            with(btnClose) {
+                visibility = View.VISIBLE
+                closeButtonColorRes?.let {
+                    imageTintList = ColorStateList.valueOf(view.context.resolveColor(it))
+                }
+                setOnClickListener {
+                    dialog.cancel()
+                }
+            }
+        }
     }
 }
 

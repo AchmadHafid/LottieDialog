@@ -26,9 +26,10 @@ dependencies {
     implementation project(":lottie-dialog")
 
     implementation deps.constraintlayout
-    implementation deps.zpack
     implementation deps.simplepref
     implementation deps.taptargetview
     implementation deps.viewanimator
     implementation deps.fluidslider
+
+    debugImplementation deps.leakcanary
 }

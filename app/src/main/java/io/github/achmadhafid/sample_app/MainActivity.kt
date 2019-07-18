@@ -20,6 +20,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ramotion.fluidslider.FluidSlider
 import io.github.achmadhafid.lottie_dialog.*
+import io.github.achmadhafid.simplepref.extension.liveDataPref
 import io.github.achmadhafid.simplepref.extension.simplePref
 import io.github.achmadhafid.simplepref.extension.simplePrefNullable
 import io.github.achmadhafid.zpack.ktx.*
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val btnDialogTypeBottomSheet: MaterialButton by bindView(R.id.btn_dialog_type_bottom_sheet)
     private val smShowLottieAnimation: SwitchMaterial by bindView(R.id.sm_showLottieAnimation)
     private val tglGroupAnimationType: MaterialButtonToggleGroup by bindView(R.id.toggle_button_group_animation_type)
+    private val smShowLottieAnimationCloseButton: SwitchMaterial by bindView(R.id.sm_showLottieAnimationCloseButton)
     private val btnAnimationCentered: MaterialButton by bindView(R.id.btn_animation_centered)
     private val btnAnimationFull: MaterialButton by bindView(R.id.btn_animation_full)
     private val smShowNegativeButton: SwitchMaterial by bindView(R.id.sm_showNegativeButton)
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private var smShowLottieAnimationIsChecked by simplePref { false }
     private var btnAnimationCenteredIsChecked by simplePref { true }
     private var btnAnimationFullIsChecked by simplePref { false }
+    private var smShowLottieAnimationCloseButtonIsChecked by simplePref { false }
     private var smShowNegativeButtonIsChecked by simplePref { false }
     private var smShowButtonIconIsChecked by simplePref { false }
     private var btnIconSvgIsChecked by simplePref { true }
@@ -138,6 +141,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             btnAnimationFullIsChecked -> btnAnimationFull
             else -> ERROR_NO_DEFAULT_CHECKED
         }
+
+        smShowLottieAnimationCloseButton.setOnCheckedChangeListener { _, isChecked ->
+            smShowLottieAnimationCloseButtonIsChecked = isChecked
+        }
+
+        liveDataPref(::smShowLottieAnimationIsChecked) {
+            smShowLottieAnimationCloseButton.isEnabled = smShowLottieAnimation.isChecked
+            smShowLottieAnimationCloseButton.isChecked = smShowLottieAnimationCloseButtonIsChecked
+        }
+
         listOf(btnAnimationCentered, btnAnimationFull)
             .exactlyOneMustBeCheckedOrNone(
                 tglGroupAnimationType,
@@ -273,6 +286,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                             lottieFileRes = R.raw.lottie_animation_notification
                             bgColorRes    = R.color.bg_dialog_notification
                         }
+                        showCloseButton = smShowLottieAnimationCloseButtonIsChecked
                     }
                 }
                 title {

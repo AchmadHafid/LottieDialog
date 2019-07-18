@@ -7,6 +7,12 @@ apply from: '../shared_build.gradle'
 
 group = 'com.github.AchmadHafid'
 
+android {
+    defaultConfig {
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+}
+
 dependencies {
     implementation deps.coroutines
     implementation deps.lifecycle

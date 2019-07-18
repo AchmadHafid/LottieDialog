@@ -159,6 +159,16 @@
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/sm_showLottieAnimationCloseButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/switch_show_lottie_animation_close_button"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textSize="14sp"
+                    app:switchPadding="24dp" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/sm_showNegativeButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -17,6 +17,19 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true" />
 
+    <ImageButton
+        android:id="@+id/lottie_dialog_btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_round_close_24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/lottie_dialog_tv_title"
         android:layout_width="0dp"
@@ -36,8 +49,8 @@
         android:id="@+id/lottie_dialog_tv_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"

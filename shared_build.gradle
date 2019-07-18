@@ -1,10 +1,10 @@
 android {
-    compileSdkVersion 29
+    compileSdkVersion versions.compileSdkVersion
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 13
-        versionName "2.5.0"
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode versions.code
+        versionName versions.name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     dexOptions {
@@ -41,6 +41,7 @@ dependencies {
     implementation deps.material
     implementation deps.core
     implementation deps.appcompat
+    implementation deps.zpack
 
     testImplementation deps.test_core
     testImplementation deps.test_runner
