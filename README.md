@@ -8,14 +8,15 @@ LottieDialog
 
 Display a beautiful confirmation dialog with Lottie animation inside easily using new material design components.
 
-![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_confirmation_dark.gif)
-![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_confirmation_light.gif)
+![image](https://drive.google.com/uc?export=download&id=1S3JFiB7ubROiWDSOY0ofz-BVjIEtU19a)
+![image](https://drive.google.com/uc?export=download&id=1_S4Au5aF6DbOFQdX0L-nWHr2xK3wcqj_)
 <br />
-![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_input_dark.gif)
-![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_input_light.gif)
+![image](https://drive.google.com/uc?export=download&id=14W02bKMa1FQRuF_sSjqln4d81t8NTTdr)
+![image](https://drive.google.com/uc?export=download&id=1l8SGbwPEl1y31L84i-L_qD_2Hi_ZVr7e)
 <br />
-![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_loading_dark.gif)
-![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_loading_light.gif)
+![image](https://drive.google.com/uc?export=download&id=1walULd_3oAcTFsnsVSrPoZWTe3_59cKp)
+![image](https://drive.google.com/uc?export=download&id=1T93iGEfESTVg1SsmMYLDzQBkw3iItIrs)
+<br />
 <br />
 [**Download Demo App Here**](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/LottieDialog.v3.0.0.apk)
 
@@ -68,7 +69,7 @@ Add live template for this library to your Android Studio to get started quickly
 Import via: `File` > `Import Settings...` <br />
 
 **Full API with detail documentation**
-![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/LottieDialog.v3.0.0_live_templates.gif)
+![image](https://drive.google.com/uc?export=download&id=1GVyVsMo_AJs4nuBr-CDUuWtYOwZPtCTb)
 <br />
 
 
