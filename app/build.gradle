@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 apply(from: "../shared_build.gradle")
 
@@ -25,7 +26,7 @@ android {
 dependencies {
     implementation project(":lottie-dialog")
 
-    implementation deps.constraintlayout
+    implementation deps.navigation
     implementation deps.simplepref
     implementation deps.taptargetview
     implementation deps.viewanimator

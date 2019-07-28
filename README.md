@@ -8,8 +8,16 @@ LottieDialog
 
 Display a beautiful confirmation dialog with Lottie animation inside easily using new material design components.
 
-![image](https://github.com/AchmadHafid/LottieDialog/blob/master/art/demo_part1.gif)![image](https://github.com/AchmadHafid/LottieDialog/blob/master/art/demo_part2.gif)<br />
-[**Download Demo App Here**](https://github.com/AchmadHafid/LottieDialog/releases/download/v2.5.0/LottieDialog.v2.5.0.apk)
+![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_confirmation_dark.gif)
+![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_confirmation_light.gif)
+<br />
+![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_input_dark.gif)
+![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_input_light.gif)
+<br />
+![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_loading_dark.gif)
+![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/demo_loading_light.gif)
+<br />
+[**Download Demo App Here**](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/LottieDialog.v3.0.0.apk)
 
 Main Features
 --------
@@ -46,7 +54,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:LottieDialog:2.6.0"
+  implementation "com.github.AchmadHafid:LottieDialog:3.0.0"
   ...
 }
 ```
@@ -55,15 +63,12 @@ dependencies {
 Live Template
 -------------
 Add live template for this library to your Android Studio to get started quickly. <br />
-[Download Live Template Here](https://github.com/AchmadHafid/LottieDialog/releases/download/v2.5.0/LottieDialog_live_templates_v2.5.0.zip)
+[Download Live Template Here](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/LottieDialog.v3.0.0_live_templates.zip)
 <br />
 Import via: `File` > `Import Settings...` <br />
 
 **Full API with detail documentation**
-![image](https://github.com/AchmadHafid/LottieDialog/blob/master/art/live_template_with_docs.gif)
-<br /><br />
-**Full API without any documentation**
-![image](https://github.com/AchmadHafid/LottieDialog/blob/master/art/live_template.gif)
+![image](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/LottieDialog.v3.0.0_live_templates.gif)
 <br />
 
 

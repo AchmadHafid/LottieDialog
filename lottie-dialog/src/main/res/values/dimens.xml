@@ -1,7 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="lottie_dialog_corner_radius_bottom_sheet">16dp</dimen>
-    <dimen name="lottie_dialog_corner_radius_dialog">16dp</dimen>
+    <dimen name="empty">0dp</dimen>
+    <dimen name="micro">0.5dp</dimen>
+    <dimen name="very_tiny">1dp</dimen>
+    <dimen name="tiny">2dp</dimen>
+    <dimen name="very_small">4dp</dimen>
+    <dimen name="small">8dp</dimen>
+    <dimen name="small_fit">12dp</dimen>
+    <dimen name="medium">16dp</dimen>
+    <dimen name="medium_fit">24dp</dimen>
+    <dimen name="large">32dp</dimen>
+    <dimen name="large_fit">48dp</dimen>
+    <dimen name="very_large">64dp</dimen>
+    <dimen name="huge">128dp</dimen>
+    <dimen name="huge_fit">192dp</dimen>
+    <dimen name="very_huge">256dp</dimen>
+
+    <dimen name="text_tiny">10sp</dimen>
+    <dimen name="text_very_small">12sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_medium_fit">18sp</dimen>
+    <dimen name="text_large">20sp</dimen>
+    <dimen name="text_large_fit">22sp</dimen>
+    <dimen name="text_very_large">24sp</dimen>
+    <dimen name="text_huge">26sp</dimen>
+    <dimen name="text_huge_fit">28sp</dimen>
+    <dimen name="text_very_huge">30sp</dimen>
+
+    <dimen name="match_constraint">@dimen/empty</dimen>
+
+    <dimen name="lottie_dialog_corner_radius_bottom_sheet">@dimen/medium</dimen>
+    <dimen name="lottie_dialog_corner_radius_dialog">@dimen/medium</dimen>
+
+    <dimen name="lottie_dialog_animation_height_loading">96dp</dimen>
+    <dimen name="lottie_dialog_animation_height_confirmation">192dp</dimen>
+    <dimen name="lottie_dialog_animation_height_input">192dp</dimen>
 
 </resources>

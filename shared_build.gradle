@@ -1,4 +1,5 @@
 android {
+    buildToolsVersion versions.buildTools
     compileSdkVersion versions.compileSdkVersion
     defaultConfig {
         minSdkVersion versions.minSdkVersion
@@ -41,6 +42,10 @@ dependencies {
     implementation deps.material
     implementation deps.core
     implementation deps.appcompat
+    implementation deps.lifecycle
+    implementation deps.activity
+    implementation deps.fragment
+    implementation deps.constraintlayout
     implementation deps.zpack
 
     testImplementation deps.test_core

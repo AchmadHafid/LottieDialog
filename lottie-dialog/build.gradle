@@ -15,8 +15,6 @@ android {
 
 dependencies {
     implementation deps.coroutines
-    implementation deps.lifecycle
-    implementation deps.activity
-    implementation deps.fragment
     implementation deps.lottie
+    implementation deps.input_mask
 }

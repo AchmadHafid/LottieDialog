@@ -1,8 +1,8 @@
 ext.versions = [
         //region Release
 
-        code              : 14,
-        name              : "2.6.0",
+        code              : 15,
+        name              : "3.0.0",
 
         //endregion
         //region SDK
@@ -10,6 +10,7 @@ ext.versions = [
         compileSdkVersion : 29,
         minSdkVersion     : 21,
         targetSdkVersion  : 29,
+        buildTools        : "29.0.1",
 
         //endregion
         //region Plugin
@@ -22,7 +23,7 @@ ext.versions = [
         //region Core Dependencies
 
         stdlib            : '1.3.41',
-        coroutine         : '1.3.0-M2',
+        coroutine         : '1.3.0-RC',
         material          : '1.1.0-alpha08',
 
         //endregion
@@ -34,6 +35,7 @@ ext.versions = [
         fragment          : '1.2.0-alpha01',
         constraintlayout  : '2.0.0-beta2',
         lifecycle         : '2.2.0-alpha02',
+        navigation        : '2.1.0-beta02',
 
         //endregion
         //region Extra Dependencies
@@ -42,9 +44,10 @@ ext.versions = [
         fluid_slider      : '0.3.1',
         tap_target_view   : '1.12.0',
         view_animator     : '1.1.1',
-        simple_pref       : '1.3.1',
-        zpack             : '0.5.1',
+        simple_pref       : '1.4.0',
+        zpack             : '0.6.0',
         leak_canary       : '2.0-alpha-3',
+        input_mask        : '4.3.1',
 
         //endregion
         //region Testing Dependencies
@@ -87,7 +90,16 @@ ext.deps = [
         activity        : "androidx.activity:activity-ktx:$versions.activity",
         fragment        : "androidx.fragment:fragment-ktx:$versions.fragment",
         constraintlayout: "androidx.constraintlayout:constraintlayout:$versions.constraintlayout",
-        lifecycle       : "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle",
+        lifecycle       : [
+                "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle",
+                "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle",
+                "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle",
+                "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+        ],
+        navigation      : [
+                "androidx.navigation:navigation-fragment-ktx:$versions.navigation",
+                "androidx.navigation:navigation-ui-ktx:$versions.navigation",
+        ],
 
         //endregion
         //region Extra
@@ -99,6 +111,7 @@ ext.deps = [
         simplepref      : "com.github.AchmadHafid:SimplePref:$versions.simple_pref",
         zpack           : "com.github.AchmadHafid:Zpack:$versions.zpack",
         leakcanary      : "com.squareup.leakcanary:leakcanary-android:$versions.leak_canary",
+        input_mask      : "com.redmadrobot:input-mask-android:$versions.input_mask",
 
         //endregion
         //region Testing

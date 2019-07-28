@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_dialog_view_anim"
+            android:layout_width="@dimen/empty"
+            android:layout_height="@dimen/lottie_dialog_animation_height_input"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
+        <ImageButton
+            android:id="@+id/lottie_dialog_btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium"
+            android:layout_marginTop="@dimen/medium"
+            android:background="@null"
+            android:src="@drawable/ic_round_close_24dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/lottie_dialog_tv_title"
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium"
+            android:layout_marginTop="@dimen/medium"
+            android:layout_marginEnd="@dimen/medium"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_tv_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lottie_dialog_view_anim"
+            tools:text="Some Title Here" />
+
+        <TextView
+            android:id="@+id/lottie_dialog_tv_content"
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium"
+            android:layout_marginEnd="@dimen/medium"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_edt_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lottie_dialog_tv_title"
+            tools:text="This is a long dialog content message" />
+
+        <EditText
+            android:id="@+id/lottie_dialog_edt_input"
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium"
+            android:layout_marginTop="@dimen/medium"
+            android:layout_marginEnd="@dimen/medium"
+            android:layout_marginBottom="@dimen/medium"
+            android:background="@null"
+            android:imeOptions="actionNone"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="?attr/colorPrimary"
+            android:textCursorDrawable="@drawable/edit_text_cursor_color_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lottie_dialog_btn_extra_action"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lottie_dialog_tv_content"
+            tools:ignore="Autofill,LabelFor,TextFields" />
+
+        <ImageButton
+            android:id="@+id/lottie_dialog_btn_extra_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small"
+            android:background="@null"
+            android:padding="@dimen/small"
+            android:tint="?attr/colorPrimary"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/lottie_dialog_edt_input"
+            app:layout_constraintEnd_toStartOf="@+id/lottie_dialog_btn_clear"
+            app:layout_constraintStart_toEndOf="@+id/lottie_dialog_edt_input"
+            app:layout_constraintTop_toTopOf="@+id/lottie_dialog_edt_input"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/lottie_dialog_btn_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small"
+            android:background="@null"
+            android:padding="@dimen/small"
+            android:src="@drawable/ic_round_close_24dp"
+            android:tint="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/lottie_dialog_edt_input"
+            app:layout_constraintEnd_toStartOf="@+id/lottie_dialog_btn_done"
+            app:layout_constraintStart_toEndOf="@+id/lottie_dialog_btn_extra_action"
+            app:layout_constraintTop_toTopOf="@+id/lottie_dialog_edt_input"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/lottie_dialog_btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/medium"
+            android:background="@null"
+            android:padding="@dimen/small"
+            android:src="@drawable/ic_round_done_24px"
+            android:tint="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/lottie_dialog_edt_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lottie_dialog_btn_clear"
+            app:layout_constraintTop_toTopOf="@+id/lottie_dialog_edt_input"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
