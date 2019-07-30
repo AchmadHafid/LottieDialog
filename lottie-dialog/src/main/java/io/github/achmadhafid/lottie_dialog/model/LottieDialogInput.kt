@@ -17,7 +17,7 @@ data class LottieDialogInput(
     var inputType: Type = Type.TEXT,
     var inputFormat: String? = null,
     var initialValue: String? = null,
-    internal var isValidInput: ((String) -> Boolean)? = null
+    internal var inputValidator: ((String) -> Boolean)? = null
 ) {
     private var input: String? = null
 
@@ -43,7 +43,7 @@ data class LottieDialogInput(
                             extractedValue.isNotEmpty()
                         }
                         btnDone.visibleOrInvisible {
-                            maskFilled && isValidInput?.invoke(extractedValue) ?: true
+                            maskFilled && inputValidator?.invoke(extractedValue) ?: true
                         }
                         if (inputType == Type.PASSWORD) {
                             togglePasswordVisibility(btnExtra, editText)
@@ -53,7 +53,7 @@ data class LottieDialogInput(
         } ?: editText.doAfterTextChanged {
             input = it.toString()
             btnClear.visibleOrInvisible { it.toString().isNotEmpty() }
-            btnDone.visibleOrInvisible { isValidInput?.invoke(it.toString()) ?: true}
+            btnDone.visibleOrInvisible { inputValidator?.invoke(it.toString()) ?: it.toString().isNotEmpty()}
             if (inputType == Type.PASSWORD) {
                 togglePasswordVisibility(btnExtra, editText)
             }
@@ -78,7 +78,7 @@ data class LottieDialogInput(
         }
         btnDone.onSingleClick(autoReEnable = true) {
             input?.let { value ->
-                isValidInput?.let {
+                inputValidator?.let {
                     inputListener(dialog, value, it(value))
                 } ?: inputListener(dialog, value, true)
             }

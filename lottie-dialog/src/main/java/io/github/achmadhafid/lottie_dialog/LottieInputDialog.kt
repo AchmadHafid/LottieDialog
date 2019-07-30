@@ -178,7 +178,7 @@ fun LottieInputDialog.withInputSpec(builder: LottieDialogInput.() -> Unit) {
 }
 
 fun LottieDialogInput.isValidInput(function: (String) -> Boolean) {
-    isValidInput = function
+    inputValidator = function
 }
 
 //endregion
