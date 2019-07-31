@@ -105,32 +105,26 @@ fun lottieConfirmationDialogBuilder(builder: LottieConfirmationDialog.() -> Unit
 //endregion
 //region Activity Extension
 
-fun AppCompatActivity.lottieConfirmationDialog(builder: LottieConfirmationDialog.() -> Unit) =
-    LottieConfirmationDialog.create(this, lifecycleScope, layoutInflater, builder)
-
+@Suppress("SpreadOperator")
 fun AppCompatActivity.lottieConfirmationDialog(
-    parentBuilder: LottieConfirmationDialog.() -> Unit,
-    childBuilder: LottieConfirmationDialog.() -> Unit
-) = LottieConfirmationDialog.create(this, lifecycleScope, layoutInflater, parentBuilder, childBuilder)
+    vararg builders: LottieConfirmationDialog.() -> Unit,
+    builder: LottieConfirmationDialog.() -> Unit
+) = LottieConfirmationDialog.create(this, lifecycleScope, layoutInflater, *builders, builder)
 
 //endregion
 //region Fragment Extension
 
-fun Fragment.lottieConfirmationDialog(builder: LottieConfirmationDialog.() -> Unit) =
-    context?.let {
-        LottieConfirmationDialog.create(it, viewLifecycleOwner.lifecycleScope, layoutInflater, builder)
-    } ?: TODO("Context required")
-
+@Suppress("SpreadOperator")
 fun Fragment.lottieConfirmationDialog(
-    parentBuilder: LottieConfirmationDialog.() -> Unit,
-    childBuilder: LottieConfirmationDialog.() -> Unit
+    vararg builders: LottieConfirmationDialog.() -> Unit,
+    builder: LottieConfirmationDialog.() -> Unit
 ) = context?.let {
     LottieConfirmationDialog.create(
         it,
         viewLifecycleOwner.lifecycleScope,
         layoutInflater,
-        parentBuilder,
-        childBuilder
+        *builders,
+        builder
     )
 } ?: TODO("Context required")
 

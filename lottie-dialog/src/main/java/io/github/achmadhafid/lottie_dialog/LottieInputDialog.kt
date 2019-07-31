@@ -86,27 +86,21 @@ fun lottieInputDialogBuilder(builder: LottieInputDialog.() -> Unit) = builder
 //endregion
 //region Activity Extension
 
-fun AppCompatActivity.lottieInputDialog(builder: LottieInputDialog.() -> Unit) =
-    LottieInputDialog.create(this, layoutInflater, builder)
-
+@Suppress("SpreadOperator")
 fun AppCompatActivity.lottieInputDialog(
-    parentBuilder: LottieInputDialog.() -> Unit,
-    childBuilder: LottieInputDialog.() -> Unit
-) = LottieInputDialog.create(this, layoutInflater, parentBuilder, childBuilder)
+    vararg builders: LottieInputDialog.() -> Unit,
+    builder: LottieInputDialog.() -> Unit
+) = LottieInputDialog.create(this, layoutInflater, *builders, builder)
 
 //endregion
 //region Fragment Extension
 
-fun Fragment.lottieInputDialog(builder: LottieInputDialog.() -> Unit) =
-    context?.let {
-        LottieInputDialog.create(it, layoutInflater, builder)
-    } ?: TODO("Context required")
-
+@Suppress("SpreadOperator")
 fun Fragment.lottieInputDialog(
-    parentBuilder: LottieInputDialog.() -> Unit,
-    childBuilder: LottieInputDialog.() -> Unit
+    vararg builders: LottieInputDialog.() -> Unit,
+    builder: LottieInputDialog.() -> Unit
 ) = context?.let {
-    LottieInputDialog.create(it, layoutInflater, parentBuilder, childBuilder)
+    LottieInputDialog.create(it, layoutInflater, *builders, builder)
 } ?: TODO("Context required")
 
 //endregion

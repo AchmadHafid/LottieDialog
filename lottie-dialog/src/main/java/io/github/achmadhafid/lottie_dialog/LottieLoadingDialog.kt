@@ -20,12 +20,14 @@ import io.github.achmadhafid.zpack.ktx.addNavigationBarPadding
 import io.github.achmadhafid.zpack.ktx.fullScreen
 import io.github.achmadhafid.zpack.ktx.visibleOrGone
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 
 data class LottieLoadingDialog(
     var type: LottieDialogType = LottieDialogType.DIALOG,
     var theme: LottieDialogTheme = LottieDialogTheme.DAY_NIGHT,
     var timeout: Long? = null,
     var showTimeOutProgress: Boolean = true,
+    internal var job: ((CoroutineScope) -> Job)? = null,
     internal var animation: LottieDialogAnimation = LottieDialogAnimation(),
     internal var title: LottieDialogText = LottieDialogText(),
     internal var cancelAbility: LottieDialogCancelOption = LottieDialogCancelOption(),
@@ -47,16 +49,21 @@ data class LottieLoadingDialog(
         title(tvTitle.apply { addNavigationBarPadding() })
         cancelAbility(dialog)
         onShowListener(dialog)
-        onDismissListener(dialog)
         onCancelListener(dialog)
+
+        val jobs = mutableListOf<Job>()
+        job?.let { jobs.add(it(coroutineScope)) }
 
         timeout?.let {
             if (it > 0) {
                 pbTimeout.visibleOrGone { showTimeOutProgress }
-                val job = onTimeoutListener(dialog, it, pbTimeout, coroutineScope)
-                onDismissListener(dialog, job)
+                onTimeoutListener(dialog, it, pbTimeout, coroutineScope)?.let { job ->
+                    jobs.add(job)
+                }
             }
         }
+
+        onDismissListener.invoke(dialog, jobs)
 
         return dialog.apply {
             window?.fullScreen()
@@ -91,34 +98,39 @@ fun lottieLoadingDialogBuilder(builder: LottieLoadingDialog.() -> Unit) = builde
 //endregion
 //region Activity Extension
 
-fun AppCompatActivity.lottieLoadingDialog(builder: LottieLoadingDialog.() -> Unit) =
-    LottieLoadingDialog.create(this, layoutInflater, lifecycleScope, builder)
-
+@Suppress("SpreadOperator")
 fun AppCompatActivity.lottieLoadingDialog(
-    parentBuilder: LottieLoadingDialog.() -> Unit,
-    childBuilder: LottieLoadingDialog.() -> Unit
-) = LottieLoadingDialog.create(this, layoutInflater, lifecycleScope, parentBuilder, childBuilder)
+    vararg builders: LottieLoadingDialog.() -> Unit,
+    builder: LottieLoadingDialog.() -> Unit
+) = LottieLoadingDialog.create(this, layoutInflater, lifecycleScope, *builders, builder)
 
 //endregion
 //region Fragment Extension
 
-fun Fragment.lottieLoadingDialog(builder: LottieLoadingDialog.() -> Unit) =
-    context?.let {
-        LottieLoadingDialog.create(it, layoutInflater, viewLifecycleOwner.lifecycleScope, builder)
-    } ?: TODO("Context required")
-
+@Suppress("SpreadOperator")
 fun Fragment.lottieLoadingDialog(
-    parentBuilder: LottieLoadingDialog.() -> Unit,
-    childBuilder: LottieLoadingDialog.() -> Unit
+    vararg builders: LottieLoadingDialog.() -> Unit,
+    builder: LottieLoadingDialog.() -> Unit
 ) = context?.let {
     LottieLoadingDialog.create(
         it,
         layoutInflater,
         viewLifecycleOwner.lifecycleScope,
-        parentBuilder,
-        childBuilder
+        *builders,
+        builder
     )
 } ?: TODO("Context required")
+
+//endregion
+//region Job DSL
+
+fun LottieLoadingDialog.withJob(block: (CoroutineScope) -> Job) {
+    job = block
+}
+
+fun LottieLoadingDialog.withoutJob() {
+    job = null
+}
 
 //endregion
 //region Animation DSL

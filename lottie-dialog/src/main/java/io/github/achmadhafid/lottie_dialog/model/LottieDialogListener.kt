@@ -22,9 +22,9 @@ data class LottieDialogOnShowListener internal constructor(
 data class LottieDialogOnDismissListener internal constructor(
     internal var onDismissListener: ((DialogInterface) -> Unit)? = null
 ) {
-    internal operator fun invoke(dialog: AppCompatDialog, job: Job? = null) {
+    internal operator fun invoke(dialog: AppCompatDialog, jobs: List<Job> = emptyList()) {
         dialog.setOnDismissListener {
-            job?.cancel()
+            jobs.forEach { job -> job.cancel() }
             onDismissListener?.invoke(it)
         }
     }
