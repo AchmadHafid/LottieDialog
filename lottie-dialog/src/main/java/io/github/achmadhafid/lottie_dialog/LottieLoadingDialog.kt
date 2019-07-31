@@ -27,7 +27,7 @@ data class LottieLoadingDialog(
     var theme: LottieDialogTheme = LottieDialogTheme.DAY_NIGHT,
     var timeout: Long? = null,
     var showTimeOutProgress: Boolean = true,
-    internal var job: ((CoroutineScope) -> Job)? = null,
+    internal var job: ((DialogInterface, CoroutineScope) -> Job)? = null,
     internal var animation: LottieDialogAnimation = LottieDialogAnimation(),
     internal var title: LottieDialogText = LottieDialogText(),
     internal var cancelAbility: LottieDialogCancelOption = LottieDialogCancelOption(),
@@ -52,7 +52,7 @@ data class LottieLoadingDialog(
         onCancelListener(dialog)
 
         val jobs = mutableListOf<Job>()
-        job?.let { jobs.add(it(coroutineScope)) }
+        job?.let { jobs.add(it(dialog, coroutineScope)) }
 
         timeout?.let {
             if (it > 0) {
@@ -124,7 +124,7 @@ fun Fragment.lottieLoadingDialog(
 //endregion
 //region Job DSL
 
-fun LottieLoadingDialog.withJob(block: (CoroutineScope) -> Job) {
+fun LottieLoadingDialog.withJob(block: (DialogInterface, CoroutineScope) -> Job) {
     job = block
 }
 
