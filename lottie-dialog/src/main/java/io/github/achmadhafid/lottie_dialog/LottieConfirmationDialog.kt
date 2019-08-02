@@ -2,6 +2,7 @@
 
 package io.github.achmadhafid.lottie_dialog
 
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.Gravity
@@ -12,7 +13,6 @@ import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDialog
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -37,11 +37,15 @@ data class LottieConfirmationDialog(
     internal var onDismissListener: LottieDialogOnDismissListener = LottieDialogOnDismissListener(),
     internal var onCancelListener: LottieDialogOnCancelListener = LottieDialogOnCancelListener()
 ) {
-    internal operator fun invoke(
-        dialog: AppCompatDialog,
+    fun getOnDismissListener() = onCancelListener
+    fun getOnCancelListener()  = onCancelListener
+
+    operator fun invoke(
+        dialog: Dialog,
         view: View,
-        coroutineScope: CoroutineScope
-    ): AppCompatDialog {
+        coroutineScope: CoroutineScope,
+        useInsideFragment: Boolean = false
+    ): Dialog {
         val viewAnim    : LottieAnimationView = view.findViewById(R.id.lottie_dialog_view_anim)
         val btnClose    : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_close)
         val tvTitle     : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
@@ -75,7 +79,7 @@ data class LottieConfirmationDialog(
         onDismissListener(dialog)
         onCancelListener(dialog)
 
-        return dialog.apply { show() }
+        return if (useInsideFragment) dialog else dialog.apply { show() }
     }
 
     companion object {
@@ -84,7 +88,7 @@ data class LottieConfirmationDialog(
             coroutineScope: CoroutineScope,
             layoutInflater: LayoutInflater,
             vararg builders: LottieConfirmationDialog.() -> Unit
-        ): AppCompatDialog {
+        ): Dialog {
             val lottieDialog = LottieConfirmationDialog()
             builders.forEach { lottieDialog.apply(it) }
 
@@ -229,7 +233,7 @@ fun LottieConfirmationDialog.withoutNegativeButton() {
     negativeButton = null
 }
 
-fun LottieDialogButton.onClick(function: (AppCompatDialog) -> Unit) {
+fun LottieDialogButton.onClick(function: (Dialog) -> Unit) {
     onClickListener = function
 }
 

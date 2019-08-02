@@ -217,7 +217,8 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_show_dialog -> {
-                lottieLoadingDialog(BaseDialog.doSomething) {
+//                lottieLoadingDialog(BaseDialog.doSomething) {
+                lottieLoadingDialog {
                     //region setup type
                     when {
                         typeDialog      -> type = LottieDialogType.DIALOG

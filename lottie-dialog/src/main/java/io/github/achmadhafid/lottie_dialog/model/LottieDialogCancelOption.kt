@@ -1,12 +1,12 @@
 package io.github.achmadhafid.lottie_dialog.model
 
-import androidx.appcompat.app.AppCompatDialog
+import android.app.Dialog
 
-data class LottieDialogCancelOption internal constructor(
+data class LottieDialogCancelOption(
     var onBackPressed: Boolean = true,
     var onTouchOutside: Boolean = true
 ) {
-    internal operator fun invoke(dialog: AppCompatDialog) {
+    operator fun invoke(dialog: Dialog) {
         dialog.setCancelable(onBackPressed)
         dialog.setCanceledOnTouchOutside(onTouchOutside)
     }

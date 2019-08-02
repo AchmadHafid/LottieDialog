@@ -2,12 +2,12 @@
 
 package io.github.achmadhafid.lottie_dialog.model
 
+import android.app.Dialog
 import android.text.InputFilter
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
-import androidx.appcompat.app.AppCompatDialog
 import androidx.core.widget.doAfterTextChanged
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import io.github.achmadhafid.lottie_dialog.R
@@ -22,8 +22,8 @@ data class LottieDialogInput(
     private var input: String? = null
 
     @Suppress("ComplexMethod", "LongParameterList")
-    internal operator fun invoke(
-        dialog: AppCompatDialog,
+    operator fun invoke(
+        dialog: Dialog,
         editText: EditText,
         btnClear: View,
         btnDone: View,

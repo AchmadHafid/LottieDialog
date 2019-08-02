@@ -8,7 +8,7 @@ import io.github.achmadhafid.zpack.ktx.setFontRes
 import io.github.achmadhafid.zpack.ktx.setTextAppearanceRes
 import io.github.achmadhafid.zpack.ktx.setTextRes
 
-data class LottieDialogText internal constructor(
+data class LottieDialogText(
     var text: CharSequence? = null,
     @StringRes
     var textRes: Int? = null,
@@ -17,7 +17,7 @@ data class LottieDialogText internal constructor(
     @FontRes
     var fontRes: Int? = null
 ) {
-    internal operator fun invoke(textView: TextView) {
+    operator fun invoke(textView: TextView) {
         textRes ?.let { textView.setTextRes(it) }
         text    ?.let { textView.text     = it }
         styleRes?.let { textView.setTextAppearanceRes(it) }

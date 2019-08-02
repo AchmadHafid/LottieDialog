@@ -1,8 +1,8 @@
 ext.versions = [
         //region Release
 
-        code              : 18,
-        name              : "3.1.1",
+        code              : 19,
+        name              : "3.2.0",
 
         //endregion
         //region SDK
@@ -15,7 +15,7 @@ ext.versions = [
         //endregion
         //region Plugin
 
-        agp               : '3.5.0-rc01',
+        agp               : '3.5.0-rc02',
         kotlin            : '1.3.41',
         detekt            : '1.0.0-RC16',
 
@@ -24,7 +24,7 @@ ext.versions = [
 
         stdlib            : '1.3.41',
         coroutine         : '1.3.0-RC',
-        material          : '1.1.0-alpha08',
+        material          : '1.1.0-alpha09',
 
         //endregion
         //region JetPack Dependencies

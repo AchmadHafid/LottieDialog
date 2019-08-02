@@ -2,6 +2,7 @@
 
 package io.github.achmadhafid.lottie_dialog
 
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
@@ -11,7 +12,6 @@ import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
@@ -36,11 +36,12 @@ data class LottieLoadingDialog(
     internal var onCancelListener: LottieDialogOnCancelListener = LottieDialogOnCancelListener(),
     internal var onTimeoutListener: LottieDialogOnTimeoutListener = LottieDialogOnTimeoutListener()
 ) {
-    internal operator fun invoke(
-        dialog: AppCompatDialog,
+    operator fun invoke(
+        dialog: Dialog,
         view: View,
-        coroutineScope: CoroutineScope
-    ): AppCompatDialog {
+        coroutineScope: CoroutineScope,
+        useInsideFragment: Boolean = false
+    ): Dialog {
         val animationView : LottieAnimationView = view.findViewById(R.id.lottie_dialog_view_anim)
         val tvTitle       : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
         val pbTimeout     : ProgressBar         = view.findViewById(R.id.lottie_dialog_progress_bar_timeout)
@@ -65,7 +66,7 @@ data class LottieLoadingDialog(
 
         onDismissListener.invoke(dialog, jobs)
 
-        return dialog.apply {
+        return if (useInsideFragment) dialog else dialog.apply {
             window?.fullScreen()
             show()
         }
@@ -77,7 +78,7 @@ data class LottieLoadingDialog(
             layoutInflater: LayoutInflater,
             coroutineScope: CoroutineScope,
             vararg builders: LottieLoadingDialog.() -> Unit
-        ): AppCompatDialog {
+        ): Dialog {
             val lottieDialog = LottieLoadingDialog()
             builders.forEach { lottieDialog.apply(it) }
 

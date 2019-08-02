@@ -2,9 +2,9 @@
 
 package io.github.achmadhafid.lottie_dialog.model
 
+import android.app.Dialog
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatDialog
 import com.google.android.material.button.MaterialButton
 import io.github.achmadhafid.zpack.ktx.*
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.max
 
-data class LottieDialogButton internal constructor(
+data class LottieDialogButton(
     var text: CharSequence? = null,
     @StringRes
     var textRes: Int? = null,
@@ -21,10 +21,10 @@ data class LottieDialogButton internal constructor(
     @MaterialButton.IconGravity
     var iconGravity: Int? = null,
     var actionDelay: Long? = null,
-    internal var onClickListener: ((AppCompatDialog) -> Unit)? = null
+    internal var onClickListener: ((Dialog) -> Unit)? = null
 ) {
     internal operator fun invoke(
-        dialog: AppCompatDialog,
+        dialog: Dialog,
         button: MaterialButton,
         coroutineScope: CoroutineScope
     ) {

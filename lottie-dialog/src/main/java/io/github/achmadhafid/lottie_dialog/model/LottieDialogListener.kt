@@ -2,27 +2,27 @@
 
 package io.github.achmadhafid.lottie_dialog.model
 
+import android.app.Dialog
 import android.content.DialogInterface
 import android.widget.ProgressBar
-import androidx.appcompat.app.AppCompatDialog
 import io.github.achmadhafid.zpack.ktx.isVisible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-data class LottieDialogOnShowListener internal constructor(
-    internal var onShowListener: ((DialogInterface) -> Unit)? = null
+data class LottieDialogOnShowListener(
+    var onShowListener: ((DialogInterface) -> Unit)? = null
 ) {
-    internal operator fun invoke(dialog: AppCompatDialog) {
+    operator fun invoke(dialog: Dialog) {
         dialog.setOnShowListener(onShowListener)
     }
 }
 
-data class LottieDialogOnDismissListener internal constructor(
-    internal var onDismissListener: ((DialogInterface) -> Unit)? = null
+data class LottieDialogOnDismissListener(
+    var onDismissListener: ((DialogInterface) -> Unit)? = null
 ) {
-    internal operator fun invoke(dialog: AppCompatDialog, jobs: List<Job> = emptyList()) {
+    operator fun invoke(dialog: Dialog, jobs: List<Job> = emptyList()) {
         dialog.setOnDismissListener {
             jobs.forEach { job -> job.cancel() }
             onDismissListener?.invoke(it)
@@ -30,20 +30,20 @@ data class LottieDialogOnDismissListener internal constructor(
     }
 }
 
-data class LottieDialogOnCancelListener internal constructor(
-    internal var onCancelListener: ((DialogInterface) -> Unit)? = null
+data class LottieDialogOnCancelListener(
+    var onCancelListener: ((DialogInterface) -> Unit)? = null
 ) {
-    internal operator fun invoke(dialog: AppCompatDialog) {
+    operator fun invoke(dialog: Dialog) {
         dialog.setOnCancelListener(onCancelListener)
     }
 }
 
-data class LottieDialogOnTimeoutListener internal constructor(
-    internal var onTimeoutListener: (() -> Unit)? = null
+data class LottieDialogOnTimeoutListener(
+    var onTimeoutListener: (() -> Unit)? = null
 ) {
     @Suppress("MagicNumber")
-    internal operator fun invoke(
-        dialog: AppCompatDialog,
+    operator fun invoke(
+        dialog: Dialog,
         timeout: Long,
         pbTimeout: ProgressBar,
         coroutineScope: CoroutineScope
@@ -68,15 +68,15 @@ data class LottieDialogOnTimeoutListener internal constructor(
 }
 
 data class LottieDialogOnInputListener(
-    internal var onValidInput: ((String) -> Unit)? = null,
-    internal var onInvalidInput: (() -> Unit)? = null
+    var onValidInputListener: ((String) -> Unit)? = null,
+    var onInvalidInputListener: (() -> Unit)? = null
 ) {
-    internal operator fun invoke(dialog: AppCompatDialog, input: String, isValid: Boolean) {
+    operator fun invoke(dialog: Dialog, input: String, isValid: Boolean) {
         if (isValid) {
             dialog.dismiss()
-            onValidInput?.invoke(input)
+            onValidInputListener?.invoke(input)
         } else {
-            onInvalidInput?.invoke()
+            onInvalidInputListener?.invoke()
         }
     }
 }

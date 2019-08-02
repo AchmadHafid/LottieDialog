@@ -2,6 +2,7 @@
 
 package io.github.achmadhafid.lottie_dialog
 
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
@@ -12,7 +13,6 @@ import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import io.github.achmadhafid.lottie_dialog.model.*
@@ -32,7 +32,11 @@ data class LottieInputDialog(
     internal var onCancelListener: LottieDialogOnCancelListener = LottieDialogOnCancelListener(),
     internal var onInputListener: LottieDialogOnInputListener = LottieDialogOnInputListener()
 ) {
-    internal operator fun invoke(dialog: AppCompatDialog, view: View): AppCompatDialog {
+    operator fun invoke(
+        dialog: Dialog,
+        view: View,
+        useInsideFragment: Boolean = false
+    ): Dialog {
         val viewAnim  : LottieAnimationView = view.findViewById(R.id.lottie_dialog_view_anim)
         val btnClose  : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_close)
         val tvTitle   : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
@@ -54,7 +58,7 @@ data class LottieInputDialog(
         onDismissListener(dialog)
         onCancelListener(dialog)
 
-        return dialog.apply {
+        return if (useInsideFragment) dialog else dialog.apply {
             window?.adjustKeyboard()
             show()
         }
@@ -65,7 +69,7 @@ data class LottieInputDialog(
             context: Context,
             layoutInflater: LayoutInflater,
             vararg builders: LottieInputDialog.() -> Unit
-        ): AppCompatDialog {
+        ): Dialog {
             val lottieDialog = LottieInputDialog()
             builders.forEach { lottieDialog.apply(it) }
 
@@ -201,11 +205,11 @@ fun LottieInputDialog.onCancel(function: (DialogInterface) -> Unit) {
 //region Input Listener DSL
 
 fun LottieInputDialog.onValidInput(function: (String) -> Unit) {
-    onInputListener.onValidInput = function
+    onInputListener.onValidInputListener = function
 }
 
 fun LottieInputDialog.onInvalidInput(function: () -> Unit) {
-    onInputListener.onInvalidInput = function
+    onInputListener.onInvalidInputListener = function
 }
 
 //endregion

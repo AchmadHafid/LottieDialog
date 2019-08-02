@@ -7,8 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.google.android.material.appbar.AppBarLayout
+import io.github.achmadhafid.simplepref.extension.simplePref
 import io.github.achmadhafid.simplepref.extension.simplePrefNullable
 import io.github.achmadhafid.zpack.ktx.*
 
@@ -24,21 +26,34 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     //region Preference
 
     private var appTheme: Int? by simplePrefNullable()
+    private var currentFragment by simplePref { navController.graph.startDestination }
 
     //endregion
     //region Lifecycle Callback
 
+    @Suppress("ComplexMethod")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setMaterialToolbar(R.id.toolbar)
         appBarLayout.setSelectedOnScrollDown(scrollView)
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (lifecycle.currentState == Lifecycle.State.RESUMED) {
+                currentFragment = destination.id
+            }
             supportActionBar?.subtitle = when (destination.id) {
                 R.id.confirmationDialogFragment -> "Confirmation"
-                R.id.loadingDialogFragment -> "Loading"
-                R.id.inputDialogFragment -> "Input"
-                else -> null
+                R.id.loadingDialogFragment      -> "Loading"
+                R.id.inputDialogFragment        -> "Input"
+                else -> return@addOnDestinationChangedListener
             }
+        }
+        if (navController.graph.startDestination != currentFragment) {
+            when (currentFragment) {
+                R.id.confirmationDialogFragment -> R.id.action_confirmation_dialog
+                R.id.loadingDialogFragment      -> R.id.action_input_dialog
+                R.id.inputDialogFragment        -> R.id.action_input_dialog
+                else -> null
+            }?.let { navController.navigate(it) }
         }
     }
 

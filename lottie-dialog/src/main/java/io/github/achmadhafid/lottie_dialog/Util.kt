@@ -2,11 +2,11 @@
 
 package io.github.achmadhafid.lottie_dialog
 
+import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatDialog
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
@@ -19,7 +19,7 @@ internal fun inflateDialogView(
     @LayoutRes layout: Int,
     dialogType: LottieDialogType,
     dialogTheme: LottieDialogTheme
-): Pair<AppCompatDialog, View> {
+): Pair<Dialog, View> {
 
     val view = layoutInflater.inflate(layout, null)
     val dialog = when (dialogType) {
