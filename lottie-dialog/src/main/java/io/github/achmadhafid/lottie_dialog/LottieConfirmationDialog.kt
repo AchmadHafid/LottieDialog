@@ -37,9 +37,6 @@ data class LottieConfirmationDialog(
     internal var onDismissListener: LottieDialogOnDismissListener = LottieDialogOnDismissListener(),
     internal var onCancelListener: LottieDialogOnCancelListener = LottieDialogOnCancelListener()
 ) {
-    fun getOnDismissListener() = onCancelListener
-    fun getOnCancelListener()  = onCancelListener
-
     operator fun invoke(
         dialog: Dialog,
         view: View,
@@ -76,10 +73,14 @@ data class LottieConfirmationDialog(
         negativeButton?.invoke(dialog, btnNegative, coroutineScope)
         cancelAbility(dialog)
         onShowListener(dialog)
-        onDismissListener(dialog)
-        onCancelListener(dialog)
 
-        return if (useInsideFragment) dialog else dialog.apply { show() }
+        if (!useInsideFragment) {
+            onDismissListener(dialog)
+            onCancelListener(dialog)
+            dialog.show()
+        }
+
+        return dialog
     }
 
     companion object {

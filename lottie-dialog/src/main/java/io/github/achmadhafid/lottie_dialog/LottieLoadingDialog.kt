@@ -36,6 +36,8 @@ data class LottieLoadingDialog(
     internal var onCancelListener: LottieDialogOnCancelListener = LottieDialogOnCancelListener(),
     internal var onTimeoutListener: LottieDialogOnTimeoutListener = LottieDialogOnTimeoutListener()
 ) {
+    val jobs = mutableListOf<Job>()
+
     operator fun invoke(
         dialog: Dialog,
         view: View,
@@ -50,9 +52,7 @@ data class LottieLoadingDialog(
         title(tvTitle.apply { addNavigationBarPadding() })
         cancelAbility(dialog)
         onShowListener(dialog)
-        onCancelListener(dialog)
 
-        val jobs = mutableListOf<Job>()
         job?.let { jobs.add(it(dialog, coroutineScope)) }
 
         timeout?.let {
@@ -64,12 +64,15 @@ data class LottieLoadingDialog(
             }
         }
 
-        onDismissListener.invoke(dialog, jobs)
+        dialog.window?.fullScreen()
 
-        return if (useInsideFragment) dialog else dialog.apply {
-            window?.fullScreen()
-            show()
+        if (!useInsideFragment) {
+            onDismissListener.invoke(dialog, jobs)
+            onCancelListener(dialog)
+            dialog.show()
         }
+
+        return dialog
     }
 
     companion object {

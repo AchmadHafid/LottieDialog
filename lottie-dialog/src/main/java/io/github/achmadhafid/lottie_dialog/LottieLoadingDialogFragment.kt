@@ -42,6 +42,10 @@ abstract class LottieLoadingDialogFragment : BottomSheetDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+        loadingDialog?.jobs?.run {
+            forEach { job -> job.cancel() }
+            clear()
+        }
         loadingDialog?.onDismissListener
             ?.onDismissListener
             ?.invoke(dialog)

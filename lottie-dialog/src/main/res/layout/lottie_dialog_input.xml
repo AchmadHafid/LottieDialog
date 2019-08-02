@@ -68,7 +68,7 @@
             android:layout_width="@dimen/match_constraint"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium"
-            android:layout_marginTop="@dimen/medium"
+            android:layout_marginTop="@dimen/medium_fit"
             android:layout_marginEnd="@dimen/medium"
             android:layout_marginBottom="@dimen/medium"
             android:background="@null"

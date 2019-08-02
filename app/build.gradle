@@ -31,6 +31,4 @@ dependencies {
     implementation deps.taptargetview
     implementation deps.viewanimator
     implementation deps.fluidslider
-
-    debugImplementation deps.leakcanary
 }

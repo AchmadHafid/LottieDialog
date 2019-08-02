@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager.LayoutParams.*
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -16,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import io.github.achmadhafid.lottie_dialog.model.*
-import io.github.achmadhafid.zpack.ktx.adjustKeyboard
 import io.github.achmadhafid.zpack.ktx.gone
 
 data class LottieInputDialog(
@@ -55,13 +55,20 @@ data class LottieInputDialog(
         input(dialog, edtInput, btnClear, btnDone, btnExtra, onInputListener)
         cancelAbility(dialog)
         onShowListener(dialog)
-        onDismissListener(dialog)
-        onCancelListener(dialog)
 
-        return if (useInsideFragment) dialog else dialog.apply {
-            window?.adjustKeyboard()
-            show()
+        val inputState = when {
+            type == LottieDialogType.DIALOG || animation == null -> SOFT_INPUT_STATE_VISIBLE
+            else -> SOFT_INPUT_STATE_HIDDEN
         }
+        dialog.window?.setSoftInputMode(inputState or SOFT_INPUT_ADJUST_RESIZE)
+
+        if (!useInsideFragment) {
+            onDismissListener(dialog)
+            onCancelListener(dialog)
+            dialog.show()
+        }
+
+        return dialog
     }
 
     companion object {

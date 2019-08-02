@@ -22,9 +22,10 @@ data class LottieDialogOnShowListener(
 data class LottieDialogOnDismissListener(
     var onDismissListener: ((DialogInterface) -> Unit)? = null
 ) {
-    operator fun invoke(dialog: Dialog, jobs: List<Job> = emptyList()) {
+    operator fun invoke(dialog: Dialog, jobs: MutableList<Job> = mutableListOf()) {
         dialog.setOnDismissListener {
             jobs.forEach { job -> job.cancel() }
+            jobs.clear()
             onDismissListener?.invoke(it)
         }
     }
