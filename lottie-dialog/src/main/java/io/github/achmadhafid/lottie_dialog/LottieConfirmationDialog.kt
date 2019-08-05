@@ -234,10 +234,6 @@ fun LottieConfirmationDialog.withoutNegativeButton() {
     negativeButton = null
 }
 
-fun LottieDialogButton.onClick(function: (Dialog) -> Unit) {
-    onClickListener = function
-}
-
 //endregion
 //region Cancel Option DSL
 

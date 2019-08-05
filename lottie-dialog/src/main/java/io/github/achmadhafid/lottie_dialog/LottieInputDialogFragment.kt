@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 abstract class LottieInputDialogFragment : BottomSheetDialogFragment() {
 
     private var inputDialog: LottieInputDialog? = null
+    protected val editTextInput: EditText?
+        get() = view?.findViewById(R.id.lottie_dialog_edt_input)
 
     override fun getTheme(): Int {
         return R.style.LottieDialogTheme_BottomSheet_DayNight

@@ -47,3 +47,7 @@ data class LottieDialogButton(
         }
     }
 }
+
+fun LottieDialogButton.onClick(function: (Dialog) -> Unit) {
+    onClickListener = function
+}
