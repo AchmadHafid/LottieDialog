@@ -17,6 +17,7 @@ import com.ramotion.fluidslider.FluidSlider
 import io.github.achmadhafid.lottie_dialog.*
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.lottie_dialog.model.onClick
 import io.github.achmadhafid.simplepref.extension.clearLocalPref
 import io.github.achmadhafid.simplepref.extension.liveDataPref
 import io.github.achmadhafid.simplepref.extension.simplePref
