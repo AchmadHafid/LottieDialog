@@ -1,5 +1,3 @@
-@file:Suppress("WildcardImport")
-
 package io.github.achmadhafid.lottie_dialog.model
 
 import android.app.Dialog
@@ -11,7 +9,13 @@ import android.widget.ImageButton
 import androidx.core.widget.doAfterTextChanged
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import io.github.achmadhafid.lottie_dialog.R
-import io.github.achmadhafid.zpack.ktx.*
+import io.github.achmadhafid.zpack.ktx.INPUT_TYPE_HIDDEN_PASSWORD
+import io.github.achmadhafid.zpack.ktx.clear
+import io.github.achmadhafid.zpack.ktx.hide
+import io.github.achmadhafid.zpack.ktx.onSingleClick
+import io.github.achmadhafid.zpack.ktx.setTextAndMoveCursor
+import io.github.achmadhafid.zpack.ktx.togglePasswordVisibility
+import io.github.achmadhafid.zpack.ktx.visibleOrInvisible
 
 data class LottieDialogInput(
     var inputType: Type = Type.TEXT,
@@ -69,14 +73,13 @@ data class LottieDialogInput(
             Type.PASSWORD -> INPUT_TYPE_HIDDEN_PASSWORD.also { btnExtra.hide() }
         }
         initialValue?.let {
-            editText.setText(it)
-            editText.moveCursorToTheEnd()
+            editText.setTextAndMoveCursor(it)
         }
 
-        btnClear.onSingleClick(autoReEnable = true) {
+        btnClear.onSingleClick {
             editText.clear()
         }
-        btnDone.onSingleClick(autoReEnable = true) {
+        btnDone.onSingleClick {
             input?.let { value ->
                 inputValidator?.let {
                     inputListener(dialog, value, it(value))
@@ -84,7 +87,7 @@ data class LottieDialogInput(
             }
         }
         if (inputType == Type.PASSWORD) {
-            btnExtra.onSingleClick(autoReEnable = true) {
+            btnExtra.onSingleClick {
                 editText.togglePasswordVisibility()
                 togglePasswordVisibility(btnExtra, editText)
             }

@@ -1,5 +1,3 @@
-@file:Suppress("WildcardImport")
-
 package io.github.achmadhafid.lottie_dialog.model
 
 import android.app.Dialog

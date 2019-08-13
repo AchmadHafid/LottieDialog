@@ -1,4 +1,4 @@
-@file:Suppress("TooManyFunctions", "WildcardImport", "unused")
+@file:Suppress("TooManyFunctions", "unused")
 
 package io.github.achmadhafid.lottie_dialog
 
@@ -7,7 +7,9 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager.LayoutParams.*
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -16,7 +18,16 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
-import io.github.achmadhafid.lottie_dialog.model.*
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogCancelOption
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogInput
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnCancelListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnDismissListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnInputListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnShowListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.zpack.ktx.gone
 
 data class LottieInputDialog(
@@ -80,7 +91,7 @@ data class LottieInputDialog(
             val lottieDialog = LottieInputDialog()
             builders.forEach { lottieDialog.apply(it) }
 
-            val (dialog, view) = inflateDialogView(
+            val (dialog, view) = inflateView(
                 context, layoutInflater, R.layout.lottie_dialog_input,
                 lottieDialog.type, lottieDialog.theme
             )
@@ -110,9 +121,7 @@ fun AppCompatActivity.lottieInputDialog(
 fun Fragment.lottieInputDialog(
     vararg builders: LottieInputDialog.() -> Unit,
     builder: LottieInputDialog.() -> Unit
-) = context?.let {
-    LottieInputDialog.create(it, layoutInflater, *builders, builder)
-} ?: TODO("Context required")
+) = LottieInputDialog.create(requireContext(), layoutInflater, *builders, builder)
 
 //endregion
 //region Animation DSL

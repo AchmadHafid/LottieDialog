@@ -1,5 +1,3 @@
-@file:Suppress("WildcardImport")
-
 package io.github.achmadhafid.lottie_dialog.model
 
 import android.app.Dialog
@@ -10,8 +8,15 @@ import androidx.annotation.DimenRes
 import androidx.annotation.RawRes
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
-import io.github.achmadhafid.lottie_dialog.*
-import io.github.achmadhafid.zpack.ktx.*
+import io.github.achmadhafid.lottie_dialog.R
+import io.github.achmadhafid.zpack.ktx.gone
+import io.github.achmadhafid.zpack.ktx.makeRoundedCornerOnTop
+import io.github.achmadhafid.zpack.ktx.onSingleClick
+import io.github.achmadhafid.zpack.ktx.setBackgroundColorRes
+import io.github.achmadhafid.zpack.ktx.setImageTintListRes
+import io.github.achmadhafid.zpack.ktx.setPaddingRes
+import io.github.achmadhafid.zpack.ktx.show
+import io.github.achmadhafid.zpack.ktx.visibleOrGone
 
 data class LottieDialogAnimation(
     @RawRes

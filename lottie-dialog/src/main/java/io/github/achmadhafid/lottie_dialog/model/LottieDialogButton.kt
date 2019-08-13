@@ -1,12 +1,13 @@
-@file:Suppress("WildcardImport")
-
 package io.github.achmadhafid.lottie_dialog.model
 
 import android.app.Dialog
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.google.android.material.button.MaterialButton
-import io.github.achmadhafid.zpack.ktx.*
+import io.github.achmadhafid.zpack.ktx.onSingleClick
+import io.github.achmadhafid.zpack.ktx.setIconRes
+import io.github.achmadhafid.zpack.ktx.setTextRes
+import io.github.achmadhafid.zpack.ktx.show
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

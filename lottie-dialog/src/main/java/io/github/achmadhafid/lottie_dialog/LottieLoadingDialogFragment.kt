@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package io.github.achmadhafid.lottie_dialog
 
 import android.content.DialogInterface

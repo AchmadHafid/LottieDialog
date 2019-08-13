@@ -1,5 +1,3 @@
-@file:Suppress("WildcardImport")
-
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
@@ -14,9 +12,14 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ramotion.fluidslider.FluidSlider
-import io.github.achmadhafid.lottie_dialog.*
+import io.github.achmadhafid.lottie_dialog.lottieLoadingDialog
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.lottie_dialog.onCancel
+import io.github.achmadhafid.lottie_dialog.onTimeout
+import io.github.achmadhafid.lottie_dialog.withAnimation
+import io.github.achmadhafid.lottie_dialog.withCancelOption
+import io.github.achmadhafid.lottie_dialog.withTitle
 import io.github.achmadhafid.simplepref.extension.clearLocalPref
 import io.github.achmadhafid.simplepref.extension.liveDataPref
 import io.github.achmadhafid.simplepref.extension.simplePref
@@ -217,8 +220,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_show_dialog -> {
-//                lottieLoadingDialog(BaseDialog.doSomething) {
-                lottieLoadingDialog {
+                lottieLoadingDialog(BaseDialog.doSomething) {
                     //region setup type
                     when {
                         typeDialog      -> type = LottieDialogType.DIALOG

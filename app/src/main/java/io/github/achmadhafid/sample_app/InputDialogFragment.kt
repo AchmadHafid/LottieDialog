@@ -1,5 +1,3 @@
-@file:Suppress("WildcardImport")
-
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
@@ -11,10 +9,20 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
-import io.github.achmadhafid.lottie_dialog.*
+import io.github.achmadhafid.lottie_dialog.isValidInput
+import io.github.achmadhafid.lottie_dialog.lottieInputDialog
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogInput
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.lottie_dialog.onCancel
+import io.github.achmadhafid.lottie_dialog.onInvalidInput
+import io.github.achmadhafid.lottie_dialog.onValidInput
+import io.github.achmadhafid.lottie_dialog.withAnimation
+import io.github.achmadhafid.lottie_dialog.withCancelOption
+import io.github.achmadhafid.lottie_dialog.withContent
+import io.github.achmadhafid.lottie_dialog.withInputSpec
+import io.github.achmadhafid.lottie_dialog.withTitle
+import io.github.achmadhafid.lottie_dialog.withoutAnimation
 import io.github.achmadhafid.simplepref.extension.clearLocalPref
 import io.github.achmadhafid.simplepref.extension.liveDataPref
 import io.github.achmadhafid.simplepref.extension.simplePref

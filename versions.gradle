@@ -1,8 +1,8 @@
 ext.versions = [
         //region Release
 
-        code              : 22,
-        name              : "3.2.3",
+        code              : 23,
+        name              : "3.2.4",
 
         //endregion
         //region SDK
@@ -15,7 +15,7 @@ ext.versions = [
         //endregion
         //region Plugin
 
-        agp               : '3.5.0-rc02',
+        agp               : '3.5.0-rc03',
         kotlin            : '1.3.41',
         detekt            : '1.0.0-RC16',
 
@@ -23,19 +23,19 @@ ext.versions = [
         //region Core Dependencies
 
         stdlib            : '1.3.41',
-        coroutine         : '1.3.0-RC',
+        coroutine         : '1.3.0-RC2',
         material          : '1.1.0-alpha09',
 
         //endregion
         //region JetPack Dependencies
 
-        core              : '1.2.0-alpha02',
+        core              : '1.2.0-alpha03',
         appcompat         : '1.1.0-rc01',
-        activity          : '1.1.0-alpha01',
-        fragment          : '1.2.0-alpha01',
+        activity          : '1.1.0-alpha02',
+        fragment          : '1.2.0-alpha02',
         constraintlayout  : '2.0.0-beta2',
-        lifecycle         : '2.2.0-alpha02',
-        navigation        : '2.1.0-beta02',
+        lifecycle         : '2.2.0-alpha03',
+        navigation        : '2.2.0-alpha01',
 
         //endregion
         //region Extra Dependencies
@@ -45,7 +45,7 @@ ext.versions = [
         tap_target_view   : '1.12.0',
         view_animator     : '1.1.1',
         simple_pref       : '1.4.0',
-        zpack             : '0.6.0',
+        zpack             : '0.6.3',
         leak_canary       : '2.0-alpha-3',
         input_mask        : '4.3.1',
 

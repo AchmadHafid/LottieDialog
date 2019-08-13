@@ -1,5 +1,3 @@
-@file:Suppress("WildcardImport")
-
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
@@ -14,10 +12,19 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ramotion.fluidslider.FluidSlider
-import io.github.achmadhafid.lottie_dialog.*
+import io.github.achmadhafid.lottie_dialog.lottieConfirmationDialog
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.model.onClick
+import io.github.achmadhafid.lottie_dialog.onCancel
+import io.github.achmadhafid.lottie_dialog.withAnimation
+import io.github.achmadhafid.lottie_dialog.withCancelOption
+import io.github.achmadhafid.lottie_dialog.withContent
+import io.github.achmadhafid.lottie_dialog.withNegativeButton
+import io.github.achmadhafid.lottie_dialog.withPositiveButton
+import io.github.achmadhafid.lottie_dialog.withTitle
+import io.github.achmadhafid.lottie_dialog.withoutAnimation
+import io.github.achmadhafid.lottie_dialog.withoutNegativeButton
 import io.github.achmadhafid.simplepref.extension.clearLocalPref
 import io.github.achmadhafid.simplepref.extension.liveDataPref
 import io.github.achmadhafid.simplepref.extension.simplePref

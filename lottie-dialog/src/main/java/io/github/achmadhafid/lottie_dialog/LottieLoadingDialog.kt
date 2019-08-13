@@ -1,4 +1,4 @@
-@file:Suppress("TooManyFunctions", "WildcardImport", "unused")
+@file:Suppress("TooManyFunctions", "unused")
 
 package io.github.achmadhafid.lottie_dialog
 
@@ -15,7 +15,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
-import io.github.achmadhafid.lottie_dialog.model.*
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogCancelOption
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnCancelListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnDismissListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnShowListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnTimeoutListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.zpack.ktx.addNavigationBarPadding
 import io.github.achmadhafid.zpack.ktx.fullScreen
 import io.github.achmadhafid.zpack.ktx.visibleOrGone
@@ -85,7 +93,7 @@ data class LottieLoadingDialog(
             val lottieDialog = LottieLoadingDialog()
             builders.forEach { lottieDialog.apply(it) }
 
-            val (dialog, view) = inflateDialogView(
+            val (dialog, view) = inflateView(
                 context, layoutInflater, R.layout.lottie_dialog_loading,
                 lottieDialog.type, lottieDialog.theme
             )
@@ -115,15 +123,13 @@ fun AppCompatActivity.lottieLoadingDialog(
 fun Fragment.lottieLoadingDialog(
     vararg builders: LottieLoadingDialog.() -> Unit,
     builder: LottieLoadingDialog.() -> Unit
-) = context?.let {
-    LottieLoadingDialog.create(
-        it,
-        layoutInflater,
-        viewLifecycleOwner.lifecycleScope,
-        *builders,
-        builder
-    )
-} ?: TODO("Context required")
+) = LottieLoadingDialog.create(
+    requireContext(),
+    layoutInflater,
+    viewLifecycleOwner.lifecycleScope,
+    *builders,
+    builder
+)
 
 //endregion
 //region Job DSL
