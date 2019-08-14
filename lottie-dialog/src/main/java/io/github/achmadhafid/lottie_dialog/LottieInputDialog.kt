@@ -15,8 +15,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.airbnb.lottie.LottieAnimationView
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogCancelOption
@@ -109,7 +109,7 @@ fun lottieInputDialogBuilder(builder: LottieInputDialog.() -> Unit) = builder
 //region Activity Extension
 
 @Suppress("SpreadOperator")
-fun AppCompatActivity.lottieInputDialog(
+fun FragmentActivity.lottieInputDialog(
     vararg builders: LottieInputDialog.() -> Unit,
     builder: LottieInputDialog.() -> Unit
 ) = LottieInputDialog.create(this, layoutInflater, *builders, builder)

@@ -1,8 +1,8 @@
 ext.versions = [
         //region Release
 
-        code              : 23,
-        name              : "3.2.4",
+        code              : 24,
+        name              : "3.2.5",
 
         //endregion
         //region SDK
@@ -44,8 +44,8 @@ ext.versions = [
         fluid_slider      : '0.3.1',
         tap_target_view   : '1.12.0',
         view_animator     : '1.1.1',
-        simple_pref       : '1.4.0',
-        zpack             : '0.6.3',
+        simple_pref       : '1.5.0',
+        zpack             : '0.6.4',
         leak_canary       : '2.0-alpha-3',
         input_mask        : '4.3.1',
 

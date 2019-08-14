@@ -12,9 +12,9 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.button.MaterialButton
@@ -119,7 +119,7 @@ fun lottieConfirmationDialogBuilder(builder: LottieConfirmationDialog.() -> Unit
 //region Activity Extension
 
 @Suppress("SpreadOperator")
-fun AppCompatActivity.lottieConfirmationDialog(
+fun FragmentActivity.lottieConfirmationDialog(
     vararg builders: LottieConfirmationDialog.() -> Unit,
     builder: LottieConfirmationDialog.() -> Unit
 ) = LottieConfirmationDialog.create(this, lifecycleScope, layoutInflater, *builders, builder)
