@@ -19,6 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/patua_one"
             android:text="@string/label_ui_type"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:textSize="@dimen/text_small" />

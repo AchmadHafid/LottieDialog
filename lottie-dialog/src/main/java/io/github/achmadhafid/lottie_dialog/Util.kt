@@ -2,6 +2,9 @@ package io.github.achmadhafid.lottie_dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.view.KeyCharacterMap
+import android.view.KeyEvent.KEYCODE_BACK
+import android.view.KeyEvent.KEYCODE_HOME
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -9,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+
 
 internal fun inflateView(
     context: Context,
@@ -59,3 +63,6 @@ private fun createBottomSheet(
     }
     return BottomSheetDialog(context, theme).apply { setContentView(view) }
 }
+
+internal inline val isPhysicalNavigationAvailable
+    get() = !(KeyCharacterMap.deviceHasKey(KEYCODE_BACK) && KeyCharacterMap.deviceHasKey(KEYCODE_HOME))

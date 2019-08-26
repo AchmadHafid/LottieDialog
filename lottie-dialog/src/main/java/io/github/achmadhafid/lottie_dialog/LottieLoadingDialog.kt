@@ -57,7 +57,11 @@ data class LottieLoadingDialog(
         val pbTimeout     : ProgressBar         = view.findViewById(R.id.lottie_dialog_progress_bar_timeout)
 
         animation(animationView, null, dialog, type)
-        title(tvTitle.apply { addNavigationBarPadding() })
+        title(tvTitle.apply {
+            if (type == LottieDialogType.BOTTOM_SHEET && isPhysicalNavigationAvailable) {
+                addNavigationBarPadding()
+            }
+        })
         cancelAbility(dialog)
         onShowListener(dialog)
 

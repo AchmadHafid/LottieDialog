@@ -6,6 +6,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.RawRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import io.github.achmadhafid.lottie_dialog.R
@@ -23,6 +24,8 @@ data class LottieDialogAnimation(
     var fileRes: Int? = null,
     @ColorRes @AttrRes
     var bgColorRes: Int? = null,
+    @DimenRes
+    var heightRes: Int? = null,
     @DimenRes
     var paddingRes: Int? = null,
     var animationSpeed: Float = 1f,
@@ -54,6 +57,11 @@ data class LottieDialogAnimation(
             if (type == LottieDialogType.BOTTOM_SHEET) {
                 animationView.makeRoundedCornerOnTop(R.dimen.lottie_dialog_corner_radius_bottom_sheet)
             }
+        }
+        heightRes?.let {
+            val layoutParams = animationView.layoutParams as ConstraintLayout.LayoutParams
+            layoutParams.height = animationView.resources.getDimensionPixelSize(it)
+            animationView.layoutParams = layoutParams
         }
         paddingRes?.let {
             animationView.setPaddingRes(it)
