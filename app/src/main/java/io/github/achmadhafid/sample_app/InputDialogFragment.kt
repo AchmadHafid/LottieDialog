@@ -23,31 +23,32 @@ import io.github.achmadhafid.lottie_dialog.withContent
 import io.github.achmadhafid.lottie_dialog.withInputSpec
 import io.github.achmadhafid.lottie_dialog.withTitle
 import io.github.achmadhafid.lottie_dialog.withoutAnimation
-import io.github.achmadhafid.simplepref.extension.clearLocalPref
-import io.github.achmadhafid.simplepref.extension.liveDataPref
-import io.github.achmadhafid.simplepref.extension.simplePref
+import io.github.achmadhafid.simplepref.SimplePref
+import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
+import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
+import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.d
 import io.github.achmadhafid.zpack.ktx.toastShort
 
-class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
+class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref {
 
     //region Preference
 
-    private var typeDialog by simplePref(isLocal = true) { true }
-    private var typeBottomSheet by simplePref(isLocal = true) { false }
-    private var themeDayNight by simplePref(isLocal = true) { true }
-    private var themeLight by simplePref(isLocal = true) { false }
-    private var themeDark by simplePref(isLocal = true) { false }
-    private var inputTypeText by simplePref(isLocal = true) { true }
-    private var inputTypeNumeric by simplePref(isLocal = true) { false }
-    private var inputTypePhone by simplePref(isLocal = true) { false }
-    private var inputTypePin by simplePref(isLocal = true) { false }
-    private var inputTypePassword by simplePref(isLocal = true) { false }
-    private var showAnimation by simplePref(isLocal = true) { false }
-    private var closeButton by simplePref(isLocal = true) { true }
-    private var useCustomText by simplePref(isLocal = true) { false }
-    private var cancelOnBackPressed by simplePref(isLocal = true) { true }
-    private var cancelOnTouchOutside by simplePref(isLocal = true) { true }
+    private var typeDialog by simplePref { true }
+    private var typeBottomSheet by simplePref { false }
+    private var themeDayNight by simplePref { true }
+    private var themeLight by simplePref { false }
+    private var themeDark by simplePref { false }
+    private var inputTypeText by simplePref { true }
+    private var inputTypeNumeric by simplePref { false }
+    private var inputTypePhone by simplePref { false }
+    private var inputTypePin by simplePref { false }
+    private var inputTypePassword by simplePref { false }
+    private var showAnimation by simplePref { false }
+    private var closeButton by simplePref { true }
+    private var useCustomText by simplePref { false }
+    private var cancelOnBackPressed by simplePref { true }
+    private var cancelOnTouchOutside by simplePref { true }
 
     //endregion
 
@@ -97,19 +98,19 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
                 btnThemeDark.id     -> themeDark     = isChecked
             }
         }
-        liveDataPref(::themeDayNight) {
+        simplePrefLiveData(themeDayNight, ::themeDayNight) {
             btnThemeDayNight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        liveDataPref(::themeLight) {
+        simplePrefLiveData(themeLight, ::themeLight) {
             btnThemeLight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        liveDataPref(::themeDark) {
+        simplePrefLiveData(themeDark, ::themeDark) {
             btnThemeDark.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -125,13 +126,13 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
                 btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
-        liveDataPref(::typeDialog) {
+        simplePrefLiveData(typeDialog, ::typeDialog) {
             btnDialogTypeDialog.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        liveDataPref(::typeBottomSheet) {
+        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
             btnDialogTypeBottomSheet.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -151,13 +152,13 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
             }
         }
         listOf(
-            ::inputTypeText     to btnInputTypeText,
-            ::inputTypeNumeric  to btnInputTypeNumeric,
-            ::inputTypePhone    to btnInputTypePhone,
-            ::inputTypePin      to btnInputTypePin,
-            ::inputTypePassword to btnInputTypePassword
-        ).forEach { (pref, btn) ->
-            liveDataPref(pref) {
+            Triple(btnInputTypeText, inputTypeText, ::inputTypeText),
+            Triple(btnInputTypeNumeric, inputTypeNumeric, ::inputTypeNumeric),
+            Triple(btnInputTypePhone, inputTypePhone, ::inputTypePhone),
+            Triple(btnInputTypePin, inputTypePin, ::inputTypePin),
+            Triple(btnInputTypePassword, inputTypePassword, ::inputTypePassword)
+        ).forEach { (btn, pref, prop) ->
+            simplePrefLiveData(pref, prop) {
                 btn.apply {
                     isChecked   = it
                     isCheckable = !it
@@ -172,7 +173,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
             setOnCheckedChangeListener { _, isChecked ->
                 showAnimation = isChecked
             }
-            liveDataPref(::showAnimation) {
+            simplePrefLiveData(showAnimation, ::showAnimation) {
                 isChecked = it
                 smShowLottieAnimationCloseButton.isEnabled = isChecked
             }
@@ -183,7 +184,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
                     closeButton = isChecked
                 }
             }
-            liveDataPref(::closeButton) {
+            simplePrefLiveData(closeButton, ::closeButton) {
                 isChecked = it
             }
         }
@@ -195,7 +196,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
-            liveDataPref(::useCustomText) {
+            simplePrefLiveData(useCustomText, ::useCustomText) {
                 isChecked = it
             }
         }
@@ -207,7 +208,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            liveDataPref(::cancelOnBackPressed) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed) {
                 isChecked = it
             }
         }
@@ -216,7 +217,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            liveDataPref(::cancelOnTouchOutside) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside) {
                 isChecked = it
             }
         }
@@ -344,7 +345,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog) {
                 true
             }
             R.id.action_reset_preferences -> {
-                clearLocalPref()
+                simplePrefClearAllLocal()
                 true
             }
             else -> super.onOptionsItemSelected(item)

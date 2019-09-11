@@ -25,35 +25,36 @@ import io.github.achmadhafid.lottie_dialog.withPositiveButton
 import io.github.achmadhafid.lottie_dialog.withTitle
 import io.github.achmadhafid.lottie_dialog.withoutAnimation
 import io.github.achmadhafid.lottie_dialog.withoutNegativeButton
-import io.github.achmadhafid.simplepref.extension.clearLocalPref
-import io.github.achmadhafid.simplepref.extension.liveDataPref
-import io.github.achmadhafid.simplepref.extension.simplePref
+import io.github.achmadhafid.simplepref.SimplePref
+import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
+import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
+import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.d
 import io.github.achmadhafid.zpack.ktx.resolveColor
 import io.github.achmadhafid.zpack.ktx.toastShort
 import kotlin.math.floor
 
-class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialog) {
+class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialog), SimplePref {
 
     //region Preference
 
-    private var themeDayNight by simplePref(isLocal = true) { true }
-    private var themeLight by simplePref(isLocal = true) { false }
-    private var themeDark by simplePref(isLocal = true) { false }
-    private var typeDialog by simplePref(isLocal = true) { true }
-    private var typeBottomSheet by simplePref(isLocal = true) { false }
-    private var showAnimation by simplePref(isLocal = true) { false }
-    private var animationCentered by simplePref(isLocal = true) { true }
-    private var animationFull by simplePref(isLocal = true) { false }
-    private var closeButton by simplePref(isLocal = true) { true }
-    private var negativeButton by simplePref(isLocal = true) { false }
-    private var showIcon by simplePref(isLocal = true) { false }
-    private var iconSvg by simplePref(isLocal = true) { true }
-    private var iconBitmap by simplePref(isLocal = true) { false }
-    private var actionDelay by simplePref(isLocal = true) { 0L }
-    private var useCustomText by simplePref(isLocal = true) { false }
-    private var cancelOnBackPressed by simplePref(isLocal = true) { true }
-    private var cancelOnTouchOutside by simplePref(isLocal = true) { true }
+    private var themeDayNight by simplePref { true }
+    private var themeLight by simplePref { false }
+    private var themeDark by simplePref { false }
+    private var typeDialog by simplePref { true }
+    private var typeBottomSheet by simplePref { false }
+    private var showAnimation by simplePref { false }
+    private var animationCentered by simplePref { true }
+    private var animationFull by simplePref { false }
+    private var closeButton by simplePref { true }
+    private var negativeButton by simplePref { false }
+    private var showIcon by simplePref { false }
+    private var iconSvg by simplePref { true }
+    private var iconBitmap by simplePref { false }
+    private var actionDelay by simplePref { 0L }
+    private var useCustomText by simplePref { false }
+    private var cancelOnBackPressed by simplePref { true }
+    private var cancelOnTouchOutside by simplePref { true }
 
     //endregion
 
@@ -107,19 +108,19 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                 btnThemeDark.id     -> themeDark     = isChecked
             }
         }
-        liveDataPref(::themeDayNight) {
+        simplePrefLiveData(themeDayNight, ::themeDayNight) {
             btnThemeDayNight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        liveDataPref(::themeLight) {
+        simplePrefLiveData(themeLight, ::themeLight) {
             btnThemeLight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        liveDataPref(::themeDark) {
+        simplePrefLiveData(themeDark, ::themeDark) {
             btnThemeDark.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -135,13 +136,13 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                 btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
-        liveDataPref(::typeDialog) {
+        simplePrefLiveData(typeDialog, ::typeDialog) {
             btnDialogTypeDialog.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        liveDataPref(::typeBottomSheet) {
+        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
             btnDialogTypeBottomSheet.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -155,7 +156,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
             setOnCheckedChangeListener { _, isChecked ->
                 showAnimation = isChecked
             }
-            liveDataPref(::showAnimation) {
+            simplePrefLiveData(showAnimation, ::showAnimation) {
                 isChecked = it
                 val btnList = listOf(
                     btnAnimationCentered to animationCentered,
@@ -201,7 +202,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                     animationCentered = isChecked
                 }
             }
-            liveDataPref(::animationCentered) {
+            simplePrefLiveData(animationCentered, ::animationCentered) {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -212,7 +213,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                     animationFull = isChecked
                 }
             }
-            liveDataPref(::animationFull) {
+            simplePrefLiveData(animationFull, ::animationFull) {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -223,7 +224,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                     closeButton = isChecked
                 }
             }
-            liveDataPref(::closeButton) {
+            simplePrefLiveData(closeButton, ::closeButton) {
                 isChecked = it
             }
         }
@@ -235,7 +236,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
             setOnCheckedChangeListener { _, isChecked ->
                 negativeButton = isChecked
             }
-            liveDataPref(::negativeButton) {
+            simplePrefLiveData(negativeButton, ::negativeButton) {
                 isChecked = it
             }
         }
@@ -247,7 +248,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
             setOnCheckedChangeListener { _, isChecked ->
                 showIcon = isChecked
             }
-            liveDataPref(::showIcon) {
+            simplePrefLiveData(showIcon, ::showIcon) {
                 isChecked = it
                 val btnList = listOf(
                     btnIconSvg    to iconSvg,
@@ -292,7 +293,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                     iconSvg = isChecked
                 }
             }
-            liveDataPref(::iconSvg) {
+            simplePrefLiveData(iconSvg, ::iconSvg) {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -303,7 +304,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                     iconBitmap = isChecked
                 }
             }
-            liveDataPref(::iconBitmap) {
+            simplePrefLiveData(iconBitmap, ::iconBitmap) {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -339,7 +340,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                 actionDelay = (floor(1000 * position / 50) * 50).toLong()
             }
 
-            liveDataPref(::actionDelay) {
+            simplePrefLiveData(actionDelay, ::actionDelay) {
                 position   = actionDelay / 1000F
                 bubbleText = "$actionDelay"
             }
@@ -352,7 +353,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
-            liveDataPref(::useCustomText) {
+            simplePrefLiveData(useCustomText, ::useCustomText) {
                 isChecked = it
             }
         }
@@ -364,7 +365,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            liveDataPref(::cancelOnBackPressed) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed) {
                 isChecked = it
             }
         }
@@ -373,7 +374,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            liveDataPref(::cancelOnTouchOutside) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside) {
                 isChecked = it
             }
         }
@@ -487,7 +488,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                 true
             }
             R.id.action_reset_preferences -> {
-                clearLocalPref()
+                simplePrefClearAllLocal()
                 true
             }
             else -> super.onOptionsItemSelected(item)

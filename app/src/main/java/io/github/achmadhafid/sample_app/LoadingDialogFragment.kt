@@ -20,15 +20,16 @@ import io.github.achmadhafid.lottie_dialog.onTimeout
 import io.github.achmadhafid.lottie_dialog.withAnimation
 import io.github.achmadhafid.lottie_dialog.withCancelOption
 import io.github.achmadhafid.lottie_dialog.withTitle
-import io.github.achmadhafid.simplepref.extension.clearLocalPref
-import io.github.achmadhafid.simplepref.extension.liveDataPref
-import io.github.achmadhafid.simplepref.extension.simplePref
+import io.github.achmadhafid.simplepref.SimplePref
+import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
+import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
+import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.d
 import io.github.achmadhafid.zpack.ktx.resolveColor
 import io.github.achmadhafid.zpack.ktx.toastShort
 import kotlin.math.floor
 
-class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
+class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), SimplePref {
 
     //region Resource Binding
 
@@ -37,16 +38,16 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
     //endregion
     //region Preference
 
-    private var typeDialog by simplePref(isLocal = true) { true }
-    private var typeBottomSheet by simplePref(isLocal = true) { false }
-    private var themeDayNight by simplePref(isLocal = true) { true }
-    private var themeLight by simplePref(isLocal = true) { false }
-    private var themeDark by simplePref(isLocal = true) { false }
-    private var useCustomText by simplePref(isLocal = true) { false }
-    private var cancelOnBackPressed by simplePref(isLocal = true) { true }
-    private var cancelOnTouchOutside by simplePref(isLocal = true) { true }
-    private var timeoutValue by simplePref(isLocal = true) { maxTimeout }
-    private var showTimeoutProgressView by simplePref(isLocal = true) { true }
+    private var typeDialog by simplePref { true }
+    private var typeBottomSheet by simplePref { false }
+    private var themeDayNight by simplePref { true }
+    private var themeLight by simplePref { false }
+    private var themeDark by simplePref { false }
+    private var useCustomText by simplePref { false }
+    private var cancelOnBackPressed by simplePref { true }
+    private var cancelOnTouchOutside by simplePref { true }
+    private var timeoutValue by simplePref { maxTimeout }
+    private var showTimeoutProgressView by simplePref { true }
 
     //endregion
 
@@ -90,13 +91,13 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
                 btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
-        liveDataPref(::typeDialog) {
+        simplePrefLiveData(typeDialog, ::typeDialog) {
             btnDialogTypeDialog.apply {
                 isChecked = it
                 isCheckable = !it
             }
         }
-        liveDataPref(::typeBottomSheet) {
+        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
             btnDialogTypeBottomSheet.apply {
                 isChecked = it
                 isCheckable = !it
@@ -113,19 +114,19 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
                 btnThemeDark.id -> themeDark = isChecked
             }
         }
-        liveDataPref(::themeDayNight) {
+        simplePrefLiveData(themeDayNight, ::themeDayNight) {
             btnThemeDayNight.apply {
                 isChecked = it
                 isCheckable = !it
             }
         }
-        liveDataPref(::themeLight) {
+        simplePrefLiveData(themeLight, ::themeLight) {
             btnThemeLight.apply {
                 isChecked = it
                 isCheckable = !it
             }
         }
-        liveDataPref(::themeDark) {
+        simplePrefLiveData(themeDark, ::themeDark) {
             btnThemeDark.apply {
                 isChecked = it
                 isCheckable = !it
@@ -139,7 +140,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
-            liveDataPref(::useCustomText) {
+            simplePrefLiveData(useCustomText, ::useCustomText) {
                 isChecked = it
             }
         }
@@ -151,7 +152,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            liveDataPref(::cancelOnBackPressed) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed) {
                 isChecked = it
             }
         }
@@ -160,7 +161,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            liveDataPref(::cancelOnTouchOutside) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside) {
                 isChecked = it
             }
         }
@@ -198,7 +199,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
                 timeoutValue = posValue()
             }
 
-            liveDataPref(::timeoutValue) {
+            simplePrefLiveData(timeoutValue, ::timeoutValue) {
                 position   = timeoutValue / maxTimeout.toFloat()
                 bubbleText = "$timeoutValue"
             }
@@ -208,7 +209,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
             setOnCheckedChangeListener { _, isChecked ->
                 showTimeoutProgressView = isChecked
             }
-            liveDataPref(::showTimeoutProgressView) {
+            simplePrefLiveData(showTimeoutProgressView, ::showTimeoutProgressView) {
                 isChecked = it
             }
         }
@@ -272,7 +273,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog) {
                 true
             }
             R.id.action_reset_preferences -> {
-                clearLocalPref()
+                simplePrefClearAllLocal()
                 true
             }
             else -> super.onOptionsItemSelected(item)

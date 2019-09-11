@@ -28,7 +28,6 @@ dependencies {
 
     implementation deps.navigation
     implementation deps.simplepref
-    implementation deps.taptargetview
     implementation deps.viewanimator
     implementation deps.fluidslider
 }

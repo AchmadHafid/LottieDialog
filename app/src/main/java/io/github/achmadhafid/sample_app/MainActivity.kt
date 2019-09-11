@@ -9,17 +9,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.google.android.material.appbar.AppBarLayout
-import io.github.achmadhafid.simplepref.extension.simplePref
-import io.github.achmadhafid.simplepref.extension.simplePrefNullable
+import io.github.achmadhafid.simplepref.SimplePref
+import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.bindNavController
 import io.github.achmadhafid.zpack.ktx.bindView
 import io.github.achmadhafid.zpack.ktx.setMaterialToolbar
 import io.github.achmadhafid.zpack.ktx.setSelectedOnScrollDown
 import io.github.achmadhafid.zpack.ktx.toggleTheme
 
-class MainActivity : AppCompatActivity(R.layout.activity_main), NavController.OnDestinationChangedListener {
+class MainActivity : AppCompatActivity(R.layout.activity_main),
+    NavController.OnDestinationChangedListener, SimplePref {
 
-        //region View Binding
+    //region View Binding
 
     private val appBarLayout: AppBarLayout by bindView(R.id.appBarLayout)
     private val scrollView: NestedScrollView by bindView(R.id.scrollView)
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavController.On
     //endregion
     //region Preference
 
-    private var appTheme: Int? by simplePrefNullable()
+    private var appTheme: Int? by simplePref()
     private var currentFragment by simplePref { navController.graph.startDestination }
 
     //endregion
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavController.On
         if (navController.graph.startDestination != currentFragment) {
             when (currentFragment) {
                 R.id.confirmationDialogFragment -> R.id.action_confirmation_dialog
-                R.id.loadingDialogFragment      -> R.id.action_input_dialog
+                R.id.loadingDialogFragment      -> R.id.action_loading_dialog
                 R.id.inputDialogFragment        -> R.id.action_input_dialog
                 else -> null
             }?.let { navController.navigate(it) }
