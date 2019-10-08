@@ -25,6 +25,7 @@ import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.d
+import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.resolveColor
 import io.github.achmadhafid.zpack.ktx.toastShort
 import kotlin.math.floor
@@ -38,7 +39,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
     //endregion
     //region Preference
 
-    private var typeDialog by simplePref { true }
+    private var typeDialogL by simplePref { true }
     private var typeBottomSheet by simplePref { false }
     private var themeDayNight by simplePref { true }
     private var themeLight by simplePref { false }
@@ -67,19 +68,19 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         super.onViewCreated(view, savedInstanceState)
         //region bind views
 
-        val tglGroupDialogType: MaterialButtonToggleGroup = view.findViewById(R.id.toggle_button_group_dialog_type)
-        val btnDialogTypeDialog: MaterialButton = view.findViewById(R.id.btn_dialog_type_dialog)
-        val btnDialogTypeBottomSheet: MaterialButton = view.findViewById(R.id.btn_dialog_type_bottom_sheet)
-        val tglGroupTheme: MaterialButtonToggleGroup = view.findViewById(R.id.toggle_button_group_theme)
-        val btnThemeDayNight: MaterialButton = view.findViewById(R.id.btn_theme_day_night)
-        val btnThemeLight: MaterialButton = view.findViewById(R.id.btn_theme_light)
-        val btnThemeDark: MaterialButton = view.findViewById(R.id.btn_theme_dark)
-        val smUseCustomText: SwitchMaterial = view.findViewById(R.id.sm_useCustomText)
-        val smCancelOnBackPressed: SwitchMaterial = view.findViewById(R.id.sm_cancelOnBackPressed)
-        val smCancelOnTouchOutside: SwitchMaterial = view.findViewById(R.id.sm_cancelOnTouchOutside)
-        val tvActionTimeout: TextView = view.findViewById(R.id.tv_actionTimeout)
-        val sbActionTimeout: FluidSlider = view.findViewById(R.id.sb_actionTimeout)
-        val smShowTimeoutProgress: SwitchMaterial = view.findViewById(R.id.sm_showTimeoutProgress)
+        val tglGroupDialogType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_dialog_type)
+        val btnDialogTypeDialog: MaterialButton = view.f(R.id.btn_dialog_type_dialog)
+        val btnDialogTypeBottomSheet: MaterialButton = view.f(R.id.btn_dialog_type_bottom_sheet)
+        val tglGroupTheme: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_theme)
+        val btnThemeDayNight: MaterialButton = view.f(R.id.btn_theme_day_night)
+        val btnThemeLight: MaterialButton = view.f(R.id.btn_theme_light)
+        val btnThemeDark: MaterialButton = view.f(R.id.btn_theme_dark)
+        val smUseCustomText: SwitchMaterial = view.f(R.id.sm_useCustomText)
+        val smCancelOnBackPressed: SwitchMaterial = view.f(R.id.sm_cancelOnBackPressed)
+        val smCancelOnTouchOutside: SwitchMaterial = view.f(R.id.sm_cancelOnTouchOutside)
+        val tvActionTimeout: TextView = view.f(R.id.tv_actionTimeout)
+        val sbActionTimeout: FluidSlider = view.f(R.id.sb_actionTimeout)
+        val smShowTimeoutProgress: SwitchMaterial = view.f(R.id.sm_showTimeoutProgress)
 
         //endregion
 
@@ -87,19 +88,19 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
 
         tglGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                btnDialogTypeDialog.id -> typeDialog = isChecked
+                btnDialogTypeDialog.id -> typeDialogL           = isChecked
                 btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
-        simplePrefLiveData(typeDialog, ::typeDialog) {
+        simplePrefLiveData(typeDialogL, ::typeDialogL) {
             btnDialogTypeDialog.apply {
-                isChecked = it
+                isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
             btnDialogTypeBottomSheet.apply {
-                isChecked = it
+                isChecked   = it
                 isCheckable = !it
             }
         }
@@ -224,7 +225,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
                 lottieLoadingDialog(BaseDialog.doSomething) {
                     //region setup type
                     when {
-                        typeDialog      -> type = LottieDialogType.DIALOG
+                        typeDialogL      -> type = LottieDialogType.DIALOG
                         typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
                     }
                     //endregion

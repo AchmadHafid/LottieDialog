@@ -8,6 +8,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.NavOptions
 import com.google.android.material.appbar.AppBarLayout
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.simplePref
@@ -20,6 +21,12 @@ import io.github.achmadhafid.zpack.ktx.toggleTheme
 class MainActivity : AppCompatActivity(R.layout.activity_main),
     NavController.OnDestinationChangedListener, SimplePref {
 
+    //region Preference
+
+    private var appTheme: Int? by simplePref()
+    private var currentFragment by simplePref { navController.graph.startDestination }
+
+    //endregion
     //region View Binding
 
     private val appBarLayout: AppBarLayout by bindView(R.id.appBarLayout)
@@ -27,20 +34,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     private val navController: NavController by bindNavController(R.id.nav_host_fragment)
 
     //endregion
-    //region Preference
-
-    private var appTheme: Int? by simplePref()
-    private var currentFragment by simplePref { navController.graph.startDestination }
-
-    //endregion
     //region Lifecycle Callback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setMaterialToolbar(R.id.toolbar)
         appBarLayout.setSelectedOnScrollDown(scrollView)
         navController.addOnDestinationChangedListener(this)
-        loadLastDestination()
+
+        if (savedInstanceState == null)
+            loadLastDestination()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -94,35 +98,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
 
     private fun loadLastDestination() {
         if (navController.graph.startDestination != currentFragment) {
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(navController.graph.startDestination, true)
+                .build()
             when (currentFragment) {
                 R.id.confirmationDialogFragment -> R.id.action_confirmation_dialog
                 R.id.loadingDialogFragment      -> R.id.action_loading_dialog
                 R.id.inputDialogFragment        -> R.id.action_input_dialog
                 else -> null
-            }?.let { navController.navigate(it) }
+            }?.let { navController.navigate(it, null, navOptions) }
         }
     }
 
     //endregion
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

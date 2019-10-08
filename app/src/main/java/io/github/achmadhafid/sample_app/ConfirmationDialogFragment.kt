@@ -30,6 +30,7 @@ import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.d
+import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.resolveColor
 import io.github.achmadhafid.zpack.ktx.toastShort
 import kotlin.math.floor
@@ -74,28 +75,28 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         super.onViewCreated(view, savedInstanceState)
         //region bind views
 
-        val tgTheme: MaterialButtonToggleGroup = view.findViewById(R.id.toggle_button_group_theme)
-        val btnThemeDayNight: MaterialButton = view.findViewById(R.id.btn_theme_day_night)
-        val btnThemeLight: MaterialButton = view.findViewById(R.id.btn_theme_light)
-        val btnThemeDark: MaterialButton = view.findViewById(R.id.btn_theme_dark)
-        val tgDialogType: MaterialButtonToggleGroup = view.findViewById(R.id.toggle_button_group_dialog_type)
-        val btnDialogTypeDialog: MaterialButton = view.findViewById(R.id.btn_dialog_type_dialog)
-        val btnDialogTypeBottomSheet: MaterialButton = view.findViewById(R.id.btn_dialog_type_bottom_sheet)
-        val smShowLottieAnimation: SwitchMaterial = view.findViewById(R.id.sm_showLottieAnimation)
-        val tgAnimationType: MaterialButtonToggleGroup = view.findViewById(R.id.toggle_button_group_animation_type)
-        val smShowLottieAnimationCloseButton: SwitchMaterial = view.findViewById(R.id.sm_showLottieAnimationCloseButton)
-        val btnAnimationCentered: MaterialButton = view.findViewById(R.id.btn_animation_centered)
-        val btnAnimationFull: MaterialButton = view.findViewById(R.id.btn_animation_full)
-        val smShowNegativeButton: SwitchMaterial = view.findViewById(R.id.sm_showNegativeButton)
-        val smShowButtonIcon: SwitchMaterial = view.findViewById(R.id.sm_showButtonIcon)
-        val tgIconType: MaterialButtonToggleGroup = view.findViewById(R.id.toggle_button_group_icon_type)
-        val btnIconSvg: MaterialButton = view.findViewById(R.id.btn_icon_svg)
-        val btnIconBitmap: MaterialButton = view.findViewById(R.id.btn_icon_bitmap)
-        val tvActionDelay: TextView = view.findViewById(R.id.tv_actionDelay)
-        val sbActionDelay: FluidSlider = view.findViewById(R.id.sb_actionDelay)
-        val smUseCustomText: SwitchMaterial = view.findViewById(R.id.sm_useCustomText)
-        val smCancelOnBackPressed: SwitchMaterial = view.findViewById(R.id.sm_cancelOnBackPressed)
-        val smCancelOnTouchOutside: SwitchMaterial = view.findViewById(R.id.sm_cancelOnTouchOutside)
+        val tgTheme: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_theme)
+        val btnThemeDayNight: MaterialButton = view.f(R.id.btn_theme_day_night)
+        val btnThemeLight: MaterialButton = view.f(R.id.btn_theme_light)
+        val btnThemeDark: MaterialButton = view.f(R.id.btn_theme_dark)
+        val tgDialogType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_dialog_type)
+        val btnDialogTypeDialog: MaterialButton = view.f(R.id.btn_dialog_type_dialog)
+        val btnDialogTypeBottomSheet: MaterialButton = view.f(R.id.btn_dialog_type_bottom_sheet)
+        val smShowLottieAnimation: SwitchMaterial = view.f(R.id.sm_showLottieAnimation)
+        val tgAnimationType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_animation_type)
+        val smShowLottieAnimationCloseButton: SwitchMaterial = view.f(R.id.sm_showLottieAnimationCloseButton)
+        val btnAnimationCentered: MaterialButton = view.f(R.id.btn_animation_centered)
+        val btnAnimationFull: MaterialButton = view.f(R.id.btn_animation_full)
+        val smShowNegativeButton: SwitchMaterial = view.f(R.id.sm_showNegativeButton)
+        val smShowButtonIcon: SwitchMaterial = view.f(R.id.sm_showButtonIcon)
+        val tgIconType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_icon_type)
+        val btnIconSvg: MaterialButton = view.f(R.id.btn_icon_svg)
+        val btnIconBitmap: MaterialButton = view.f(R.id.btn_icon_bitmap)
+        val tvActionDelay: TextView = view.f(R.id.tv_actionDelay)
+        val sbActionDelay: FluidSlider = view.f(R.id.sb_actionDelay)
+        val smUseCustomText: SwitchMaterial = view.f(R.id.sm_useCustomText)
+        val smCancelOnBackPressed: SwitchMaterial = view.f(R.id.sm_cancelOnBackPressed)
+        val smCancelOnTouchOutside: SwitchMaterial = view.f(R.id.sm_cancelOnTouchOutside)
 
         //endregion
 
@@ -180,8 +181,8 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                     btnList.map { item -> item.first }.forEach { button ->
                         button.apply {
                             isCheckable = true
-                            isChecked = false
-                            isEnabled = false
+                            isChecked   = false
+                            isEnabled   = false
                         }
                     }
                 }

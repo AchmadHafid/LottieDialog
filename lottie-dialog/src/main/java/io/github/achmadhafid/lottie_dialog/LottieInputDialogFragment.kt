@@ -29,7 +29,7 @@ abstract class LottieInputDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         inputDialog = LottieInputDialog().apply(dialogBuilder)
-        inputDialog!!.invoke(dialog, view, true)
+        inputDialog!!.invoke(requireDialog(), view, true)
     }
 
     override fun onDestroyView() {

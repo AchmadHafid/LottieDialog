@@ -27,7 +27,7 @@ abstract class LottieLoadingDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LottieLoadingDialog().apply(dialogBuilder)
-        loadingDialog!!.invoke(dialog, view, viewLifecycleOwner.lifecycleScope, true)
+        loadingDialog!!.invoke(requireDialog(), view, viewLifecycleOwner.lifecycleScope, true)
     }
 
     override fun onDestroyView() {

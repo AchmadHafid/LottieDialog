@@ -18,7 +18,7 @@ Display a beautiful confirmation dialog with Lottie animation inside easily usin
 ![image](https://drive.google.com/uc?export=download&id=1T93iGEfESTVg1SsmMYLDzQBkw3iItIrs)
 <br />
 <br />
-[**Download Demo App Here**](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.4.0/LottieDialog.v3.4.0.apk)
+[**Download Demo App Here**](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.4.1/LottieDialog.v3.4.1.apk)
 
 Main Features
 --------
@@ -55,7 +55,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:LottieDialog:3.4.0"
+  implementation "com.github.AchmadHafid:LottieDialog:3.4.1"
   ...
 }
 ```
@@ -64,7 +64,7 @@ dependencies {
 Live Template
 -------------
 Add live template for this library to your Android Studio to get started quickly. <br />
-[Download Live Template Here](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.0.0/LottieDialog.v3.0.0_live_templates.zip)
+[Download Live Template Here](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.4.1/LottieDialog.v3.4.1_live_templates.zip)
 <br />
 Import via: `File` > `Import Settings...` <br />
 

@@ -28,6 +28,7 @@ import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.d
+import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.toastShort
 
 class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref {
@@ -68,24 +69,24 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
         super.onViewCreated(view, savedInstanceState)
         //region bind views
 
-        val tgDialogType: MaterialButtonToggleGroup = view.findViewById(R.id.toggle_button_group_dialog_type)
-        val btnDialogTypeDialog: MaterialButton = view.findViewById(R.id.btn_dialog_type_dialog)
-        val btnDialogTypeBottomSheet: MaterialButton = view.findViewById(R.id.btn_dialog_type_bottom_sheet)
-        val tgTheme: MaterialButtonToggleGroup = view.findViewById(R.id.toggle_button_group_theme)
-        val btnThemeDayNight: MaterialButton = view.findViewById(R.id.btn_theme_day_night)
-        val btnThemeLight: MaterialButton = view.findViewById(R.id.btn_theme_light)
-        val btnThemeDark: MaterialButton = view.findViewById(R.id.btn_theme_dark)
-        val tgInputType: MaterialButtonToggleGroup = view.findViewById(R.id.toggle_button_group_input_type)
-        val btnInputTypeText: MaterialButton = view.findViewById(R.id.btn_input_type_text)
-        val btnInputTypeNumeric: MaterialButton = view.findViewById(R.id.btn_input_type_numeric)
-        val btnInputTypePhone: MaterialButton = view.findViewById(R.id.btn_input_type_phone)
-        val btnInputTypePin: MaterialButton = view.findViewById(R.id.btn_input_type_pin)
-        val btnInputTypePassword: MaterialButton = view.findViewById(R.id.btn_input_type_password)
-        val smShowLottieAnimation: SwitchMaterial = view.findViewById(R.id.sm_showLottieAnimation)
-        val smShowLottieAnimationCloseButton: SwitchMaterial = view.findViewById(R.id.sm_showLottieAnimationCloseButton)
-        val smUseCustomText: SwitchMaterial = view.findViewById(R.id.sm_useCustomText)
-        val smCancelOnBackPressed: SwitchMaterial = view.findViewById(R.id.sm_cancelOnBackPressed)
-        val smCancelOnTouchOutside: SwitchMaterial = view.findViewById(R.id.sm_cancelOnTouchOutside)
+        val tgDialogType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_dialog_type)
+        val btnDialogTypeDialog: MaterialButton = view.f(R.id.btn_dialog_type_dialog)
+        val btnDialogTypeBottomSheet: MaterialButton = view.f(R.id.btn_dialog_type_bottom_sheet)
+        val tgTheme: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_theme)
+        val btnThemeDayNight: MaterialButton = view.f(R.id.btn_theme_day_night)
+        val btnThemeLight: MaterialButton = view.f(R.id.btn_theme_light)
+        val btnThemeDark: MaterialButton = view.f(R.id.btn_theme_dark)
+        val tgInputType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_input_type)
+        val btnInputTypeText: MaterialButton = view.f(R.id.btn_input_type_text)
+        val btnInputTypeNumeric: MaterialButton = view.f(R.id.btn_input_type_numeric)
+        val btnInputTypePhone: MaterialButton = view.f(R.id.btn_input_type_phone)
+        val btnInputTypePin: MaterialButton = view.f(R.id.btn_input_type_pin)
+        val btnInputTypePassword: MaterialButton = view.f(R.id.btn_input_type_password)
+        val smShowLottieAnimation: SwitchMaterial = view.f(R.id.sm_showLottieAnimation)
+        val smShowLottieAnimationCloseButton: SwitchMaterial = view.f(R.id.sm_showLottieAnimationCloseButton)
+        val smUseCustomText: SwitchMaterial = view.f(R.id.sm_useCustomText)
+        val smCancelOnBackPressed: SwitchMaterial = view.f(R.id.sm_cancelOnBackPressed)
+        val smCancelOnTouchOutside: SwitchMaterial = view.f(R.id.sm_cancelOnTouchOutside)
 
         //endregion
 

@@ -27,7 +27,7 @@ abstract class LottieConfirmationDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         confirmationDialog = LottieConfirmationDialog().apply(dialogBuilder)
-        confirmationDialog!!.invoke(dialog, view, viewLifecycleOwner.lifecycleScope, true)
+        confirmationDialog!!.invoke(requireDialog(), view, viewLifecycleOwner.lifecycleScope, true)
     }
 
     override fun onDestroyView() {
