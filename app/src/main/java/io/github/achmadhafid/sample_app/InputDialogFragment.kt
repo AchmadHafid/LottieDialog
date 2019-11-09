@@ -355,5 +355,4 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
 
     //endregion
 
-
 }
