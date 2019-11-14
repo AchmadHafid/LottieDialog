@@ -1,40 +1,39 @@
 <resources>
 
-    <style name="LottieDialogTheme.Dialog.DayNight" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert" />
-    <style name="LottieDialogTheme.Dialog.Light" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert" />
-    <style name="LottieDialogTheme.Dialog.Dark" parent="@style/Theme.MaterialComponents.Dialog.Alert" />
+    <style name="LottieDialogTheme.Dialog.DayNight" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:background">?android:colorBackground</item>
+    </style>
 
-    <style name="LottieDialogTheme.BottomSheet.BaseDayNight" parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
+    <style name="LottieDialogTheme.Dialog.Light" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:background">?android:colorBackground</item>
     </style>
-    <style name="LottieDialogTheme.BottomSheet.BaseLight" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
+
+    <style name="LottieDialogTheme.Dialog.Dark" parent="@style/Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:background">?android:colorBackground</item>
     </style>
-    <style name="LottieDialogTheme.BottomSheet.BaseDark" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+
+    <style name="LottieDialogTheme.BottomSheet.DayNight" parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
     </style>
 
-    <style name="LottieDialogTheme.BottomSheet.DayNight" parent="@style/LottieDialogTheme.BottomSheet.BaseDayNight">
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
+    <style name="LottieDialogTheme.BottomSheet.Light" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
     </style>
-    <style name="LottieDialogTheme.BottomSheet.Light" parent="@style/LottieDialogTheme.BottomSheet.BaseLight">
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
-    </style>
-    <style name="LottieDialogTheme.BottomSheet.Dark" parent="@style/LottieDialogTheme.BottomSheet.BaseDark">
-        <item name="android:navigationBarColor">@color/lottie_dialog_color_navigation_bar_dark</item>
+
+    <style name="LottieDialogTheme.BottomSheet.Dark" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
     </style>
 
     <style name="LottieDialogTheme.BottomSheet.Style" parent="@style/Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="shapeAppearanceOverlay">@style/LottieDialogTheme.BottomSheet.ShapeAppearanceOverlay</item>
+        <item name="shapeAppearanceOverlay">
+            @style/LottieDialogTheme.BottomSheet.ShapeAppearanceOverlay
+        </item>
     </style>
 
     <style name="LottieDialogTheme.BottomSheet.ShapeAppearanceOverlay" parent="ShapeAppearance.MaterialComponents.LargeComponent">

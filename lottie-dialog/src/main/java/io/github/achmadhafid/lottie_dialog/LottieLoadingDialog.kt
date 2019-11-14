@@ -25,6 +25,7 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.zpack.ktx.addNavigationBarPadding
+import io.github.achmadhafid.zpack.ktx.atLeastOreoMR1
 import io.github.achmadhafid.zpack.ktx.fullScreen
 import io.github.achmadhafid.zpack.ktx.visibleOrGone
 import kotlinx.coroutines.CoroutineScope
@@ -58,7 +59,7 @@ data class LottieLoadingDialog(
 
         animation(animationView, null, dialog, type)
         title(tvTitle.apply {
-            if (type == LottieDialogType.BOTTOM_SHEET && isPhysicalNavigationAvailable) {
+            if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && !isPhysicalNavigationAvailable) {
                 addNavigationBarPadding()
             }
         })
@@ -76,7 +77,9 @@ data class LottieLoadingDialog(
             }
         }
 
-        dialog.window?.fullScreen()
+        if (atLeastOreoMR1()) {
+            dialog.window?.fullScreen()
+        }
 
         if (!useInsideFragment) {
             onDismissListener.invoke(dialog, jobs)

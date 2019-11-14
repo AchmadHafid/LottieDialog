@@ -3,8 +3,8 @@
     <!--region Activity Theme-->
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+<!--        <item name="android:navigationBarColor">?attr/colorSurface</item>-->
     </style>
 
     <!--endregion-->

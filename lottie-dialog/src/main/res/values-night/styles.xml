@@ -1,13 +1,9 @@
 <resources>
 
-    <style name="LottieDialogTheme.BottomSheet.DayNight" parent="@style/LottieDialogTheme.BottomSheet.BaseDayNight">
-        <item name="android:navigationBarColor">@color/lottie_dialog_color_navigation_bar_dark</item>
-    </style>
-    <style name="LottieDialogTheme.BottomSheet.Light" parent="@style/LottieDialogTheme.BottomSheet.BaseLight">
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
-    </style>
-    <style name="LottieDialogTheme.BottomSheet.Dark" parent="@style/LottieDialogTheme.BottomSheet.BaseDark">
-        <item name="android:navigationBarColor">@color/lottie_dialog_color_navigation_bar_dark</item>
-    </style>
+    <style name="LottieDialogTheme.Dialog.DayNight" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert" />
+
+    <style name="LottieDialogTheme.Dialog.Light" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert" />
+
+    <style name="LottieDialogTheme.Dialog.Dark" parent="@style/Theme.MaterialComponents.Dialog.Alert" />
 
 </resources>
