@@ -14,6 +14,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
     </style>
+
     <style name="LottieDialogTheme.BottomSheet.Light" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
@@ -21,6 +22,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
     </style>
+
     <style name="LottieDialogTheme.BottomSheet.Dark" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>

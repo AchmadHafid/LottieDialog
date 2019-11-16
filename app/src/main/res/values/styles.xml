@@ -2,12 +2,7 @@
 
     <!--region Activity Theme-->
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
-<!--        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
-<!--        <item name="android:navigationBarColor">?attr/colorSurface</item>-->
-<!--        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>-->
-    </style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 
     <!--endregion-->
     <!--region View Theme-->

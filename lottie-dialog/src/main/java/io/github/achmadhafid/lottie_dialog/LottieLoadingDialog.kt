@@ -15,19 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogCancelOption
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnCancelListener
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnDismissListener
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnShowListener
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnTimeoutListener
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
-import io.github.achmadhafid.zpack.ktx.addNavigationBarPadding
-import io.github.achmadhafid.zpack.ktx.atLeastOreoMR1
-import io.github.achmadhafid.zpack.ktx.fullScreen
-import io.github.achmadhafid.zpack.ktx.visibleOrGone
+import io.github.achmadhafid.lottie_dialog.model.*
+import io.github.achmadhafid.zpack.ktx.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 
@@ -59,7 +48,7 @@ data class LottieLoadingDialog(
 
         animation(animationView, null, dialog, type)
         title(tvTitle.apply {
-            if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && !isPhysicalNavigationAvailable) {
+            if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && dialog.context.hasSoftNavigationKeys) {
                 addNavigationBarPadding()
             }
         })
