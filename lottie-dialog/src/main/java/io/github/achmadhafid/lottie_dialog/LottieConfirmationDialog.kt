@@ -18,17 +18,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.button.MaterialButton
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogButton
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogCancelOption
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnCancelListener
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnDismissListener
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnShowListener
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.lottie_dialog.model.*
 import io.github.achmadhafid.zpack.ktx.clearConstraint
 import io.github.achmadhafid.zpack.ktx.constraintMarginEnd
+import io.github.achmadhafid.zpack.ktx.constraintMarginStart
 import io.github.achmadhafid.zpack.ktx.gone
 import kotlinx.coroutines.CoroutineScope
 
@@ -62,6 +55,13 @@ data class LottieConfirmationDialog(
             it(viewAnim, btnClose, dialog, type)
             tvTitle.gravity   = Gravity.CENTER
             tvContent.gravity = Gravity.CENTER
+            if (negativeButton == null) {
+                btnPositive.layoutParams.width = 0
+                with(view.resources.getDimensionPixelSize(R.dimen.large)) {
+                    btnPositive.constraintMarginStart = this
+                    btnPositive.constraintMarginEnd   = this
+                }
+            }
         } ?: run {
             viewAnim.gone()
             btnClose.gone()
