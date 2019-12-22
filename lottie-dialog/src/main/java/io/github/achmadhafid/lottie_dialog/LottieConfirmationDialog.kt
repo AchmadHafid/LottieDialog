@@ -19,10 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.button.MaterialButton
 import io.github.achmadhafid.lottie_dialog.model.*
-import io.github.achmadhafid.zpack.ktx.clearConstraint
-import io.github.achmadhafid.zpack.ktx.constraintMarginEnd
-import io.github.achmadhafid.zpack.ktx.constraintMarginStart
-import io.github.achmadhafid.zpack.ktx.gone
+import io.github.achmadhafid.zpack.ktx.*
 import kotlinx.coroutines.CoroutineScope
 
 data class LottieConfirmationDialog(
@@ -131,135 +128,137 @@ fun FragmentActivity.lottieConfirmationDialog(
 fun Fragment.lottieConfirmationDialog(
     vararg builders: LottieConfirmationDialog.() -> Unit,
     builder: LottieConfirmationDialog.() -> Unit
-) = LottieConfirmationDialog.create(
-    requireContext(),
-    viewLifecycleOwner.lifecycleScope,
-    layoutInflater,
-    *builders,
-    builder
-)
+) = ctx?.let {
+    LottieConfirmationDialog.create(
+        it,
+        viewLifecycleOwner.lifecycleScope,
+        layoutInflater,
+        *builders,
+        builder
+    )
+}
 
 //endregion
 //region Animation DSL
 
-fun LottieConfirmationDialog.withAnimation(@RawRes lottieFileRes: Int) {
-    if (animation == null) {
-        animation = LottieDialogAnimation(lottieFileRes)
+    fun LottieConfirmationDialog.withAnimation(@RawRes lottieFileRes: Int) {
+        if (animation == null) {
+            animation = LottieDialogAnimation(lottieFileRes)
+        }
+        animation!!.fileRes = lottieFileRes
     }
-    animation!!.fileRes = lottieFileRes
-}
 
-fun LottieConfirmationDialog.withAnimation(builder: LottieDialogAnimation.() -> Unit) {
-    if (animation == null) {
-        animation = LottieDialogAnimation()
+    fun LottieConfirmationDialog.withAnimation(builder: LottieDialogAnimation.() -> Unit) {
+        if (animation == null) {
+            animation = LottieDialogAnimation()
+        }
+        animation!!.apply(builder)
     }
-    animation!!.apply(builder)
-}
 
-fun LottieConfirmationDialog.withoutAnimation() {
-    animation = null
-}
+    fun LottieConfirmationDialog.withoutAnimation() {
+        animation = null
+    }
 
 //endregion
 //region Text DSL
 
-fun LottieConfirmationDialog.withTitle(@StringRes textRes: Int) {
-    title.textRes = textRes
-}
-
-fun LottieConfirmationDialog.withTitle(text: CharSequence) {
-    title.text = text
-}
-
-fun LottieConfirmationDialog.withTitle(builder: LottieDialogText.() -> Unit) {
-    title.apply(builder)
-}
-
-fun LottieConfirmationDialog.withContent(@StringRes textRes: Int) {
-    if (content == null) {
-        content = LottieDialogText()
+    fun LottieConfirmationDialog.withTitle(@StringRes textRes: Int) {
+        title.textRes = textRes
     }
-    content!!.textRes = textRes
-}
 
-fun LottieConfirmationDialog.withContent(text: CharSequence) {
-    if (content == null) {
-        content = LottieDialogText()
+    fun LottieConfirmationDialog.withTitle(text: CharSequence) {
+        title.text = text
     }
-    content!!.text = text
-}
 
-fun LottieConfirmationDialog.withContent(builder: LottieDialogText.() -> Unit) {
-    if (content == null) {
-        content = LottieDialogText()
+    fun LottieConfirmationDialog.withTitle(builder: LottieDialogText.() -> Unit) {
+        title.apply(builder)
     }
-    content!!.apply(builder)
-}
 
-fun LottieConfirmationDialog.withoutContent() {
-    content = null
-}
+    fun LottieConfirmationDialog.withContent(@StringRes textRes: Int) {
+        if (content == null) {
+            content = LottieDialogText()
+        }
+        content!!.textRes = textRes
+    }
+
+    fun LottieConfirmationDialog.withContent(text: CharSequence) {
+        if (content == null) {
+            content = LottieDialogText()
+        }
+        content!!.text = text
+    }
+
+    fun LottieConfirmationDialog.withContent(builder: LottieDialogText.() -> Unit) {
+        if (content == null) {
+            content = LottieDialogText()
+        }
+        content!!.apply(builder)
+    }
+
+    fun LottieConfirmationDialog.withoutContent() {
+        content = null
+    }
 
 //endregion
 //region Action Button DSL
 
-fun LottieConfirmationDialog.withPositiveButton(@StringRes textRes: Int) {
-    positiveButton.textRes = textRes
-}
-
-fun LottieConfirmationDialog.withPositiveButton(text: CharSequence) {
-    positiveButton.text = text
-}
-
-fun LottieConfirmationDialog.withPositiveButton(builder: LottieDialogButton.() -> Unit) {
-    positiveButton.apply(builder)
-}
-
-fun LottieConfirmationDialog.withNegativeButton(@StringRes textRes: Int) {
-    if (negativeButton == null) {
-        negativeButton = LottieDialogButton(textRes = textRes)
+    fun LottieConfirmationDialog.withPositiveButton(@StringRes textRes: Int) {
+        positiveButton.textRes = textRes
     }
-    negativeButton!!.textRes = textRes
-}
 
-fun LottieConfirmationDialog.withNegativeButton(text: CharSequence) {
-    if (negativeButton == null) {
-        negativeButton = LottieDialogButton(textRes = android.R.string.cancel, text = text)
+    fun LottieConfirmationDialog.withPositiveButton(text: CharSequence) {
+        positiveButton.text = text
     }
-    negativeButton!!.text = text
-}
 
-fun LottieConfirmationDialog.withNegativeButton(builder: LottieDialogButton.() -> Unit) {
-    if (negativeButton == null) {
-        negativeButton = LottieDialogButton(textRes = android.R.string.cancel)
+    fun LottieConfirmationDialog.withPositiveButton(builder: LottieDialogButton.() -> Unit) {
+        positiveButton.apply(builder)
     }
-    negativeButton!!.apply(builder)
-}
 
-fun LottieConfirmationDialog.withoutNegativeButton() {
-    negativeButton = null
-}
+    fun LottieConfirmationDialog.withNegativeButton(@StringRes textRes: Int) {
+        if (negativeButton == null) {
+            negativeButton = LottieDialogButton(textRes = textRes)
+        }
+        negativeButton!!.textRes = textRes
+    }
+
+    fun LottieConfirmationDialog.withNegativeButton(text: CharSequence) {
+        if (negativeButton == null) {
+            negativeButton = LottieDialogButton(textRes = android.R.string.cancel, text = text)
+        }
+        negativeButton!!.text = text
+    }
+
+    fun LottieConfirmationDialog.withNegativeButton(builder: LottieDialogButton.() -> Unit) {
+        if (negativeButton == null) {
+            negativeButton = LottieDialogButton(textRes = android.R.string.cancel)
+        }
+        negativeButton!!.apply(builder)
+    }
+
+    fun LottieConfirmationDialog.withoutNegativeButton() {
+        negativeButton = null
+    }
 
 //endregion
 //region Cancel Option DSL
 
-fun LottieConfirmationDialog.withCancelOption(builder: LottieDialogCancelOption.() -> Unit) {
-    cancelAbility.apply(builder)
-}
+    fun LottieConfirmationDialog.withCancelOption(builder: LottieDialogCancelOption.() -> Unit) {
+        cancelAbility.apply(builder)
+    }
 
 //endregion
 //region Listener DSL
 
-fun LottieConfirmationDialog.onShow(function: (DialogInterface) -> Unit) {
-    onShowListener = LottieDialogOnShowListener(function)
-}
+    fun LottieConfirmationDialog.onShow(function: (DialogInterface) -> Unit) {
+        onShowListener = LottieDialogOnShowListener(function)
+    }
 
-fun LottieConfirmationDialog.onDismiss(function: (DialogInterface) -> Unit) {
-    onDismissListener = LottieDialogOnDismissListener(function)
-}
+    fun LottieConfirmationDialog.onDismiss(function: (DialogInterface) -> Unit) {
+        onDismissListener = LottieDialogOnDismissListener(function)
+    }
 
-fun LottieConfirmationDialog.onCancel(function: (DialogInterface) -> Unit) {
-    onCancelListener = LottieDialogOnCancelListener(function)
-}
+    fun LottieConfirmationDialog.onCancel(function: (DialogInterface) -> Unit) {
+        onCancelListener = LottieDialogOnCancelListener(function)
+    }
 
 //endregion

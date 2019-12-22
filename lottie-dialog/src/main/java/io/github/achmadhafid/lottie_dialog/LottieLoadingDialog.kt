@@ -119,13 +119,15 @@ fun FragmentActivity.lottieLoadingDialog(
 fun Fragment.lottieLoadingDialog(
     vararg builders: LottieLoadingDialog.() -> Unit,
     builder: LottieLoadingDialog.() -> Unit
-) = LottieLoadingDialog.create(
-    requireContext(),
-    layoutInflater,
-    viewLifecycleOwner.lifecycleScope,
-    *builders,
-    builder
-)
+) = ctx?.let {
+    LottieLoadingDialog.create(
+        it,
+        layoutInflater,
+        viewLifecycleOwner.lifecycleScope,
+        *builders,
+        builder
+    )
+}
 
 //endregion
 //region Job DSL

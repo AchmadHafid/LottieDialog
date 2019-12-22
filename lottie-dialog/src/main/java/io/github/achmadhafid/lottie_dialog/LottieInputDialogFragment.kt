@@ -4,10 +4,12 @@ package io.github.achmadhafid.lottie_dialog
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 abstract class LottieInputDialogFragment : BottomSheetDialogFragment() {
@@ -29,7 +31,9 @@ abstract class LottieInputDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         inputDialog = LottieInputDialog().apply(dialogBuilder)
-        inputDialog!!.invoke(requireDialog(), view, true)
+        dialog?.let {
+            inputDialog!!.invoke(it, view, true)
+        } ?: Log.d("LottieDialog", "no dialog attached")
     }
 
     override fun onDestroyView() {

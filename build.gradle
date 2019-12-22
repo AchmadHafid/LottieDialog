@@ -14,7 +14,7 @@ buildscript {
 plugins {
     id "com.github.dcendents.android-maven" version "2.1"
     id "com.github.ben-manes.versions" version "0.27.0"
-    id "io.gitlab.arturbosch.detekt" version "1.2.0"
+    id "io.gitlab.arturbosch.detekt" version "1.2.2"
 }
 
 allprojects {

@@ -28,6 +28,7 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnShowListener
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.zpack.ktx.ctx
 import io.github.achmadhafid.zpack.ktx.gone
 
 data class LottieInputDialog(
@@ -121,7 +122,9 @@ fun FragmentActivity.lottieInputDialog(
 fun Fragment.lottieInputDialog(
     vararg builders: LottieInputDialog.() -> Unit,
     builder: LottieInputDialog.() -> Unit
-) = LottieInputDialog.create(requireContext(), layoutInflater, *builders, builder)
+) = ctx?.let {
+    LottieInputDialog.create(it, layoutInflater, *builders, builder)
+}
 
 //endregion
 //region Animation DSL

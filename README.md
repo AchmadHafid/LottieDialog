@@ -55,7 +55,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:LottieDialog:3.5.1"
+  implementation "com.github.AchmadHafid:LottieDialog:3.5.3"
   ...
 }
 ```

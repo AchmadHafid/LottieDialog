@@ -4,6 +4,7 @@ package io.github.achmadhafid.lottie_dialog
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,9 @@ abstract class LottieLoadingDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LottieLoadingDialog().apply(dialogBuilder)
-        loadingDialog!!.invoke(requireDialog(), view, viewLifecycleOwner.lifecycleScope, true)
+        dialog?.let {
+            loadingDialog!!.invoke(it, view, viewLifecycleOwner.lifecycleScope, true)
+        } ?: Log.d("LottieDialog", "no dialog attached")
     }
 
     override fun onDestroyView() {
