@@ -11,8 +11,11 @@ import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
 import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -20,6 +23,7 @@ import androidx.fragment.app.FragmentActivity
 import com.airbnb.lottie.LottieAnimationView
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogCancelOption
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogImage
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogInput
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnCancelListener
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnDismissListener
@@ -34,6 +38,7 @@ import io.github.achmadhafid.zpack.ktx.gone
 data class LottieInputDialog(
     var type: LottieDialogType = LottieDialogType.DIALOG,
     var theme: LottieDialogTheme = LottieDialogTheme.DAY_NIGHT,
+    internal var image: LottieDialogImage? = null,
     internal var animation: LottieDialogAnimation? = null,
     internal var title: LottieDialogText = LottieDialogText(),
     internal var content: LottieDialogText? = null,
@@ -49,18 +54,26 @@ data class LottieInputDialog(
         view: View,
         useInsideFragment: Boolean = false
     ): Dialog {
-        val viewAnim  : LottieAnimationView = view.findViewById(R.id.lottie_dialog_view_anim)
-        val btnClose  : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_close)
-        val tvTitle   : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
-        val tvContent : TextView            = view.findViewById(R.id.lottie_dialog_tv_content)
-        val edtInput  : EditText            = view.findViewById(R.id.lottie_dialog_edt_input)
-        val btnClear  : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_clear)
-        val btnDone   : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_done)
-        val btnExtra  : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_extra_action)
+        val illustrationLayout : FrameLayout         = view.findViewById(R.id.lottie_dialog_illustration_layout)
+        val illustrationAnim   : LottieAnimationView = view.findViewById(R.id.lottie_dialog_view_anim)
+        val illustrationImage  : ImageView           = view.findViewById(R.id.lottie_dialog_view_image)
+        val btnClose           : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_close)
+        val tvTitle            : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
+        val tvContent          : TextView            = view.findViewById(R.id.lottie_dialog_tv_content)
+        val edtInput           : EditText            = view.findViewById(R.id.lottie_dialog_edt_input)
+        val btnClear           : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_clear)
+        val btnDone            : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_done)
+        val btnExtra           : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_extra_action)
 
-        animation?.invoke(viewAnim, btnClose, dialog, type) ?: run {
-            viewAnim.gone()
+        animation?.invoke(illustrationAnim, btnClose, dialog, type) ?: run {
+            illustrationAnim.gone()
             btnClose.gone()
+
+            image?.invoke(illustrationImage, btnClose, dialog, type) ?: run {
+                illustrationImage.gone()
+                btnClose.gone()
+                illustrationLayout.gone()
+            }
         }
         title.invoke(tvTitle)
         content?.invoke(tvContent) ?: tvContent.gone()
@@ -69,7 +82,7 @@ data class LottieInputDialog(
         onShowListener(dialog)
 
         val inputState = when {
-            type == LottieDialogType.DIALOG || animation == null -> SOFT_INPUT_STATE_VISIBLE
+            type == LottieDialogType.DIALOG || (animation == null && image == null) -> SOFT_INPUT_STATE_VISIBLE
             else -> SOFT_INPUT_STATE_HIDDEN
         }
         dialog.window?.setSoftInputMode(inputState or SOFT_INPUT_ADJUST_RESIZE)
@@ -145,6 +158,27 @@ fun LottieInputDialog.withAnimation(builder: LottieDialogAnimation.() -> Unit) {
 
 fun LottieInputDialog.withoutAnimation() {
     animation = null
+}
+
+//endregion
+//region Image DSL
+
+fun LottieInputDialog.withImage(@DrawableRes imageRes: Int) {
+    if (image == null) {
+        image = LottieDialogImage(imageRes)
+    }
+    image!!.imageRes = imageRes
+}
+
+fun LottieInputDialog.withImage(builder: LottieDialogImage.() -> Unit) {
+    if (image == null) {
+        image = LottieDialogImage()
+    }
+    image!!.apply(builder)
+}
+
+fun LottieInputDialog.withoutImage() {
+    image = null
 }
 
 //endregion

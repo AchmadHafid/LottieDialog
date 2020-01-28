@@ -7,16 +7,34 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
-import io.github.achmadhafid.lottie_dialog.model.*
-import io.github.achmadhafid.zpack.ktx.*
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogCancelOption
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogImage
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnCancelListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnDismissListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnShowListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnTimeoutListener
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.zpack.ktx.addNavigationBarPadding
+import io.github.achmadhafid.zpack.ktx.atLeastOreoMR1
+import io.github.achmadhafid.zpack.ktx.ctx
+import io.github.achmadhafid.zpack.ktx.fullScreen
+import io.github.achmadhafid.zpack.ktx.gone
+import io.github.achmadhafid.zpack.ktx.hasSoftNavigationKeys
+import io.github.achmadhafid.zpack.ktx.visibleOrGone
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 
@@ -26,7 +44,8 @@ data class LottieLoadingDialog(
     var timeout: Long? = null,
     var showTimeOutProgress: Boolean = true,
     internal var job: ((DialogInterface, CoroutineScope) -> Job)? = null,
-    internal var animation: LottieDialogAnimation = LottieDialogAnimation(),
+    internal var image: LottieDialogImage? = null,
+    internal var animation: LottieDialogAnimation? = null,
     internal var title: LottieDialogText = LottieDialogText(),
     internal var cancelAbility: LottieDialogCancelOption = LottieDialogCancelOption(),
     internal var onShowListener: LottieDialogOnShowListener = LottieDialogOnShowListener(),
@@ -42,11 +61,19 @@ data class LottieLoadingDialog(
         coroutineScope: CoroutineScope,
         useInsideFragment: Boolean = false
     ): Dialog {
-        val animationView : LottieAnimationView = view.findViewById(R.id.lottie_dialog_view_anim)
-        val tvTitle       : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
-        val pbTimeout     : ProgressBar         = view.findViewById(R.id.lottie_dialog_progress_bar_timeout)
+        val illustrationLayout : FrameLayout         = view.findViewById(R.id.lottie_dialog_illustration_layout)
+        val illustrationAnim   : LottieAnimationView = view.findViewById(R.id.lottie_dialog_view_anim)
+        val illustrationImage  : ImageView           = view.findViewById(R.id.lottie_dialog_view_image)
+        val tvTitle            : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
+        val pbTimeout          : ProgressBar         = view.findViewById(R.id.lottie_dialog_progress_bar_timeout)
 
-        animation(animationView, null, dialog, type)
+        animation?.invoke(illustrationAnim, null, dialog, type) ?: run {
+            illustrationAnim.gone()
+            image?.invoke(illustrationImage, null, dialog, type) ?: run {
+                illustrationImage.gone()
+                illustrationLayout.gone()
+            }
+        }
         title(tvTitle.apply {
             if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && dialog.context.hasSoftNavigationKeys) {
                 addNavigationBarPadding()
@@ -144,11 +171,42 @@ fun LottieLoadingDialog.withoutJob() {
 //region Animation DSL
 
 fun LottieLoadingDialog.withAnimation(@RawRes lottieFileRes: Int) {
-    animation.fileRes = lottieFileRes
+    if (animation == null) {
+        animation = LottieDialogAnimation(lottieFileRes)
+    }
+    animation!!.fileRes = lottieFileRes
 }
 
 fun LottieLoadingDialog.withAnimation(builder: LottieDialogAnimation.() -> Unit) {
-    animation.apply(builder)
+    if (animation == null) {
+        animation = LottieDialogAnimation()
+    }
+    animation!!.apply(builder)
+}
+
+fun LottieLoadingDialog.withoutAnimation() {
+    animation = null
+}
+
+//endregion
+//region Image DSL
+
+fun LottieLoadingDialog.withImage(@DrawableRes imageRes: Int) {
+    if (image == null) {
+        image = LottieDialogImage(imageRes)
+    }
+    image!!.imageRes = imageRes
+}
+
+fun LottieLoadingDialog.withImage(builder: LottieDialogImage.() -> Unit) {
+    if (image == null) {
+        image = LottieDialogImage()
+    }
+    image!!.apply(builder)
+}
+
+fun LottieLoadingDialog.withoutImage() {
+    image = null
 }
 
 //endregion

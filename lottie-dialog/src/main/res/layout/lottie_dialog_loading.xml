@@ -5,18 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_dialog_view_anim"
+    <FrameLayout
+        android:id="@+id/lottie_dialog_illustration_layout"
         android:layout_width="@dimen/empty"
         android:layout_height="@dimen/lottie_dialog_animation_height_loading"
-        android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_tv_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true" />
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_dialog_view_anim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
+        <ImageView
+            android:id="@+id/lottie_dialog_view_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/lottie_dialog_tv_title"
@@ -30,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lottie_dialog_view_anim"
+        app:layout_constraintTop_toBottomOf="@+id/lottie_dialog_illustration_layout"
         app:layout_goneMarginTop="@dimen/medium"
         tools:text="Title" />
 

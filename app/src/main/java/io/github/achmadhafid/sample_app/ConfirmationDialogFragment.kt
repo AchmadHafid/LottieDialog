@@ -20,10 +20,12 @@ import io.github.achmadhafid.lottie_dialog.onCancel
 import io.github.achmadhafid.lottie_dialog.withAnimation
 import io.github.achmadhafid.lottie_dialog.withCancelOption
 import io.github.achmadhafid.lottie_dialog.withContent
+import io.github.achmadhafid.lottie_dialog.withImage
 import io.github.achmadhafid.lottie_dialog.withNegativeButton
 import io.github.achmadhafid.lottie_dialog.withPositiveButton
 import io.github.achmadhafid.lottie_dialog.withTitle
 import io.github.achmadhafid.lottie_dialog.withoutAnimation
+import io.github.achmadhafid.lottie_dialog.withoutImage
 import io.github.achmadhafid.lottie_dialog.withoutNegativeButton
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
@@ -45,6 +47,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
     private var typeDialog by simplePref { true }
     private var typeBottomSheet by simplePref { false }
     private var showAnimation by simplePref { false }
+    private var showImage by simplePref { false }
     private var animationCentered by simplePref { true }
     private var animationFull by simplePref { false }
     private var closeButton by simplePref { true }
@@ -83,6 +86,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         val btnDialogTypeDialog: MaterialButton = view.f(R.id.btn_dialog_type_dialog)
         val btnDialogTypeBottomSheet: MaterialButton = view.f(R.id.btn_dialog_type_bottom_sheet)
         val smShowLottieAnimation: SwitchMaterial = view.f(R.id.sm_showLottieAnimation)
+        val smShowImage: SwitchMaterial = view.f(R.id.sm_showImage)
         val tgAnimationType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_animation_type)
         val smShowLottieAnimationCloseButton: SwitchMaterial = view.f(R.id.sm_showLottieAnimationCloseButton)
         val btnAnimationCentered: MaterialButton = view.f(R.id.btn_animation_centered)
@@ -155,6 +159,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
 
         smShowLottieAnimation.apply {
             setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) smShowImage.isChecked = false
                 showAnimation = isChecked
             }
             simplePrefLiveData(showAnimation, ::showAnimation) {
@@ -186,7 +191,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                         }
                     }
                 }
-                smShowLottieAnimationCloseButton.isEnabled = isChecked
+                smShowLottieAnimationCloseButton.isEnabled = isChecked || showImage
             }
         }
         tgAnimationType.addOnButtonCheckedListener { _, id, isChecked ->
@@ -219,11 +224,27 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                 isCheckable = !it
             }
         }
+
+        //endregion
+        //region setup image option
+
+        smShowImage.apply {
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) smShowLottieAnimation.isChecked = false
+                showImage = isChecked
+            }
+            simplePrefLiveData(showImage, ::showImage) {
+                isChecked = it
+                smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
+            }
+        }
+
+        //endregion
+        //region setup close button
+
         smShowLottieAnimationCloseButton.apply {
             setOnCheckedChangeListener { _, isChecked ->
-                if (smShowLottieAnimation.isChecked) {
-                    closeButton = isChecked
-                }
+                closeButton = isChecked
             }
             simplePrefLiveData(closeButton, ::closeButton) {
                 isChecked = it
@@ -401,21 +422,32 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                         themeDark     -> theme = LottieDialogTheme.DARK
                     }
                     //endregion
-                    //region setup animation
-                    if (showAnimation) {
-                        withAnimation {
-                            if (animationCentered) {
-                                fileRes    = R.raw.lottie_animation_location
-                                paddingRes = R.dimen.lottie_dialog_animation_padding
+                    //region setup animation or image
+                    when {
+                        showAnimation -> {
+                            withAnimation {
+                                if (animationCentered) {
+                                    fileRes    = R.raw.lottie_animation_location
+                                    paddingRes = R.dimen.lottie_dialog_animation_padding
+                                }
+                                if (animationFull) {
+                                    fileRes    = R.raw.lottie_animation_notification
+                                    bgColorRes = R.color.bg_dialog_notification
+                                }
+                                showCloseButton = closeButton
                             }
-                            if (animationFull) {
-                                fileRes    = R.raw.lottie_animation_notification
-                                bgColorRes = R.color.bg_dialog_notification
-                            }
-                            showCloseButton = closeButton
                         }
-                    } else {
-                        withoutAnimation()
+                        showImage -> {
+                            withImage {
+                                imageRes        = R.drawable.offline
+                                paddingRes      = R.dimen.lottie_dialog_animation_padding
+                                showCloseButton = closeButton
+                            }
+                        }
+                        else -> {
+                            withoutAnimation()
+                            withoutImage()
+                        }
                     }
                     //endregion
                     //region setup title

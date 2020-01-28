@@ -7,7 +7,8 @@
     <string name="menu_reset_preferences">Reset Preferences</string>
     <string name="menu_show_dialog">Show Dialog</string>
 
-    <string name="switch_show_lottie_animation">Show Lottie Animation</string>
+    <string name="switch_show_lottie_animation">Use Lottie Animation</string>
+    <string name="switch_show_image">Use Image</string>
     <string name="switch_show_negative_button">Show Negative Button</string>
     <string name="switch_show_button_icon">Show Button Icon</string>
     <string name="switch_show_lottie_animation_close_button">Show Close Button</string>

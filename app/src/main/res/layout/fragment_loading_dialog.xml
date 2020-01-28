@@ -92,10 +92,30 @@
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/sm_showLottieAnimation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small"
+            android:checked="false"
+            android:text="@string/switch_show_lottie_animation"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textSize="@dimen/text_small"
+            app:switchPadding="@dimen/medium_fit" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/sm_showImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/switch_show_image"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textSize="@dimen/text_small"
+            app:switchPadding="@dimen/medium_fit" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/sm_useCustomText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium"
             android:checked="false"
             android:text="@string/switch_use_custom_text"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"

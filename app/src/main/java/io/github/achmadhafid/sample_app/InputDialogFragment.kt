@@ -20,9 +20,11 @@ import io.github.achmadhafid.lottie_dialog.onValidInput
 import io.github.achmadhafid.lottie_dialog.withAnimation
 import io.github.achmadhafid.lottie_dialog.withCancelOption
 import io.github.achmadhafid.lottie_dialog.withContent
+import io.github.achmadhafid.lottie_dialog.withImage
 import io.github.achmadhafid.lottie_dialog.withInputSpec
 import io.github.achmadhafid.lottie_dialog.withTitle
 import io.github.achmadhafid.lottie_dialog.withoutAnimation
+import io.github.achmadhafid.lottie_dialog.withoutContent
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
@@ -46,6 +48,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
     private var inputTypePin by simplePref { false }
     private var inputTypePassword by simplePref { false }
     private var showAnimation by simplePref { false }
+    private var showImage by simplePref { false }
     private var closeButton by simplePref { true }
     private var useCustomText by simplePref { false }
     private var cancelOnBackPressed by simplePref { true }
@@ -83,6 +86,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
         val btnInputTypePin: MaterialButton = view.f(R.id.btn_input_type_pin)
         val btnInputTypePassword: MaterialButton = view.f(R.id.btn_input_type_password)
         val smShowLottieAnimation: SwitchMaterial = view.f(R.id.sm_showLottieAnimation)
+        val smShowImage: SwitchMaterial = view.f(R.id.sm_showImage)
         val smShowLottieAnimationCloseButton: SwitchMaterial = view.f(R.id.sm_showLottieAnimationCloseButton)
         val smUseCustomText: SwitchMaterial = view.f(R.id.sm_useCustomText)
         val smCancelOnBackPressed: SwitchMaterial = view.f(R.id.sm_cancelOnBackPressed)
@@ -172,18 +176,35 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
 
         smShowLottieAnimation.apply {
             setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) smShowImage.isChecked = false
                 showAnimation = isChecked
             }
             simplePrefLiveData(showAnimation, ::showAnimation) {
                 isChecked = it
-                smShowLottieAnimationCloseButton.isEnabled = isChecked
+                smShowLottieAnimationCloseButton.isEnabled = isChecked || showImage
             }
         }
+
+        //endregion
+        //region setup image option
+
+        smShowImage.apply {
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) smShowLottieAnimation.isChecked = false
+                showImage = isChecked
+            }
+            simplePrefLiveData(showImage, ::showImage) {
+                isChecked = it
+                smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
+            }
+        }
+
+        //endregion
+        //region setup close button
+
         smShowLottieAnimationCloseButton.apply {
             setOnCheckedChangeListener { _, isChecked ->
-                if (smShowLottieAnimation.isChecked) {
-                    closeButton = isChecked
-                }
+                closeButton = isChecked
             }
             simplePrefLiveData(closeButton, ::closeButton) {
                 isChecked = it
@@ -245,13 +266,24 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
                     }
                     //endregion
                     //region setup animation
-                    if (showAnimation) {
-                        withAnimation {
-                            fileRes         = R.raw.lottie_animation_input
-                            showCloseButton = closeButton
+                    when {
+                        showAnimation -> {
+                            withAnimation {
+                                fileRes         = R.raw.lottie_animation_input
+                                showCloseButton = closeButton
+                            }
                         }
-                    } else {
-                        withoutAnimation()
+                        showImage -> {
+                            withImage {
+                                imageRes        = R.drawable.offline
+                                paddingRes      = R.dimen.lottie_dialog_animation_padding
+                                showCloseButton = closeButton
+                            }
+                        }
+                        else -> {
+                            withoutAnimation()
+                            withoutContent()
+                        }
                     }
                     //endregion
                     //region setup title

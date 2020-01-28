@@ -19,7 +19,10 @@ import io.github.achmadhafid.lottie_dialog.onCancel
 import io.github.achmadhafid.lottie_dialog.onTimeout
 import io.github.achmadhafid.lottie_dialog.withAnimation
 import io.github.achmadhafid.lottie_dialog.withCancelOption
+import io.github.achmadhafid.lottie_dialog.withImage
 import io.github.achmadhafid.lottie_dialog.withTitle
+import io.github.achmadhafid.lottie_dialog.withoutAnimation
+import io.github.achmadhafid.lottie_dialog.withoutImage
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
@@ -44,6 +47,8 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
     private var themeDayNight by simplePref { true }
     private var themeLight by simplePref { false }
     private var themeDark by simplePref { false }
+    private var showAnimation by simplePref { false }
+    private var showImage by simplePref { false }
     private var useCustomText by simplePref { false }
     private var cancelOnBackPressed by simplePref { true }
     private var cancelOnTouchOutside by simplePref { true }
@@ -75,6 +80,8 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         val btnThemeDayNight: MaterialButton = view.f(R.id.btn_theme_day_night)
         val btnThemeLight: MaterialButton = view.f(R.id.btn_theme_light)
         val btnThemeDark: MaterialButton = view.f(R.id.btn_theme_dark)
+        val smShowLottieAnimation: SwitchMaterial = view.f(R.id.sm_showLottieAnimation)
+        val smShowImage: SwitchMaterial = view.f(R.id.sm_showImage)
         val smUseCustomText: SwitchMaterial = view.f(R.id.sm_useCustomText)
         val smCancelOnBackPressed: SwitchMaterial = view.f(R.id.sm_cancelOnBackPressed)
         val smCancelOnTouchOutside: SwitchMaterial = view.f(R.id.sm_cancelOnTouchOutside)
@@ -131,6 +138,32 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
             btnThemeDark.apply {
                 isChecked = it
                 isCheckable = !it
+            }
+        }
+
+        //endregion
+        //region setup animation type options
+
+        smShowLottieAnimation.apply {
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) smShowImage.isChecked = false
+                showAnimation = isChecked
+            }
+            simplePrefLiveData(showAnimation, ::showAnimation) {
+                isChecked = it
+            }
+        }
+
+        //endregion
+        //region setup image option
+
+        smShowImage.apply {
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) smShowLottieAnimation.isChecked = false
+                showImage = isChecked
+            }
+            simplePrefLiveData(showImage, ::showImage) {
+                isChecked = it
             }
         }
 
@@ -241,9 +274,24 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
                     showTimeOutProgress = showTimeoutProgressView
                     //endregion
                     //region setup animation
-                    withAnimation {
-                        fileRes        = R.raw.lottie_animation_loading
-                        animationSpeed = 2f
+                    when {
+                        showAnimation -> {
+                            withAnimation {
+                                fileRes        = R.raw.lottie_animation_loading
+                                animationSpeed = 2f
+                            }
+                        }
+                        showImage -> {
+                            withImage {
+                                imageRes   = R.drawable.offline
+                                paddingRes = R.dimen.lottie_dialog_animation_padding
+                                heightRes  = R.dimen.huge
+                            }
+                        }
+                        else -> {
+                            withoutAnimation()
+                            withoutImage()
+                        }
                     }
                     //endregion
                     //region setup title
