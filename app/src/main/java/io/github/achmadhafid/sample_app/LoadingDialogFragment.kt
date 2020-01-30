@@ -285,7 +285,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
                             withImage {
                                 imageRes   = R.drawable.offline
                                 paddingRes = R.dimen.lottie_dialog_animation_padding
-                                heightRes  = R.dimen.huge
+                                heightRes  = R.dimen.huge_fit
                             }
                         }
                         else -> {

@@ -8,6 +8,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import io.github.achmadhafid.lottie_dialog.R
 import io.github.achmadhafid.zpack.ktx.gone
 import io.github.achmadhafid.zpack.ktx.makeRoundedCornerOnTop
@@ -32,6 +33,7 @@ data class LottieDialogImage(
     var closeButtonColorRes: Int? = null
 ) {
     operator fun invoke(
+        imageViewLayout: FrameLayout,
         imageView: ImageView,
         btnClose: ImageButton? = null,
         dialog: Dialog,
@@ -54,9 +56,9 @@ data class LottieDialogImage(
         }
 
         heightRes?.let {
-            with(imageView.layoutParams as FrameLayout.LayoutParams) {
-                height = imageView.resources.getDimensionPixelSize(it)
-                imageView.layoutParams = this
+            with(imageViewLayout.layoutParams as ConstraintLayout.LayoutParams) {
+                height = imageViewLayout.resources.getDimensionPixelSize(it)
+                imageViewLayout.layoutParams = this
             }
         }
 

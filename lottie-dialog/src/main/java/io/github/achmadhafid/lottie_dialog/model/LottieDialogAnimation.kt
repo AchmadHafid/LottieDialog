@@ -7,6 +7,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.RawRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import io.github.achmadhafid.lottie_dialog.R
@@ -36,6 +37,7 @@ data class LottieDialogAnimation(
     var closeButtonColorRes: Int? = null
 ) {
     operator fun invoke(
+        animationLayout: FrameLayout,
         animationView: LottieAnimationView,
         btnClose: ImageButton? = null,
         dialog: Dialog,
@@ -60,9 +62,9 @@ data class LottieDialogAnimation(
         }
 
         heightRes?.let {
-            with(animationView.layoutParams as FrameLayout.LayoutParams) {
-                height = animationView.resources.getDimensionPixelSize(it)
-                animationView.layoutParams = this
+            with(animationLayout.layoutParams as ConstraintLayout.LayoutParams) {
+                height = animationLayout.resources.getDimensionPixelSize(it)
+                animationLayout.layoutParams = this
             }
         }
 

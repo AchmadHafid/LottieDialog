@@ -67,9 +67,9 @@ data class LottieLoadingDialog(
         val tvTitle            : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
         val pbTimeout          : ProgressBar         = view.findViewById(R.id.lottie_dialog_progress_bar_timeout)
 
-        animation?.invoke(illustrationAnim, null, dialog, type) ?: run {
+        animation?.invoke(illustrationLayout, illustrationAnim, null, dialog, type) ?: run {
             illustrationAnim.gone()
-            image?.invoke(illustrationImage, null, dialog, type) ?: run {
+            image?.invoke(illustrationLayout, illustrationImage, null, dialog, type) ?: run {
                 illustrationImage.gone()
                 illustrationLayout.gone()
             }

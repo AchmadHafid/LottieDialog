@@ -65,11 +65,11 @@ data class LottieInputDialog(
         val btnDone            : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_done)
         val btnExtra           : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_extra_action)
 
-        animation?.invoke(illustrationAnim, btnClose, dialog, type) ?: run {
+        animation?.invoke(illustrationLayout, illustrationAnim, btnClose, dialog, type) ?: run {
             illustrationAnim.gone()
             btnClose.gone()
 
-            image?.invoke(illustrationImage, btnClose, dialog, type) ?: run {
+            image?.invoke(illustrationLayout, illustrationImage, btnClose, dialog, type) ?: run {
                 illustrationImage.gone()
                 btnClose.gone()
                 illustrationLayout.gone()

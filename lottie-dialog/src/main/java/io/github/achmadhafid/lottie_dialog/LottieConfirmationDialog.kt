@@ -68,7 +68,7 @@ data class LottieConfirmationDialog(
         val btnNegative        : MaterialButton      = view.findViewById(R.id.lottie_dialog_btn_negative)
 
         animation?.let {
-            it(illustrationAnim, btnClose, dialog, type)
+            it(illustrationLayout, illustrationAnim, btnClose, dialog, type)
             tvTitle.gravity   = Gravity.CENTER
             tvContent.gravity = Gravity.CENTER
             if (negativeButton == null) {
@@ -83,7 +83,7 @@ data class LottieConfirmationDialog(
             btnClose.gone()
 
             image?.let {
-                it(illustrationImage, btnClose, dialog, type)
+                it(illustrationLayout, illustrationImage, btnClose, dialog, type)
                 tvTitle.gravity   = Gravity.CENTER
                 tvContent.gravity = Gravity.CENTER
                 if (negativeButton == null) {
