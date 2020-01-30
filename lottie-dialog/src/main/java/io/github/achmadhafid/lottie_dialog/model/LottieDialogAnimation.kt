@@ -1,12 +1,12 @@
 package io.github.achmadhafid.lottie_dialog.model
 
 import android.app.Dialog
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.RawRes
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import io.github.achmadhafid.lottie_dialog.R
@@ -60,9 +60,10 @@ data class LottieDialogAnimation(
         }
 
         heightRes?.let {
-            val layoutParams = animationView.layoutParams as ConstraintLayout.LayoutParams
-            layoutParams.height = animationView.resources.getDimensionPixelSize(it)
-            animationView.layoutParams = layoutParams
+            with(animationView.layoutParams as FrameLayout.LayoutParams) {
+                height = animationView.resources.getDimensionPixelSize(it)
+                animationView.layoutParams = this
+            }
         }
 
         paddingRes?.let {

@@ -54,9 +54,10 @@ data class LottieDialogImage(
         }
 
         heightRes?.let {
-            val layoutParams = imageView.layoutParams as FrameLayout.LayoutParams
-            layoutParams.height = imageView.resources.getDimensionPixelSize(it)
-            imageView.layoutParams = layoutParams
+            with(imageView.layoutParams as FrameLayout.LayoutParams) {
+                height = imageView.resources.getDimensionPixelSize(it)
+                imageView.layoutParams = this
+            }
         }
 
         paddingRes?.let {
