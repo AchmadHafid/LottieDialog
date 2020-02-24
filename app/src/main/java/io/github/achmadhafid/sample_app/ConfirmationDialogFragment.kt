@@ -1,17 +1,14 @@
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.florent37.viewanimator.ViewAnimator
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.ramotion.fluidslider.FluidSlider
 import io.github.achmadhafid.lottie_dialog.lottieConfirmationDialog
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
@@ -27,17 +24,17 @@ import io.github.achmadhafid.lottie_dialog.withTitle
 import io.github.achmadhafid.lottie_dialog.withoutAnimation
 import io.github.achmadhafid.lottie_dialog.withoutImage
 import io.github.achmadhafid.lottie_dialog.withoutNegativeButton
+import io.github.achmadhafid.sample_app.databinding.FragmentConfirmationDialogBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.d
-import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.resolveColor
 import io.github.achmadhafid.zpack.ktx.toastShort
 import kotlin.math.floor
 
-class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialog), SimplePref {
+class ConfirmationDialogFragment : Fragment(), SimplePref {
 
     //region Preference
 
@@ -61,6 +58,12 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
     private var cancelOnTouchOutside by simplePref { true }
 
     //endregion
+    //region View Binding
+
+    private var _binding: FragmentConfirmationDialogBinding? = null
+    private val binding get() = _binding!!
+
+    //endregion
 
     //region Lifecycle Callback
 
@@ -73,60 +76,41 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         inflater.inflate(R.menu.fragment_action_bar, menu)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentConfirmationDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     @Suppress("ComplexMethod", "LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //region bind views
-
-        val tgTheme: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_theme)
-        val btnThemeDayNight: MaterialButton = view.f(R.id.btn_theme_day_night)
-        val btnThemeLight: MaterialButton = view.f(R.id.btn_theme_light)
-        val btnThemeDark: MaterialButton = view.f(R.id.btn_theme_dark)
-        val tgDialogType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_dialog_type)
-        val btnDialogTypeDialog: MaterialButton = view.f(R.id.btn_dialog_type_dialog)
-        val btnDialogTypeBottomSheet: MaterialButton = view.f(R.id.btn_dialog_type_bottom_sheet)
-        val smShowLottieAnimation: SwitchMaterial = view.f(R.id.sm_showLottieAnimation)
-        val smShowImage: SwitchMaterial = view.f(R.id.sm_showImage)
-        val tgAnimationType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_animation_type)
-        val smShowLottieAnimationCloseButton: SwitchMaterial = view.f(R.id.sm_showLottieAnimationCloseButton)
-        val btnAnimationCentered: MaterialButton = view.f(R.id.btn_animation_centered)
-        val btnAnimationFull: MaterialButton = view.f(R.id.btn_animation_full)
-        val smShowNegativeButton: SwitchMaterial = view.f(R.id.sm_showNegativeButton)
-        val smShowButtonIcon: SwitchMaterial = view.f(R.id.sm_showButtonIcon)
-        val tgIconType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_icon_type)
-        val btnIconSvg: MaterialButton = view.f(R.id.btn_icon_svg)
-        val btnIconBitmap: MaterialButton = view.f(R.id.btn_icon_bitmap)
-        val tvActionDelay: TextView = view.f(R.id.tv_actionDelay)
-        val sbActionDelay: FluidSlider = view.f(R.id.sb_actionDelay)
-        val smUseCustomText: SwitchMaterial = view.f(R.id.sm_useCustomText)
-        val smCancelOnBackPressed: SwitchMaterial = view.f(R.id.sm_cancelOnBackPressed)
-        val smCancelOnTouchOutside: SwitchMaterial = view.f(R.id.sm_cancelOnTouchOutside)
-
-        //endregion
-
         //region setup theme options
 
-        tgTheme.addOnButtonCheckedListener { _, id, isChecked ->
+        binding.toggleButtonGroupTheme.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                btnThemeDayNight.id -> themeDayNight = isChecked
-                btnThemeLight.id    -> themeLight    = isChecked
-                btnThemeDark.id     -> themeDark     = isChecked
+                binding.btnThemeDayNight.id -> themeDayNight = isChecked
+                binding.btnThemeLight.id    -> themeLight    = isChecked
+                binding.btnThemeDark.id     -> themeDark     = isChecked
             }
         }
         simplePrefLiveData(themeDayNight, ::themeDayNight) {
-            btnThemeDayNight.apply {
+            binding.btnThemeDayNight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(themeLight, ::themeLight) {
-            btnThemeLight.apply {
+            binding.btnThemeLight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(themeDark, ::themeDark) {
-            btnThemeDark.apply {
+            binding.btnThemeDark.apply {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -135,20 +119,20 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         //endregion
         //region setup dialog type options
 
-        tgDialogType.addOnButtonCheckedListener { _, id, isChecked ->
+        binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                btnDialogTypeDialog.id      -> typeDialog      = isChecked
-                btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
+                binding.btnDialogTypeDialog.id      -> typeDialog      = isChecked
+                binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
         simplePrefLiveData(typeDialog, ::typeDialog) {
-            btnDialogTypeDialog.apply {
+            binding.btnDialogTypeDialog.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
-            btnDialogTypeBottomSheet.apply {
+            binding.btnDialogTypeBottomSheet.apply {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -157,16 +141,16 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         //endregion
         //region setup animation type options
 
-        smShowLottieAnimation.apply {
+        binding.smShowLottieAnimation.apply {
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) smShowImage.isChecked = false
+                if (isChecked) binding.smShowImage.isChecked = false
                 showAnimation = isChecked
             }
             simplePrefLiveData(showAnimation, ::showAnimation) {
                 isChecked = it
                 val btnList = listOf(
-                    btnAnimationCentered to animationCentered,
-                    btnAnimationFull     to animationFull
+                    binding.btnAnimationCentered to animationCentered,
+                    binding.btnAnimationFull     to animationFull
                 )
                 if (isChecked) {
                     btnList.apply {
@@ -191,20 +175,20 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                         }
                     }
                 }
-                smShowLottieAnimationCloseButton.isEnabled = isChecked || showImage
+                binding.smShowLottieAnimationCloseButton.isEnabled = isChecked || showImage
             }
         }
-        tgAnimationType.addOnButtonCheckedListener { _, id, isChecked ->
-            if (smShowLottieAnimation.isChecked) {
+        binding.toggleButtonGroupAnimationType.addOnButtonCheckedListener { _, id, isChecked ->
+            if (binding.smShowLottieAnimation.isChecked) {
                 when (id) {
-                    btnAnimationCentered.id -> animationCentered = isChecked
-                    btnAnimationFull.id     -> animationFull     = isChecked
+                    binding.btnAnimationCentered.id -> animationCentered = isChecked
+                    binding.btnAnimationFull.id     -> animationFull     = isChecked
                 }
             }
         }
-        btnAnimationCentered.apply {
+        binding.btnAnimationCentered.apply {
             addOnCheckedChangeListener { _, isChecked ->
-                if (smShowLottieAnimation.isChecked) {
+                if (binding.smShowLottieAnimation.isChecked) {
                     animationCentered = isChecked
                 }
             }
@@ -213,9 +197,9 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                 isCheckable = !it
             }
         }
-        btnAnimationFull.apply {
+        binding.btnAnimationFull.apply {
             addOnCheckedChangeListener { _, isChecked ->
-                if (smShowLottieAnimation.isChecked) {
+                if (binding.smShowLottieAnimation.isChecked) {
                     animationFull = isChecked
                 }
             }
@@ -228,21 +212,21 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         //endregion
         //region setup image option
 
-        smShowImage.apply {
+        binding.smShowImage.apply {
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) smShowLottieAnimation.isChecked = false
+                if (isChecked) binding.smShowLottieAnimation.isChecked = false
                 showImage = isChecked
             }
             simplePrefLiveData(showImage, ::showImage) {
                 isChecked = it
-                smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
+                binding.smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
             }
         }
 
         //endregion
         //region setup close button
 
-        smShowLottieAnimationCloseButton.apply {
+        binding.smShowLottieAnimationCloseButton.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 closeButton = isChecked
             }
@@ -254,7 +238,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         //endregion
         //region setup negative button options
 
-        smShowNegativeButton.apply {
+        binding.smShowNegativeButton.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 negativeButton = isChecked
             }
@@ -266,15 +250,15 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         //endregion
         //region setup icon type options
 
-        smShowButtonIcon.apply {
+        binding.smShowButtonIcon.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 showIcon = isChecked
             }
             simplePrefLiveData(showIcon, ::showIcon) {
                 isChecked = it
                 val btnList = listOf(
-                    btnIconSvg    to iconSvg,
-                    btnIconBitmap to iconBitmap
+                    binding.btnIconSvg    to iconSvg,
+                    binding.btnIconBitmap to iconBitmap
                 )
                 if (isChecked) {
                     btnList.apply {
@@ -301,17 +285,17 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                 }
             }
         }
-        tgIconType.addOnButtonCheckedListener { _, id, isChecked ->
-            if (smShowButtonIcon.isChecked) {
+        binding.toggleButtonGroupIconType.addOnButtonCheckedListener { _, id, isChecked ->
+            if (binding.smShowButtonIcon.isChecked) {
                 when (id) {
-                    btnIconSvg.id    -> iconSvg    = isChecked
-                    btnIconBitmap.id -> iconBitmap = isChecked
+                    binding.btnIconSvg.id    -> iconSvg    = isChecked
+                    binding.btnIconBitmap.id -> iconBitmap = isChecked
                 }
             }
         }
-        btnIconSvg.apply {
+        binding.btnIconSvg.apply {
             addOnCheckedChangeListener { _, isChecked ->
-                if (smShowButtonIcon.isChecked) {
+                if (binding.smShowButtonIcon.isChecked) {
                     iconSvg = isChecked
                 }
             }
@@ -320,9 +304,9 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                 isCheckable = !it
             }
         }
-        btnIconBitmap.apply {
+        binding.btnIconBitmap.apply {
             addOnCheckedChangeListener { _, isChecked ->
-                if (smShowButtonIcon.isChecked) {
+                if (binding.smShowButtonIcon.isChecked) {
                     iconBitmap = isChecked
                 }
             }
@@ -336,7 +320,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         //region setup action delay
 
         @Suppress("MagicNumber")
-        with(sbActionDelay) {
+        with(binding.sbActionDelay) {
             colorBubble     = context.resolveColor(R.attr.colorPrimary)
             colorBubbleText = context.resolveColor(R.attr.colorOnPrimary)
             colorBar        = colorBubble
@@ -345,8 +329,8 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
                 bubbleText = "${(floor(1000 * position / 50) * 50).toLong()}"
             }
 
-            val height by lazy { tvActionDelay.height.toFloat() }
-            val animation by lazy { ViewAnimator.animate(tvActionDelay) }
+            val height by lazy { binding.tvActionDelay.height.toFloat() }
+            val animation by lazy { ViewAnimator.animate(binding.tvActionDelay) }
 
             beginTrackingListener = {
                 animation.translationY(0F, -height)
@@ -371,7 +355,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         //endregion
         //region setup custom text options
 
-        smUseCustomText.apply {
+        binding.smUseCustomText.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
@@ -383,7 +367,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         //endregion
         //region setup auto dismiss & cancel options
 
-        smCancelOnBackPressed.apply {
+        binding.smCancelOnBackPressed.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
@@ -392,7 +376,7 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
             }
         }
 
-        smCancelOnTouchOutside.apply {
+        binding.smCancelOnTouchOutside.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
@@ -402,6 +386,11 @@ class ConfirmationDialogFragment : Fragment(R.layout.fragment_confirmation_dialo
         }
 
         //endregion
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     @Suppress("ComplexMethod", "LongMethod")

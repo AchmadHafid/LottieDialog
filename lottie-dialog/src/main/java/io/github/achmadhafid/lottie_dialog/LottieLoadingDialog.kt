@@ -31,6 +31,7 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.zpack.ktx.addNavigationBarPadding
 import io.github.achmadhafid.zpack.ktx.atLeastOreoMR1
 import io.github.achmadhafid.zpack.ktx.ctx
+import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.fullScreen
 import io.github.achmadhafid.zpack.ktx.gone
 import io.github.achmadhafid.zpack.ktx.hasSoftNavigationKeys
@@ -55,17 +56,18 @@ data class LottieLoadingDialog(
 ) {
     val jobs = mutableListOf<Job>()
 
+    @Suppress("ComplexMethod")
     operator fun invoke(
         dialog: Dialog,
         view: View,
         coroutineScope: CoroutineScope,
         useInsideFragment: Boolean = false
     ): Dialog {
-        val illustrationLayout : FrameLayout         = view.findViewById(R.id.lottie_dialog_illustration_layout)
-        val illustrationAnim   : LottieAnimationView = view.findViewById(R.id.lottie_dialog_view_anim)
-        val illustrationImage  : ImageView           = view.findViewById(R.id.lottie_dialog_view_image)
-        val tvTitle            : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
-        val pbTimeout          : ProgressBar         = view.findViewById(R.id.lottie_dialog_progress_bar_timeout)
+        val illustrationLayout : FrameLayout         = view.f(R.id.lottie_dialog_illustration_layout)
+        val illustrationAnim   : LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
+        val illustrationImage  : ImageView           = view.f(R.id.lottie_dialog_view_image)
+        val tvTitle            : TextView            = view.f(R.id.lottie_dialog_tv_title)
+        val pbTimeout          : ProgressBar         = view.f(R.id.lottie_dialog_progress_bar_timeout)
 
         animation?.invoke(illustrationLayout, illustrationAnim, null, dialog, type) ?: run {
             illustrationAnim.gone()

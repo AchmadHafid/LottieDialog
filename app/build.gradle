@@ -6,6 +6,7 @@ apply plugin: 'kotlin-kapt'
 apply(from: "../shared_build.gradle")
 
 android {
+    viewBinding.enabled = true
     defaultConfig {
         applicationId = "io.github.achmadhafid.sample_app"
     }

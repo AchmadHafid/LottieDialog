@@ -1,17 +1,14 @@
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.florent37.viewanimator.ViewAnimator
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.ramotion.fluidslider.FluidSlider
 import io.github.achmadhafid.lottie_dialog.lottieLoadingDialog
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
@@ -23,17 +20,17 @@ import io.github.achmadhafid.lottie_dialog.withImage
 import io.github.achmadhafid.lottie_dialog.withTitle
 import io.github.achmadhafid.lottie_dialog.withoutAnimation
 import io.github.achmadhafid.lottie_dialog.withoutImage
+import io.github.achmadhafid.sample_app.databinding.FragmentLoadingDialogBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.d
-import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.resolveColor
 import io.github.achmadhafid.zpack.ktx.toastShort
 import kotlin.math.floor
 
-class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), SimplePref {
+class LoadingDialogFragment : Fragment(), SimplePref {
 
     //region Resource Binding
 
@@ -56,6 +53,12 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
     private var showTimeoutProgressView by simplePref { true }
 
     //endregion
+    //region View Binding
+
+    private var _binding: FragmentLoadingDialogBinding? = null
+    private val binding get() = _binding!!
+
+    //endregion
 
     //region Lifecycle Callback
 
@@ -68,45 +71,34 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         inflater.inflate(R.menu.fragment_action_bar, menu)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentLoadingDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     @Suppress("ComplexMethod", "LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //region bind views
-
-        val tglGroupDialogType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_dialog_type)
-        val btnDialogTypeDialog: MaterialButton = view.f(R.id.btn_dialog_type_dialog)
-        val btnDialogTypeBottomSheet: MaterialButton = view.f(R.id.btn_dialog_type_bottom_sheet)
-        val tglGroupTheme: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_theme)
-        val btnThemeDayNight: MaterialButton = view.f(R.id.btn_theme_day_night)
-        val btnThemeLight: MaterialButton = view.f(R.id.btn_theme_light)
-        val btnThemeDark: MaterialButton = view.f(R.id.btn_theme_dark)
-        val smShowLottieAnimation: SwitchMaterial = view.f(R.id.sm_showLottieAnimation)
-        val smShowImage: SwitchMaterial = view.f(R.id.sm_showImage)
-        val smUseCustomText: SwitchMaterial = view.f(R.id.sm_useCustomText)
-        val smCancelOnBackPressed: SwitchMaterial = view.f(R.id.sm_cancelOnBackPressed)
-        val smCancelOnTouchOutside: SwitchMaterial = view.f(R.id.sm_cancelOnTouchOutside)
-        val tvActionTimeout: TextView = view.f(R.id.tv_actionTimeout)
-        val sbActionTimeout: FluidSlider = view.f(R.id.sb_actionTimeout)
-        val smShowTimeoutProgress: SwitchMaterial = view.f(R.id.sm_showTimeoutProgress)
-
-        //endregion
-
         //region setup dialog type
 
-        tglGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
+        binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                btnDialogTypeDialog.id -> typeDialogL           = isChecked
-                btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
+                binding.btnDialogTypeDialog.id -> typeDialogL          = isChecked
+                binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
         simplePrefLiveData(typeDialogL, ::typeDialogL) {
-            btnDialogTypeDialog.apply {
+            binding.btnDialogTypeDialog.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
-            btnDialogTypeBottomSheet.apply {
+            binding.btnDialogTypeBottomSheet.apply {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -115,28 +107,28 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         //endregion
         //region setup theme
 
-        tglGroupTheme.addOnButtonCheckedListener { _, id, isChecked ->
+        binding.toggleButtonGroupTheme.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                btnThemeDayNight.id -> themeDayNight = isChecked
-                btnThemeLight.id -> themeLight = isChecked
-                btnThemeDark.id -> themeDark = isChecked
+                binding.btnThemeDayNight.id -> themeDayNight = isChecked
+                binding.btnThemeLight.id    -> themeLight    = isChecked
+                binding.btnThemeDark.id     -> themeDark     = isChecked
             }
         }
         simplePrefLiveData(themeDayNight, ::themeDayNight) {
-            btnThemeDayNight.apply {
-                isChecked = it
+            binding.btnThemeLight.apply {
+                isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(themeLight, ::themeLight) {
-            btnThemeLight.apply {
-                isChecked = it
+            binding.btnThemeLight.apply {
+                isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(themeDark, ::themeDark) {
-            btnThemeDark.apply {
-                isChecked = it
+            binding.btnThemeDark.apply {
+                isChecked   = it
                 isCheckable = !it
             }
         }
@@ -144,9 +136,9 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         //endregion
         //region setup animation type options
 
-        smShowLottieAnimation.apply {
+        binding.smShowLottieAnimation.apply {
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) smShowImage.isChecked = false
+                if (isChecked) binding.smShowImage.isChecked = false
                 showAnimation = isChecked
             }
             simplePrefLiveData(showAnimation, ::showAnimation) {
@@ -157,9 +149,9 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         //endregion
         //region setup image option
 
-        smShowImage.apply {
+        binding.smShowImage.apply {
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) smShowLottieAnimation.isChecked = false
+                if (isChecked) binding.smShowLottieAnimation.isChecked = false
                 showImage = isChecked
             }
             simplePrefLiveData(showImage, ::showImage) {
@@ -170,7 +162,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         //endregion
         //region setup custom text
 
-        smUseCustomText.apply {
+        binding.smUseCustomText.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
@@ -182,7 +174,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         //endregion
         //region setup cancel options
 
-        smCancelOnBackPressed.apply {
+        binding.smCancelOnBackPressed.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
@@ -191,7 +183,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
             }
         }
 
-        smCancelOnTouchOutside.apply {
+        binding.smCancelOnTouchOutside.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
@@ -204,7 +196,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         //region setup timeout
 
         @Suppress("MagicNumber")
-        with(sbActionTimeout) {
+        with(binding.sbActionTimeout) {
             colorBubble     = context.resolveColor(R.attr.colorPrimary)
             colorBubbleText = context.resolveColor(R.attr.colorOnPrimary)
             colorBar        = colorBubble
@@ -216,8 +208,8 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
                 bubbleText = "${posValue()}"
             }
 
-            val height by lazy { tvActionTimeout.height.toFloat() }
-            val animation by lazy { ViewAnimator.animate(tvActionTimeout) }
+            val height by lazy { binding.tvActionTimeout.height.toFloat() }
+            val animation by lazy { ViewAnimator.animate(binding.tvActionTimeout) }
 
             beginTrackingListener = {
                 animation.translationY(0F, -height)
@@ -239,7 +231,7 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
             }
         }
 
-        smShowTimeoutProgress.apply {
+        binding.smShowTimeoutProgress.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 showTimeoutProgressView = isChecked
             }
@@ -249,6 +241,11 @@ class LoadingDialogFragment : Fragment(R.layout.fragment_loading_dialog), Simple
         }
 
         //endregion
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     @Suppress("ComplexMethod", "LongMethod")

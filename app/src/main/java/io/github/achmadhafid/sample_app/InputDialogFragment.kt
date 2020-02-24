@@ -1,14 +1,13 @@
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.switchmaterial.SwitchMaterial
 import io.github.achmadhafid.lottie_dialog.isValidInput
 import io.github.achmadhafid.lottie_dialog.lottieInputDialog
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogInput
@@ -25,15 +24,15 @@ import io.github.achmadhafid.lottie_dialog.withInputSpec
 import io.github.achmadhafid.lottie_dialog.withTitle
 import io.github.achmadhafid.lottie_dialog.withoutAnimation
 import io.github.achmadhafid.lottie_dialog.withoutContent
+import io.github.achmadhafid.sample_app.databinding.FragmentInputDialogBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.d
-import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.toastShort
 
-class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref {
+class InputDialogFragment : Fragment(), SimplePref {
 
     //region Preference
 
@@ -55,6 +54,12 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
     private var cancelOnTouchOutside by simplePref { true }
 
     //endregion
+    //region View Binding
+
+    private var _binding: FragmentInputDialogBinding? = null
+    private val binding get() = _binding!!
+
+    //endregion
 
     //region Lifecycle Callback
 
@@ -67,56 +72,41 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
         inflater.inflate(R.menu.fragment_action_bar, menu)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentInputDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     @Suppress("ComplexMethod", "LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //region bind views
-
-        val tgDialogType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_dialog_type)
-        val btnDialogTypeDialog: MaterialButton = view.f(R.id.btn_dialog_type_dialog)
-        val btnDialogTypeBottomSheet: MaterialButton = view.f(R.id.btn_dialog_type_bottom_sheet)
-        val tgTheme: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_theme)
-        val btnThemeDayNight: MaterialButton = view.f(R.id.btn_theme_day_night)
-        val btnThemeLight: MaterialButton = view.f(R.id.btn_theme_light)
-        val btnThemeDark: MaterialButton = view.f(R.id.btn_theme_dark)
-        val tgInputType: MaterialButtonToggleGroup = view.f(R.id.toggle_button_group_input_type)
-        val btnInputTypeText: MaterialButton = view.f(R.id.btn_input_type_text)
-        val btnInputTypeNumeric: MaterialButton = view.f(R.id.btn_input_type_numeric)
-        val btnInputTypePhone: MaterialButton = view.f(R.id.btn_input_type_phone)
-        val btnInputTypePin: MaterialButton = view.f(R.id.btn_input_type_pin)
-        val btnInputTypePassword: MaterialButton = view.f(R.id.btn_input_type_password)
-        val smShowLottieAnimation: SwitchMaterial = view.f(R.id.sm_showLottieAnimation)
-        val smShowImage: SwitchMaterial = view.f(R.id.sm_showImage)
-        val smShowLottieAnimationCloseButton: SwitchMaterial = view.f(R.id.sm_showLottieAnimationCloseButton)
-        val smUseCustomText: SwitchMaterial = view.f(R.id.sm_useCustomText)
-        val smCancelOnBackPressed: SwitchMaterial = view.f(R.id.sm_cancelOnBackPressed)
-        val smCancelOnTouchOutside: SwitchMaterial = view.f(R.id.sm_cancelOnTouchOutside)
-
-        //endregion
-
         //region setup theme options
 
-        tgTheme.addOnButtonCheckedListener { _, id, isChecked ->
+        binding.toggleButtonGroupTheme.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                btnThemeDayNight.id -> themeDayNight = isChecked
-                btnThemeLight.id    -> themeLight    = isChecked
-                btnThemeDark.id     -> themeDark     = isChecked
+                binding.btnThemeDayNight.id -> themeDayNight = isChecked
+                binding.btnThemeLight.id    -> themeLight    = isChecked
+                binding.btnThemeDark.id     -> themeDark     = isChecked
             }
         }
         simplePrefLiveData(themeDayNight, ::themeDayNight) {
-            btnThemeDayNight.apply {
+            binding.btnThemeDayNight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(themeLight, ::themeLight) {
-            btnThemeLight.apply {
+            binding.btnThemeLight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(themeDark, ::themeDark) {
-            btnThemeDark.apply {
+            binding.btnThemeDark.apply {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -125,20 +115,20 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
         //endregion
         //region setup dialog type options
 
-        tgDialogType.addOnButtonCheckedListener { _, id, isChecked ->
+        binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                btnDialogTypeDialog.id      -> typeDialog      = isChecked
-                btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
+                binding.btnDialogTypeDialog.id      -> typeDialog      = isChecked
+                binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
         simplePrefLiveData(typeDialog, ::typeDialog) {
-            btnDialogTypeDialog.apply {
+            binding.btnDialogTypeDialog.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
-            btnDialogTypeBottomSheet.apply {
+            binding.btnDialogTypeBottomSheet.apply {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -147,21 +137,21 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
         //endregion
         //region setup input type options
 
-        tgInputType.addOnButtonCheckedListener { _, id, isChecked ->
+        binding.toggleButtonGroupInputType.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                btnInputTypeText.id     -> inputTypeText     = isChecked
-                btnInputTypeNumeric.id  -> inputTypeNumeric  = isChecked
-                btnInputTypePhone.id    -> inputTypePhone    = isChecked
-                btnInputTypePin.id      -> inputTypePin      = isChecked
-                btnInputTypePassword.id -> inputTypePassword = isChecked
+                binding.btnInputTypeText.id     -> inputTypeText     = isChecked
+                binding.btnInputTypeNumeric.id  -> inputTypeNumeric  = isChecked
+                binding.btnInputTypePhone.id    -> inputTypePhone    = isChecked
+                binding.btnInputTypePin.id      -> inputTypePin      = isChecked
+                binding.btnInputTypePassword.id -> inputTypePassword = isChecked
             }
         }
         listOf(
-            Triple(btnInputTypeText, inputTypeText, ::inputTypeText),
-            Triple(btnInputTypeNumeric, inputTypeNumeric, ::inputTypeNumeric),
-            Triple(btnInputTypePhone, inputTypePhone, ::inputTypePhone),
-            Triple(btnInputTypePin, inputTypePin, ::inputTypePin),
-            Triple(btnInputTypePassword, inputTypePassword, ::inputTypePassword)
+            Triple(binding.btnInputTypeText, inputTypeText, ::inputTypeText),
+            Triple(binding.btnInputTypeNumeric, inputTypeNumeric, ::inputTypeNumeric),
+            Triple(binding.btnInputTypePhone, inputTypePhone, ::inputTypePhone),
+            Triple(binding.btnInputTypePin, inputTypePin, ::inputTypePin),
+            Triple(binding.btnInputTypePassword, inputTypePassword, ::inputTypePassword)
         ).forEach { (btn, pref, prop) ->
             simplePrefLiveData(pref, prop) {
                 btn.apply {
@@ -174,35 +164,35 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
         //endregion
         //region setup animation type options
 
-        smShowLottieAnimation.apply {
+        binding.smShowLottieAnimation.apply {
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) smShowImage.isChecked = false
+                if (isChecked) binding.smShowImage.isChecked = false
                 showAnimation = isChecked
             }
             simplePrefLiveData(showAnimation, ::showAnimation) {
                 isChecked = it
-                smShowLottieAnimationCloseButton.isEnabled = isChecked || showImage
+                binding.smShowLottieAnimationCloseButton.isEnabled = isChecked || showImage
             }
         }
 
         //endregion
         //region setup image option
 
-        smShowImage.apply {
+        binding.smShowImage.apply {
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) smShowLottieAnimation.isChecked = false
+                if (isChecked) binding.smShowLottieAnimation.isChecked = false
                 showImage = isChecked
             }
             simplePrefLiveData(showImage, ::showImage) {
                 isChecked = it
-                smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
+                binding.smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
             }
         }
 
         //endregion
         //region setup close button
 
-        smShowLottieAnimationCloseButton.apply {
+        binding.smShowLottieAnimationCloseButton.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 closeButton = isChecked
             }
@@ -214,7 +204,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
         //endregion
         //region setup custom text options
 
-        smUseCustomText.apply {
+        binding.smUseCustomText.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
@@ -226,7 +216,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
         //endregion
         //region setup auto dismiss & cancel options
 
-        smCancelOnBackPressed.apply {
+        binding.smCancelOnBackPressed.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
@@ -235,7 +225,7 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
             }
         }
 
-        smCancelOnTouchOutside.apply {
+        binding.smCancelOnTouchOutside.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
@@ -245,6 +235,11 @@ class InputDialogFragment : Fragment(R.layout.fragment_input_dialog), SimplePref
         }
 
         //endregion
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     @Suppress("ComplexMethod", "LongMethod")

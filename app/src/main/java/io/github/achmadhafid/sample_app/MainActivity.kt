@@ -4,22 +4,18 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
-import com.google.android.material.appbar.AppBarLayout
+import io.github.achmadhafid.sample_app.databinding.ActivityMainBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.ktx.bindNavController
-import io.github.achmadhafid.zpack.ktx.bindView
-import io.github.achmadhafid.zpack.ktx.setMaterialToolbar
 import io.github.achmadhafid.zpack.ktx.setSelectedOnScrollDown
 import io.github.achmadhafid.zpack.ktx.toggleTheme
 
-class MainActivity : AppCompatActivity(R.layout.activity_main),
-    NavController.OnDestinationChangedListener, SimplePref {
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener, SimplePref {
 
     //region Preference
 
@@ -29,8 +25,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     //endregion
     //region View Binding
 
-    private val appBarLayout: AppBarLayout by bindView(R.id.appBarLayout)
-    private val scrollView: NestedScrollView by bindView(R.id.scrollView)
+    private lateinit var binding: ActivityMainBinding
+
     private val navController: NavController by bindNavController(R.id.nav_host_fragment)
 
     //endregion
@@ -38,9 +34,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setMaterialToolbar(R.id.toolbar)
-        appBarLayout.setSelectedOnScrollDown(scrollView)
+        setSupportActionBar(binding.toolbar)
+        binding.appBarLayout.setSelectedOnScrollDown(binding.scrollView)
         navController.addOnDestinationChangedListener(this)
 
         if (savedInstanceState == null)

@@ -1,44 +1,44 @@
 ext.versions = [
         //region Release
 
-        code              : 35,
-        name              : "3.5.6",
+        code             : 36,
+        name             : "3.6.0",
 
         //endregion
         //region SDK
 
-        compileSdkVersion : 29,
-        minSdkVersion     : 21,
-        targetSdkVersion  : 29,
+        compileSdkVersion: 29,
+        minSdkVersion    : 21,
+        targetSdkVersion : 29,
 
         //endregion
         //region Plugin
 
-        agp               : '3.5.3',
-        kotlin            : '1.3.61',
+        agp              : '3.6.0',
+        kotlin           : '1.3.61',
 
         //endregion
         //region Core Dependencies
 
-        stdlib            : '1.3.41',
-        coroutine         : '1.3.3',
-        material          : '1.2.0-alpha04',
+        stdlib           : '1.3.41',
+        coroutine        : '1.3.3',
+        material         : '1.2.0-alpha05',
 
         //endregion
         //region JetPack Dependencies
 
-        core              : '1.3.0-alpha01',
-        appcompat         : '1.2.0-alpha02',
-        activity          : '1.1.0',
-        fragment          : '1.2.0',
-        constraintlayout  : '2.0.0-beta4',
-        lifecycle         : '2.2.0',
-        navigation        : '2.2.0',
+        core             : '1.3.0-alpha01',
+        appcompat        : '1.2.0-alpha02',
+        activity         : '1.1.0',
+        fragment         : '1.2.2',
+        constraintlayout : '2.0.0-beta4',
+        lifecycle        : '2.2.0',
+        navigation        : '2.3.0-alpha02',
 
         //endregion
         //region Extra Dependencies
 
-        lottie            : '3.3.1',
+        lottie            : '3.4.0',
         fluid_slider      : '0.3.1',
         view_animator     : '1.1.1',
         simple_pref       : '2.3.1',
@@ -53,11 +53,11 @@ ext.versions = [
         truth             : '1.0-rc2',
         robolectric       : '4.3.1',
         hamcrest          : '2.1',
-        test_core         : '1.3.0-alpha03',
-        test_runner       : '1.3.0-alpha03',
-        test_rules        : '1.3.0-alpha03',
+        test_core         : '1.3.0-alpha04',
+        test_runner       : '1.3.0-alpha04',
+        test_rules        : '1.3.0-alpha04',
         test_espresso     : '3.3.0-alpha01',
-        test_ext_junit_ktx: '1.1.2-alpha03',
+        test_ext_junit_ktx: '1.1.2-alpha04',
         test_ext_truth    : '1.3.0-alpha01',
         test_fragment     : '1.2.0-alpha01'
 

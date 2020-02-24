@@ -35,6 +35,7 @@ import io.github.achmadhafid.zpack.ktx.clearConstraint
 import io.github.achmadhafid.zpack.ktx.constraintMarginEnd
 import io.github.achmadhafid.zpack.ktx.constraintMarginStart
 import io.github.achmadhafid.zpack.ktx.ctx
+import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.gone
 import kotlinx.coroutines.CoroutineScope
 
@@ -52,20 +53,21 @@ data class LottieConfirmationDialog(
     internal var onDismissListener: LottieDialogOnDismissListener = LottieDialogOnDismissListener(),
     internal var onCancelListener: LottieDialogOnCancelListener = LottieDialogOnCancelListener()
 ) {
+    @SuppressWarnings("LongMethod", "NestedBlockDepth")
     operator fun invoke(
         dialog: Dialog,
         view: View,
         coroutineScope: CoroutineScope,
         useInsideFragment: Boolean = false
     ): Dialog {
-        val illustrationLayout : FrameLayout         = view.findViewById(R.id.lottie_dialog_illustration_layout)
-        val illustrationAnim   : LottieAnimationView = view.findViewById(R.id.lottie_dialog_view_anim)
-        val illustrationImage  : ImageView           = view.findViewById(R.id.lottie_dialog_view_image)
-        val btnClose           : ImageButton         = view.findViewById(R.id.lottie_dialog_btn_close)
-        val tvTitle            : TextView            = view.findViewById(R.id.lottie_dialog_tv_title)
-        val tvContent          : TextView            = view.findViewById(R.id.lottie_dialog_tv_content)
-        val btnPositive        : MaterialButton      = view.findViewById(R.id.lottie_dialog_btn_positive)
-        val btnNegative        : MaterialButton      = view.findViewById(R.id.lottie_dialog_btn_negative)
+        val illustrationLayout : FrameLayout         = view.f(R.id.lottie_dialog_illustration_layout)
+        val illustrationAnim   : LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
+        val illustrationImage  : ImageView           = view.f(R.id.lottie_dialog_view_image)
+        val btnClose           : ImageButton         = view.f(R.id.lottie_dialog_btn_close)
+        val tvTitle            : TextView            = view.f(R.id.lottie_dialog_tv_title)
+        val tvContent          : TextView            = view.f(R.id.lottie_dialog_tv_content)
+        val btnPositive        : MaterialButton      = view.f(R.id.lottie_dialog_btn_positive)
+        val btnNegative        : MaterialButton      = view.f(R.id.lottie_dialog_btn_negative)
 
         animation?.let {
             it(illustrationLayout, illustrationAnim, btnClose, dialog, type)
