@@ -1,50 +1,50 @@
 ext.versions = [
         //region Release
 
-        code             : 36,
-        name             : "3.6.0",
+        code              : 37,
+        name              : "3.7.0",
 
         //endregion
         //region SDK
 
-        compileSdkVersion: 29,
-        minSdkVersion    : 21,
-        targetSdkVersion : 29,
+        compileSdkVersion : 29,
+        minSdkVersion     : 21,
+        targetSdkVersion  : 29,
 
         //endregion
         //region Plugin
 
-        agp              : '3.6.0',
-        kotlin           : '1.3.61',
+        agp               : '3.6.1',
+        kotlin            : '1.3.70',
 
         //endregion
         //region Core Dependencies
 
-        stdlib           : '1.3.41',
-        coroutine        : '1.3.3',
-        material         : '1.2.0-alpha05',
+        stdlib            : '1.3.41',
+        coroutine         : '1.3.4',
+        material          : '1.2.0-alpha05',
 
         //endregion
         //region JetPack Dependencies
 
-        core             : '1.3.0-alpha01',
-        appcompat        : '1.2.0-alpha02',
-        activity         : '1.1.0',
-        fragment         : '1.2.2',
-        constraintlayout : '2.0.0-beta4',
-        lifecycle        : '2.2.0',
-        navigation        : '2.3.0-alpha02',
+        activity          : '1.2.0-alpha01',
+        appcompat         : '1.2.0-alpha03',
+        constraintlayout  : '2.0.0-beta4',
+        core              : '1.3.0-alpha02',
+        fragment          : '1.3.0-alpha01',
+        lifecycle         : '2.3.0-alpha01',
+        navigation        : '2.3.0-alpha03',
 
         //endregion
         //region Extra Dependencies
 
-        lottie            : '3.4.0',
         fluid_slider      : '0.3.1',
-        view_animator     : '1.1.1',
-        simple_pref       : '2.3.1',
-        zpack             : '0.8.1',
         input_mask        : '5.0.0',
         leak_canary       : '2.0-alpha-3',
+        lottie            : '3.4.0',
+        simple_pref       : '2.4.0',
+        view_animator     : '1.1.1',
+        zpack             : '0.8.3',
 
         //endregion
         //region Testing Dependencies
@@ -82,17 +82,16 @@ ext.deps = [
         //endregion
         //region JetPack
 
-        core            : "androidx.core:core-ktx:$versions.core",
+        activity        : "androidx.activity:activity-ktx:$versions.activity",
         appcompat       : [
                 "androidx.appcompat:appcompat:$versions.appcompat",
                 "androidx.appcompat:appcompat-resources:$versions.appcompat",
         ],
-        activity        : "androidx.activity:activity-ktx:$versions.activity",
-        fragment        : "androidx.fragment:fragment-ktx:$versions.fragment",
         constraintlayout: "androidx.constraintlayout:constraintlayout:$versions.constraintlayout",
+        core            : "androidx.core:core-ktx:$versions.core",
+        fragment        : "androidx.fragment:fragment-ktx:$versions.fragment",
         lifecycle       : [
                 "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle",
-                "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle",
                 "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle",
                 "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
         ],
@@ -104,13 +103,13 @@ ext.deps = [
         //endregion
         //region Extra
 
-        lottie          : "com.airbnb.android:lottie:$versions.lottie",
         fluidslider     : "com.ramotion.fluidslider:fluid-slider:$versions.fluid_slider",
-        viewanimator    : "com.github.florent37:viewanimator:$versions.view_animator",
-        simplepref      : "com.github.AchmadHafid:SimplePref:$versions.simple_pref",
-        zpack           : "com.github.AchmadHafid:Zpack:$versions.zpack",
         input_mask      : "com.redmadrobot:input-mask-android:$versions.input_mask",
         leakcanary      : "com.squareup.leakcanary:leakcanary-android:$versions.leak_canary",
+        lottie          : "com.airbnb.android:lottie:$versions.lottie",
+        simplepref      : "com.github.AchmadHafid:SimplePref:$versions.simple_pref",
+        viewanimator    : "com.github.florent37:viewanimator:$versions.view_animator",
+        zpack           : "com.github.AchmadHafid:Zpack:$versions.zpack",
 
         //endregion
         //region Testing

@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.observe
 import io.github.achmadhafid.lottie_dialog.isValidInput
 import io.github.achmadhafid.lottie_dialog.lottieInputDialog
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogInput
@@ -93,19 +94,19 @@ class InputDialogFragment : Fragment(), SimplePref {
                 binding.btnThemeDark.id     -> themeDark     = isChecked
             }
         }
-        simplePrefLiveData(themeDayNight, ::themeDayNight) {
+        simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner) {
             binding.btnThemeDayNight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        simplePrefLiveData(themeLight, ::themeLight) {
+        simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner) {
             binding.btnThemeLight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        simplePrefLiveData(themeDark, ::themeDark) {
+        simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner) {
             binding.btnThemeDark.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -121,13 +122,13 @@ class InputDialogFragment : Fragment(), SimplePref {
                 binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
-        simplePrefLiveData(typeDialog, ::typeDialog) {
+        simplePrefLiveData(typeDialog, ::typeDialog).observe(viewLifecycleOwner) {
             binding.btnDialogTypeDialog.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
+        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner) {
             binding.btnDialogTypeBottomSheet.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -153,7 +154,7 @@ class InputDialogFragment : Fragment(), SimplePref {
             Triple(binding.btnInputTypePin, inputTypePin, ::inputTypePin),
             Triple(binding.btnInputTypePassword, inputTypePassword, ::inputTypePassword)
         ).forEach { (btn, pref, prop) ->
-            simplePrefLiveData(pref, prop) {
+            simplePrefLiveData(pref, prop).observe(viewLifecycleOwner) {
                 btn.apply {
                     isChecked   = it
                     isCheckable = !it
@@ -169,7 +170,7 @@ class InputDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowImage.isChecked = false
                 showAnimation = isChecked
             }
-            simplePrefLiveData(showAnimation, ::showAnimation) {
+            simplePrefLiveData(showAnimation, ::showAnimation).observe(viewLifecycleOwner) {
                 isChecked = it
                 binding.smShowLottieAnimationCloseButton.isEnabled = isChecked || showImage
             }
@@ -183,7 +184,7 @@ class InputDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowLottieAnimation.isChecked = false
                 showImage = isChecked
             }
-            simplePrefLiveData(showImage, ::showImage) {
+            simplePrefLiveData(showImage, ::showImage).observe(viewLifecycleOwner) {
                 isChecked = it
                 binding.smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
             }
@@ -196,7 +197,7 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 closeButton = isChecked
             }
-            simplePrefLiveData(closeButton, ::closeButton) {
+            simplePrefLiveData(closeButton, ::closeButton).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -208,7 +209,7 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
-            simplePrefLiveData(useCustomText, ::useCustomText) {
+            simplePrefLiveData(useCustomText, ::useCustomText).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -220,7 +221,7 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -229,7 +230,7 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }

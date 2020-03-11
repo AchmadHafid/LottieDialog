@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.observe
 import com.github.florent37.viewanimator.ViewAnimator
 import io.github.achmadhafid.lottie_dialog.lottieConfirmationDialog
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
@@ -97,19 +98,19 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 binding.btnThemeDark.id     -> themeDark     = isChecked
             }
         }
-        simplePrefLiveData(themeDayNight, ::themeDayNight) {
+        simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner) {
             binding.btnThemeDayNight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        simplePrefLiveData(themeLight, ::themeLight) {
+        simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner) {
             binding.btnThemeLight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        simplePrefLiveData(themeDark, ::themeDark) {
+        simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner) {
             binding.btnThemeDark.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -125,13 +126,13 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
-        simplePrefLiveData(typeDialog, ::typeDialog) {
+        simplePrefLiveData(typeDialog, ::typeDialog).observe(viewLifecycleOwner) {
             binding.btnDialogTypeDialog.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
+        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner) {
             binding.btnDialogTypeBottomSheet.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -146,7 +147,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowImage.isChecked = false
                 showAnimation = isChecked
             }
-            simplePrefLiveData(showAnimation, ::showAnimation) {
+            simplePrefLiveData(showAnimation, ::showAnimation).observe(viewLifecycleOwner) {
                 isChecked = it
                 val btnList = listOf(
                     binding.btnAnimationCentered to animationCentered,
@@ -192,7 +193,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     animationCentered = isChecked
                 }
             }
-            simplePrefLiveData(animationCentered, ::animationCentered) {
+            simplePrefLiveData(animationCentered, ::animationCentered).observe(viewLifecycleOwner) {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -203,7 +204,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     animationFull = isChecked
                 }
             }
-            simplePrefLiveData(animationFull, ::animationFull) {
+            simplePrefLiveData(animationFull, ::animationFull).observe(viewLifecycleOwner) {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -217,7 +218,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowLottieAnimation.isChecked = false
                 showImage = isChecked
             }
-            simplePrefLiveData(showImage, ::showImage) {
+            simplePrefLiveData(showImage, ::showImage).observe(viewLifecycleOwner) {
                 isChecked = it
                 binding.smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
             }
@@ -230,7 +231,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 closeButton = isChecked
             }
-            simplePrefLiveData(closeButton, ::closeButton) {
+            simplePrefLiveData(closeButton, ::closeButton).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -242,7 +243,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 negativeButton = isChecked
             }
-            simplePrefLiveData(negativeButton, ::negativeButton) {
+            simplePrefLiveData(negativeButton, ::negativeButton).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -254,7 +255,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 showIcon = isChecked
             }
-            simplePrefLiveData(showIcon, ::showIcon) {
+            simplePrefLiveData(showIcon, ::showIcon).observe(viewLifecycleOwner) {
                 isChecked = it
                 val btnList = listOf(
                     binding.btnIconSvg    to iconSvg,
@@ -299,7 +300,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     iconSvg = isChecked
                 }
             }
-            simplePrefLiveData(iconSvg, ::iconSvg) {
+            simplePrefLiveData(iconSvg, ::iconSvg).observe(viewLifecycleOwner) {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -310,7 +311,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     iconBitmap = isChecked
                 }
             }
-            simplePrefLiveData(iconBitmap, ::iconBitmap) {
+            simplePrefLiveData(iconBitmap, ::iconBitmap).observe(viewLifecycleOwner) {
                 isChecked   = it
                 isCheckable = !it
             }
@@ -346,7 +347,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 actionDelay = (floor(1000 * position / 50) * 50).toLong()
             }
 
-            simplePrefLiveData(actionDelay, ::actionDelay) {
+            simplePrefLiveData(actionDelay, ::actionDelay).observe(viewLifecycleOwner) {
                 position   = actionDelay / 1000F
                 bubbleText = "$actionDelay"
             }
@@ -359,7 +360,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
-            simplePrefLiveData(useCustomText, ::useCustomText) {
+            simplePrefLiveData(useCustomText, ::useCustomText).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -371,7 +372,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -380,7 +381,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }

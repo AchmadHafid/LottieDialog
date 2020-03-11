@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.observe
 import com.github.florent37.viewanimator.ViewAnimator
 import io.github.achmadhafid.lottie_dialog.lottieLoadingDialog
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
@@ -91,13 +92,13 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                 binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
-        simplePrefLiveData(typeDialogL, ::typeDialogL) {
+        simplePrefLiveData(typeDialogL, ::typeDialogL).observe(viewLifecycleOwner) {
             binding.btnDialogTypeDialog.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet) {
+        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner) {
             binding.btnDialogTypeBottomSheet.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -114,19 +115,19 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                 binding.btnThemeDark.id     -> themeDark     = isChecked
             }
         }
-        simplePrefLiveData(themeDayNight, ::themeDayNight) {
+        simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner) {
             binding.btnThemeLight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        simplePrefLiveData(themeLight, ::themeLight) {
+        simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner) {
             binding.btnThemeLight.apply {
                 isChecked   = it
                 isCheckable = !it
             }
         }
-        simplePrefLiveData(themeDark, ::themeDark) {
+        simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner) {
             binding.btnThemeDark.apply {
                 isChecked   = it
                 isCheckable = !it
@@ -141,7 +142,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowImage.isChecked = false
                 showAnimation = isChecked
             }
-            simplePrefLiveData(showAnimation, ::showAnimation) {
+            simplePrefLiveData(showAnimation, ::showAnimation).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -154,7 +155,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowLottieAnimation.isChecked = false
                 showImage = isChecked
             }
-            simplePrefLiveData(showImage, ::showImage) {
+            simplePrefLiveData(showImage, ::showImage).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -166,7 +167,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
-            simplePrefLiveData(useCustomText, ::useCustomText) {
+            simplePrefLiveData(useCustomText, ::useCustomText).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -178,7 +179,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -187,7 +188,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }
@@ -225,7 +226,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                 timeoutValue = posValue()
             }
 
-            simplePrefLiveData(timeoutValue, ::timeoutValue) {
+            simplePrefLiveData(timeoutValue, ::timeoutValue).observe(viewLifecycleOwner) {
                 position   = timeoutValue / maxTimeout.toFloat()
                 bubbleText = "$timeoutValue"
             }
@@ -235,7 +236,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 showTimeoutProgressView = isChecked
             }
-            simplePrefLiveData(showTimeoutProgressView, ::showTimeoutProgressView) {
+            simplePrefLiveData(showTimeoutProgressView, ::showTimeoutProgressView).observe(viewLifecycleOwner) {
                 isChecked = it
             }
         }

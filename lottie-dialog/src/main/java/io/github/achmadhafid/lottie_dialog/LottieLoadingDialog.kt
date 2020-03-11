@@ -32,7 +32,6 @@ import io.github.achmadhafid.zpack.ktx.addNavigationBarPadding
 import io.github.achmadhafid.zpack.ktx.atLeastOreoMR1
 import io.github.achmadhafid.zpack.ktx.ctx
 import io.github.achmadhafid.zpack.ktx.f
-import io.github.achmadhafid.zpack.ktx.fullScreen
 import io.github.achmadhafid.zpack.ktx.gone
 import io.github.achmadhafid.zpack.ktx.hasSoftNavigationKeys
 import io.github.achmadhafid.zpack.ktx.visibleOrGone
@@ -96,7 +95,8 @@ data class LottieLoadingDialog(
         }
 
         if (atLeastOreoMR1()) {
-            dialog.window?.fullScreen()
+            view.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         }
 
         if (!useInsideFragment) {
