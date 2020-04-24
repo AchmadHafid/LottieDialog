@@ -24,7 +24,10 @@ android {
         }
     }
     lintOptions {
+        abortOnError false
         warningsAsErrors true
+        checkDependencies = true
+        checkGeneratedSources = true
     }
     sourceSets {
         androidTest {

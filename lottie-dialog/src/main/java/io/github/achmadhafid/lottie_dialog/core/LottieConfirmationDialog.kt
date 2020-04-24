@@ -1,6 +1,6 @@
 @file:Suppress("TooManyFunctions", "unused")
 
-package io.github.achmadhafid.lottie_dialog
+package io.github.achmadhafid.lottie_dialog.core
 
 import android.app.Dialog
 import android.content.Context
@@ -21,6 +21,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.button.MaterialButton
+import io.github.achmadhafid.lottie_dialog.R
+import io.github.achmadhafid.lottie_dialog.inflateView
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogButton
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogCancelOption
@@ -31,10 +33,10 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnShowListener
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.lottie_dialog.showLottieDialog
 import io.github.achmadhafid.zpack.ktx.clearConstraint
 import io.github.achmadhafid.zpack.ktx.constraintMarginEnd
 import io.github.achmadhafid.zpack.ktx.constraintMarginStart
-import io.github.achmadhafid.zpack.ktx.ctx
 import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.gone
 import kotlinx.coroutines.CoroutineScope
@@ -60,24 +62,24 @@ data class LottieConfirmationDialog(
         coroutineScope: CoroutineScope,
         useInsideFragment: Boolean = false
     ): Dialog {
-        val illustrationLayout : FrameLayout         = view.f(R.id.lottie_dialog_illustration_layout)
-        val illustrationAnim   : LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
-        val illustrationImage  : ImageView           = view.f(R.id.lottie_dialog_view_image)
-        val btnClose           : ImageButton         = view.f(R.id.lottie_dialog_btn_close)
-        val tvTitle            : TextView            = view.f(R.id.lottie_dialog_tv_title)
-        val tvContent          : TextView            = view.f(R.id.lottie_dialog_tv_content)
-        val btnPositive        : MaterialButton      = view.f(R.id.lottie_dialog_btn_positive)
-        val btnNegative        : MaterialButton      = view.f(R.id.lottie_dialog_btn_negative)
+        val illustrationLayout: FrameLayout = view.f(R.id.lottie_dialog_illustration_layout)
+        val illustrationAnim: LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
+        val illustrationImage: ImageView = view.f(R.id.lottie_dialog_view_image)
+        val btnClose: ImageButton = view.f(R.id.lottie_dialog_btn_close)
+        val tvTitle: TextView = view.f(R.id.lottie_dialog_tv_title)
+        val tvContent: TextView = view.f(R.id.lottie_dialog_tv_content)
+        val btnPositive: MaterialButton = view.f(R.id.lottie_dialog_btn_positive)
+        val btnNegative: MaterialButton = view.f(R.id.lottie_dialog_btn_negative)
 
         animation?.let {
             it(illustrationLayout, illustrationAnim, btnClose, dialog, type)
-            tvTitle.gravity   = Gravity.CENTER
+            tvTitle.gravity = Gravity.CENTER
             tvContent.gravity = Gravity.CENTER
             if (negativeButton == null) {
                 btnPositive.layoutParams.width = 0
                 with(view.resources.getDimensionPixelSize(R.dimen.large)) {
                     btnPositive.constraintMarginStart = this
-                    btnPositive.constraintMarginEnd   = this
+                    btnPositive.constraintMarginEnd = this
                 }
             }
         } ?: run {
@@ -86,13 +88,13 @@ data class LottieConfirmationDialog(
 
             image?.let {
                 it(illustrationLayout, illustrationImage, btnClose, dialog, type)
-                tvTitle.gravity   = Gravity.CENTER
+                tvTitle.gravity = Gravity.CENTER
                 tvContent.gravity = Gravity.CENTER
                 if (negativeButton == null) {
                     btnPositive.layoutParams.width = 0
                     with(view.resources.getDimensionPixelSize(R.dimen.large)) {
                         btnPositive.constraintMarginStart = this
-                        btnPositive.constraintMarginEnd   = this
+                        btnPositive.constraintMarginEnd = this
                     }
                 }
             } ?: run {
@@ -121,7 +123,6 @@ data class LottieConfirmationDialog(
         if (!useInsideFragment) {
             onDismissListener(dialog)
             onCancelListener(dialog)
-            dialog.show()
         }
 
         return dialog
@@ -135,11 +136,15 @@ data class LottieConfirmationDialog(
             vararg builders: LottieConfirmationDialog.() -> Unit
         ): Dialog {
             val lottieDialog = LottieConfirmationDialog()
+
             builders.forEach { lottieDialog.apply(it) }
 
             val (dialog, view) = inflateView(
-                context, layoutInflater, R.layout.lottie_dialog_confirmation,
-                lottieDialog.type, lottieDialog.theme
+                context,
+                layoutInflater,
+                R.layout.lottie_dialog_confirmation,
+                lottieDialog.type,
+                lottieDialog.theme
             )
 
             return lottieDialog(dialog, view, coroutineScope)
@@ -158,7 +163,15 @@ fun lottieConfirmationDialogBuilder(builder: LottieConfirmationDialog.() -> Unit
 fun AppCompatActivity.lottieConfirmationDialog(
     vararg builders: LottieConfirmationDialog.() -> Unit,
     builder: LottieConfirmationDialog.() -> Unit
-) = LottieConfirmationDialog.create(this, lifecycleScope, layoutInflater, *builders, builder)
+) {
+    LottieConfirmationDialog.create(
+        this,
+        lifecycleScope,
+        layoutInflater,
+        *builders,
+        builder
+    ).let { showLottieDialog(it) }
+}
 
 //endregion
 //region Fragment Extension
@@ -167,14 +180,14 @@ fun AppCompatActivity.lottieConfirmationDialog(
 fun Fragment.lottieConfirmationDialog(
     vararg builders: LottieConfirmationDialog.() -> Unit,
     builder: LottieConfirmationDialog.() -> Unit
-) = ctx?.let {
+) {
     LottieConfirmationDialog.create(
-        it,
+        requireContext(),
         viewLifecycleOwner.lifecycleScope,
         layoutInflater,
         *builders,
         builder
-    )
+    ).let { showLottieDialog(it) }
 }
 
 //endregion

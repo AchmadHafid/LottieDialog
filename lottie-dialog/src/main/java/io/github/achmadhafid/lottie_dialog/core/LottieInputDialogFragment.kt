@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package io.github.achmadhafid.lottie_dialog
+package io.github.achmadhafid.lottie_dialog.core
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -8,12 +8,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
+import android.widget.EditText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import io.github.achmadhafid.lottie_dialog.R
+import io.github.achmadhafid.zpack.ktx.f
 
-abstract class LottieLoadingDialogFragment : BottomSheetDialogFragment() {
+abstract class LottieInputDialogFragment : BottomSheetDialogFragment() {
 
-    private var loadingDialog: LottieLoadingDialog? = null
+    private var inputDialog: LottieInputDialog? = null
+    protected val editTextInput: EditText?
+        get() = view?.f(R.id.lottie_dialog_edt_input)
 
     override fun getTheme(): Int {
         return R.style.LottieDialogTheme_BottomSheet_DayNight
@@ -23,39 +27,36 @@ abstract class LottieLoadingDialogFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.lottie_dialog_loading, container, false)
+    ): View? = inflater.inflate(R.layout.lottie_dialog_input, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadingDialog = LottieLoadingDialog().apply(dialogBuilder)
+        inputDialog = LottieInputDialog()
+            .apply(dialogBuilder)
         dialog?.let {
-            loadingDialog!!.invoke(it, view, viewLifecycleOwner.lifecycleScope, true)
+            inputDialog!!.invoke(it, view, true)
         } ?: Log.d("LottieDialog", "no dialog attached")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        loadingDialog = null
+        inputDialog = null
     }
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        loadingDialog?.onCancelListener
+        inputDialog?.onCancelListener
             ?.onCancelListener
             ?.invoke(dialog)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        loadingDialog?.jobs?.run {
-            forEach { job -> job.cancel() }
-            clear()
-        }
-        loadingDialog?.onDismissListener
+        inputDialog?.onDismissListener
             ?.onDismissListener
             ?.invoke(dialog)
     }
 
-    abstract val dialogBuilder: (LottieLoadingDialog.() -> Unit)
+    abstract val dialogBuilder: (LottieInputDialog.() -> Unit)
 
 }

@@ -10,21 +10,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.github.florent37.viewanimator.ViewAnimator
-import io.github.achmadhafid.lottie_dialog.lottieConfirmationDialog
+import io.github.achmadhafid.lottie_dialog.core.lottieConfirmationDialog
+import io.github.achmadhafid.lottie_dialog.core.onCancel
+import io.github.achmadhafid.lottie_dialog.core.withAnimation
+import io.github.achmadhafid.lottie_dialog.core.withCancelOption
+import io.github.achmadhafid.lottie_dialog.core.withContent
+import io.github.achmadhafid.lottie_dialog.core.withImage
+import io.github.achmadhafid.lottie_dialog.core.withNegativeButton
+import io.github.achmadhafid.lottie_dialog.core.withPositiveButton
+import io.github.achmadhafid.lottie_dialog.core.withTitle
+import io.github.achmadhafid.lottie_dialog.core.withoutAnimation
+import io.github.achmadhafid.lottie_dialog.core.withoutImage
+import io.github.achmadhafid.lottie_dialog.core.withoutNegativeButton
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.model.onClick
-import io.github.achmadhafid.lottie_dialog.onCancel
-import io.github.achmadhafid.lottie_dialog.withAnimation
-import io.github.achmadhafid.lottie_dialog.withCancelOption
-import io.github.achmadhafid.lottie_dialog.withContent
-import io.github.achmadhafid.lottie_dialog.withImage
-import io.github.achmadhafid.lottie_dialog.withNegativeButton
-import io.github.achmadhafid.lottie_dialog.withPositiveButton
-import io.github.achmadhafid.lottie_dialog.withTitle
-import io.github.achmadhafid.lottie_dialog.withoutAnimation
-import io.github.achmadhafid.lottie_dialog.withoutImage
-import io.github.achmadhafid.lottie_dialog.withoutNegativeButton
 import io.github.achmadhafid.sample_app.databinding.FragmentConfirmationDialogBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
@@ -94,25 +94,25 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
         binding.toggleButtonGroupTheme.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
                 binding.btnThemeDayNight.id -> themeDayNight = isChecked
-                binding.btnThemeLight.id    -> themeLight    = isChecked
-                binding.btnThemeDark.id     -> themeDark     = isChecked
+                binding.btnThemeLight.id -> themeLight = isChecked
+                binding.btnThemeDark.id -> themeDark = isChecked
             }
         }
         simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner) {
             binding.btnThemeDayNight.apply {
-                isChecked   = it
+                isChecked = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner) {
             binding.btnThemeLight.apply {
-                isChecked   = it
+                isChecked = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner) {
             binding.btnThemeDark.apply {
-                isChecked   = it
+                isChecked = it
                 isCheckable = !it
             }
         }
@@ -122,19 +122,19 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
 
         binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                binding.btnDialogTypeDialog.id      -> typeDialog      = isChecked
+                binding.btnDialogTypeDialog.id -> typeDialog = isChecked
                 binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
         simplePrefLiveData(typeDialog, ::typeDialog).observe(viewLifecycleOwner) {
             binding.btnDialogTypeDialog.apply {
-                isChecked   = it
+                isChecked = it
                 isCheckable = !it
             }
         }
         simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner) {
             binding.btnDialogTypeBottomSheet.apply {
-                isChecked   = it
+                isChecked = it
                 isCheckable = !it
             }
         }
@@ -151,13 +151,13 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 isChecked = it
                 val btnList = listOf(
                     binding.btnAnimationCentered to animationCentered,
-                    binding.btnAnimationFull     to animationFull
+                    binding.btnAnimationFull to animationFull
                 )
                 if (isChecked) {
                     btnList.apply {
                         map { item -> item.first }.forEach { button ->
                             button.apply {
-                                isEnabled   = true
+                                isEnabled = true
                                 isCheckable = true
                             }
                         }
@@ -171,8 +171,8 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     btnList.map { item -> item.first }.forEach { button ->
                         button.apply {
                             isCheckable = true
-                            isChecked   = false
-                            isEnabled   = false
+                            isChecked = false
+                            isEnabled = false
                         }
                     }
                 }
@@ -183,7 +183,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             if (binding.smShowLottieAnimation.isChecked) {
                 when (id) {
                     binding.btnAnimationCentered.id -> animationCentered = isChecked
-                    binding.btnAnimationFull.id     -> animationFull     = isChecked
+                    binding.btnAnimationFull.id -> animationFull = isChecked
                 }
             }
         }
@@ -194,7 +194,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 }
             }
             simplePrefLiveData(animationCentered, ::animationCentered).observe(viewLifecycleOwner) {
-                isChecked   = it
+                isChecked = it
                 isCheckable = !it
             }
         }
@@ -205,7 +205,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 }
             }
             simplePrefLiveData(animationFull, ::animationFull).observe(viewLifecycleOwner) {
-                isChecked   = it
+                isChecked = it
                 isCheckable = !it
             }
         }
@@ -258,14 +258,14 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             simplePrefLiveData(showIcon, ::showIcon).observe(viewLifecycleOwner) {
                 isChecked = it
                 val btnList = listOf(
-                    binding.btnIconSvg    to iconSvg,
+                    binding.btnIconSvg to iconSvg,
                     binding.btnIconBitmap to iconBitmap
                 )
                 if (isChecked) {
                     btnList.apply {
                         map { item -> item.first }.forEach { button ->
                             button.apply {
-                                isEnabled   = true
+                                isEnabled = true
                                 isCheckable = true
                             }
                         }
@@ -279,8 +279,8 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     btnList.map { item -> item.first }.forEach { button ->
                         button.apply {
                             isCheckable = true
-                            isChecked   = false
-                            isEnabled   = false
+                            isChecked = false
+                            isEnabled = false
                         }
                     }
                 }
@@ -289,7 +289,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
         binding.toggleButtonGroupIconType.addOnButtonCheckedListener { _, id, isChecked ->
             if (binding.smShowButtonIcon.isChecked) {
                 when (id) {
-                    binding.btnIconSvg.id    -> iconSvg    = isChecked
+                    binding.btnIconSvg.id -> iconSvg = isChecked
                     binding.btnIconBitmap.id -> iconBitmap = isChecked
                 }
             }
@@ -301,7 +301,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 }
             }
             simplePrefLiveData(iconSvg, ::iconSvg).observe(viewLifecycleOwner) {
-                isChecked   = it
+                isChecked = it
                 isCheckable = !it
             }
         }
@@ -312,7 +312,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 }
             }
             simplePrefLiveData(iconBitmap, ::iconBitmap).observe(viewLifecycleOwner) {
-                isChecked   = it
+                isChecked = it
                 isCheckable = !it
             }
         }
@@ -322,9 +322,9 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
 
         @Suppress("MagicNumber")
         with(binding.sbActionDelay) {
-            colorBubble     = context.resolveColor(R.attr.colorPrimary)
+            colorBubble = context.resolveColor(R.attr.colorPrimary)
             colorBubbleText = context.resolveColor(R.attr.colorOnPrimary)
-            colorBar        = colorBubble
+            colorBar = colorBubble
 
             positionListener = {
                 bubbleText = "${(floor(1000 * position / 50) * 50).toLong()}"
@@ -348,7 +348,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             }
 
             simplePrefLiveData(actionDelay, ::actionDelay).observe(viewLifecycleOwner) {
-                position   = actionDelay / 1000F
+                position = actionDelay / 1000F
                 bubbleText = "$actionDelay"
             }
         }
@@ -372,7 +372,9 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(
+                viewLifecycleOwner
+            ) {
                 isChecked = it
             }
         }
@@ -381,7 +383,9 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(
+                viewLifecycleOwner
+            ) {
                 isChecked = it
             }
         }
@@ -401,15 +405,15 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                 lottieConfirmationDialog(BaseDialog.requestSomething) {
                     //region setup type
                     when {
-                        typeDialog      -> type = LottieDialogType.DIALOG
+                        typeDialog -> type = LottieDialogType.DIALOG
                         typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
                     }
                     //endregion
                     //region setup theme
                     when {
                         themeDayNight -> theme = LottieDialogTheme.DAY_NIGHT
-                        themeLight    -> theme = LottieDialogTheme.LIGHT
-                        themeDark     -> theme = LottieDialogTheme.DARK
+                        themeLight -> theme = LottieDialogTheme.LIGHT
+                        themeDark -> theme = LottieDialogTheme.DARK
                     }
                     //endregion
                     //region setup animation or image
@@ -417,11 +421,11 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                         showAnimation -> {
                             withAnimation {
                                 if (animationCentered) {
-                                    fileRes    = R.raw.lottie_animation_location
+                                    fileRes = R.raw.lottie_animation_location
                                     paddingRes = R.dimen.lottie_dialog_animation_padding
                                 }
                                 if (animationFull) {
-                                    fileRes    = R.raw.lottie_animation_notification
+                                    fileRes = R.raw.lottie_animation_notification
                                     bgColorRes = R.color.bg_dialog_notification
                                 }
                                 showCloseButton = closeButton
@@ -429,8 +433,8 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                         }
                         showImage -> {
                             withImage {
-                                imageRes        = R.drawable.offline
-                                paddingRes      = R.dimen.lottie_dialog_animation_padding
+                                imageRes = R.drawable.offline
+                                paddingRes = R.dimen.lottie_dialog_animation_padding
                                 showCloseButton = closeButton
                             }
                         }
@@ -444,11 +448,11 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     withTitle {
                         textRes = when {
                             animationCentered -> R.string.dialog_location_title
-                            animationFull     -> R.string.dialog_notification_title
-                            else              -> R.string.dialog_location_title
+                            animationFull -> R.string.dialog_notification_title
+                            else -> R.string.dialog_location_title
                         }
                         if (useCustomText) {
-                            fontRes  = R.font.lobster_two_bold
+                            fontRes = R.font.lobster_two_bold
                             styleRes = R.style.AppTheme_TextAppearance
                         }
                     }
@@ -457,8 +461,8 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     withContent {
                         textRes = when {
                             animationCentered -> R.string.dialog_location_content
-                            animationFull     -> R.string.dialog_notification_content
-                            else              -> R.string.dialog_location_content
+                            animationFull -> R.string.dialog_notification_content
+                            else -> R.string.dialog_location_content
                         }
                         if (useCustomText) {
                             fontRes = R.font.sofia
@@ -467,11 +471,11 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     //endregion
                     //region setup positive button
                     withPositiveButton {
-                        textRes     = android.R.string.ok
+                        textRes = android.R.string.ok
                         actionDelay = this@ConfirmationDialogFragment.actionDelay
                         if (showIcon) {
                             when {
-                                iconSvg    -> iconRes = R.drawable.ic_check_black_18dp_svg
+                                iconSvg -> iconRes = R.drawable.ic_check_black_18dp_svg
                                 iconBitmap -> iconRes = R.drawable.ic_check_black_18dp
                             }
                         }
@@ -481,11 +485,11 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     //region setup negative button
                     if (negativeButton) {
                         withNegativeButton {
-                            textRes     = R.string.negative_button
+                            textRes = R.string.negative_button
                             actionDelay = this@ConfirmationDialogFragment.actionDelay
                             if (showIcon) {
                                 when {
-                                    iconSvg    -> iconRes = R.drawable.ic_close_black_18dp_svg
+                                    iconSvg -> iconRes = R.drawable.ic_close_black_18dp_svg
                                     iconBitmap -> iconRes = R.drawable.ic_close_black_18dp
                                 }
                             }
@@ -497,7 +501,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                     //endregion
                     //region setup cancel options
                     withCancelOption {
-                        onBackPressed  = cancelOnBackPressed
+                        onBackPressed = cancelOnBackPressed
                         onTouchOutside = cancelOnTouchOutside
                     }
                     //endregion
