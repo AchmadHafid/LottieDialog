@@ -14,8 +14,8 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
@@ -136,7 +136,7 @@ fun lottieLoadingDialogBuilder(builder: LottieLoadingDialog.() -> Unit) = builde
 //region Activity Extension
 
 @Suppress("SpreadOperator")
-fun FragmentActivity.lottieLoadingDialog(
+fun AppCompatActivity.lottieLoadingDialog(
     vararg builders: LottieLoadingDialog.() -> Unit,
     builder: LottieLoadingDialog.() -> Unit
 ) = LottieLoadingDialog.create(this, layoutInflater, lifecycleScope, *builders, builder)
