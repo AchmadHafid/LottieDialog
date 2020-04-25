@@ -40,7 +40,7 @@ private fun createDialog(
         .setView(view)
         .create()
         .apply {
-            window?.setBackgroundDrawableResource(R.drawable.lottie_dialog_bg_rounded_corner_dialog)
+            window?.setBackgroundDrawableResource(R.drawable.lottie_dialog_bg_rounded_corner)
         }
 }
 
