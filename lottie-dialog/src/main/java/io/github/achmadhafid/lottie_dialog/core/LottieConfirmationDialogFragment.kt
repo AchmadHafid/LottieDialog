@@ -16,9 +16,7 @@ abstract class LottieConfirmationDialogFragment : BottomSheetDialogFragment() {
 
     private var confirmationDialog: LottieConfirmationDialog? = null
 
-    override fun getTheme(): Int {
-        return R.style.LottieDialogTheme_BottomSheet_DayNight
-    }
+    override fun getTheme() = R.style.Theme_LottieDialog_BottomSheet_DayNight
 
     override fun onCreateView(
         inflater: LayoutInflater,

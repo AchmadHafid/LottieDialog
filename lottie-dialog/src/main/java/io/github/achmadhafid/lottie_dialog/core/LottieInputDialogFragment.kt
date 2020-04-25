@@ -19,9 +19,7 @@ abstract class LottieInputDialogFragment : BottomSheetDialogFragment() {
     protected val editTextInput: EditText?
         get() = view?.f(R.id.lottie_dialog_edt_input)
 
-    override fun getTheme(): Int {
-        return R.style.LottieDialogTheme_BottomSheet_DayNight
-    }
+    override fun getTheme() = R.style.Theme_LottieDialog_BottomSheet_DayNight
 
     override fun onCreateView(
         inflater: LayoutInflater,

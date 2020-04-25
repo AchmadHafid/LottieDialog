@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="LottieDialogTheme.BottomSheet.DayNight" parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.DayNight" parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">?android:colorBackground</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
+        <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
-    <style name="LottieDialogTheme.BottomSheet.Light" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.Light" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">?android:colorBackground</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
+        <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
-    <style name="LottieDialogTheme.BottomSheet.Dark" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.Dark" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">?android:colorBackground</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
+        <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
 </resources>
