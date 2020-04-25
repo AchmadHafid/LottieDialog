@@ -161,6 +161,7 @@ fun lottieConfirmationDialogBuilder(builder: LottieConfirmationDialog.() -> Unit
 
 @Suppress("SpreadOperator")
 fun AppCompatActivity.lottieConfirmationDialog(
+    priority: Int,
     vararg builders: LottieConfirmationDialog.() -> Unit,
     builder: LottieConfirmationDialog.() -> Unit
 ) {
@@ -170,7 +171,7 @@ fun AppCompatActivity.lottieConfirmationDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it) }
+    ).let { showLottieDialog(it, priority) }
 }
 
 //endregion
@@ -178,6 +179,7 @@ fun AppCompatActivity.lottieConfirmationDialog(
 
 @Suppress("SpreadOperator")
 fun Fragment.lottieConfirmationDialog(
+    priority: Int,
     vararg builders: LottieConfirmationDialog.() -> Unit,
     builder: LottieConfirmationDialog.() -> Unit
 ) {
@@ -187,7 +189,7 @@ fun Fragment.lottieConfirmationDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it) }
+    ).let { showLottieDialog(it, priority) }
 }
 
 //endregion

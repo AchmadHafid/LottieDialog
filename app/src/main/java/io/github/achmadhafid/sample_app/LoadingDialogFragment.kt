@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.github.florent37.viewanimator.ViewAnimator
 import io.github.achmadhafid.lottie_dialog.core.lottieLoadingDialog
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.core.onCancel
 import io.github.achmadhafid.lottie_dialog.core.onTimeout
 import io.github.achmadhafid.lottie_dialog.core.withAnimation
@@ -21,6 +19,8 @@ import io.github.achmadhafid.lottie_dialog.core.withImage
 import io.github.achmadhafid.lottie_dialog.core.withTitle
 import io.github.achmadhafid.lottie_dialog.core.withoutAnimation
 import io.github.achmadhafid.lottie_dialog.core.withoutImage
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.sample_app.databinding.FragmentLoadingDialogBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
@@ -253,7 +253,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_show_dialog -> {
-                lottieLoadingDialog(BaseDialog.doSomething) {
+                lottieLoadingDialog(Int.MAX_VALUE, BaseDialog.doSomething) {
                     //region setup type
                     when {
                         typeDialogL      -> type = LottieDialogType.DIALOG

@@ -130,6 +130,7 @@ fun lottieInputDialogBuilder(builder: LottieInputDialog.() -> Unit) = builder
 
 @Suppress("SpreadOperator")
 fun AppCompatActivity.lottieInputDialog(
+    priority: Int,
     vararg builders: LottieInputDialog.() -> Unit,
     builder: LottieInputDialog.() -> Unit
 ) {
@@ -138,7 +139,7 @@ fun AppCompatActivity.lottieInputDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it) }
+    ).let { showLottieDialog(it, priority) }
 }
 
 //endregion
@@ -146,6 +147,7 @@ fun AppCompatActivity.lottieInputDialog(
 
 @Suppress("SpreadOperator")
 fun Fragment.lottieInputDialog(
+    priority: Int,
     vararg builders: LottieInputDialog.() -> Unit,
     builder: LottieInputDialog.() -> Unit
 ) {
@@ -154,7 +156,7 @@ fun Fragment.lottieInputDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it) }
+    ).let { showLottieDialog(it, priority) }
 }
 
 //endregion
