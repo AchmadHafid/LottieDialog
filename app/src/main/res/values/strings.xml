@@ -3,7 +3,6 @@
     <string name="app_name">Lottie Dialog</string>
 
     <string name="menu_toggle_theme">Toggle Theme</string>
-    <string name="menu_select_type">Select Type</string>
     <string name="menu_reset_preferences">Reset Preferences</string>
     <string name="menu_show_dialog">Show Dialog</string>
 
@@ -14,13 +13,6 @@
     <string name="switch_show_lottie_animation_close_button">Show Close Button</string>
     <string name="switch_show_timeout_progress">Show Timeout Progress</string>
 
-    <string name="tutorial_toggle_theme_title">Switch Theme</string>
-    <string name="tutorial_toggle_theme_description"><![CDATA[Tap here to switch between light & dark theme]]></string>
-    <string name="tutorial_select_dialog_type_title">Select Dialog</string>
-    <string name="tutorial_select_dialog_type_description">Tap here to select dialog type</string>
-    <string name="tutorial_show_dialog_title">Show Dialog</string>
-    <string name="tutorial_show_dialog_description">Tap here to show your dialog based on settings</string>
-
     <string name="message_on_positive">Thank you</string>
     <string name="message_on_negative">OK that\'s fine</string>
     <string name="negative_button">Not Now</string>
@@ -29,7 +21,6 @@
     <string name="dialog_notification_title">Notification Access Required</string>
     <string name="dialog_notification_content">Please allow this application to access device notification in order to coninue</string>
     <string name="switch_use_custom_text">Use Custom Text</string>
-    <string name="switch_enable_auto_dismiss">Enable Auto Dismiss</string>
     <string name="switch_cancel_on_back_pressed">Cancel On Back Pressed</string>
     <string name="switch_cancel_on_touch_outside">Cancel On Touch Outside</string>
     <string name="btn_animation_centered">Centered</string>
@@ -55,6 +46,5 @@
     <string name="action_select_type_confirmation">Confirmation Dialog</string>
     <string name="action_select_type_input">Input Dialog</string>
     <string name="action_select_type_loading">Loading Dialog</string>
-
 
 </resources>

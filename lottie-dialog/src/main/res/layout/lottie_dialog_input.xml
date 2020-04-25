@@ -10,66 +10,50 @@
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true">
 
-        <FrameLayout
+        <include
             android:id="@+id/lottie_dialog_illustration_layout"
-            android:layout_width="@dimen/empty"
+            layout="@layout/lottie_dialog_view_illustration"
+            android:layout_width="@dimen/match_constraint"
             android:layout_height="@dimen/lottie_dialog_animation_height_input"
             app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_tv_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" >
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottie_dialog_view_anim"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerInside"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true" />
-
-            <ImageView
-                android:id="@+id/lottie_dialog_view_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:ignore="ContentDescription" />
-
-        </FrameLayout>
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <ImageButton
             android:id="@+id/lottie_dialog_btn_close"
+            style="@style/Widget.LottieDialog.CloseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium"
             android:layout_marginTop="@dimen/medium"
-            android:background="@null"
-            android:src="@drawable/ic_round_close_24dp"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/lottie_dialog_tv_title"
             android:layout_width="@dimen/match_constraint"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium"
             android:layout_marginTop="@dimen/medium"
             android:layout_marginEnd="@dimen/medium"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textAppearance="@style/TextAppearance.LottieDialog.Title"
             app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_tv_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lottie_dialog_illustration_layout"
             tools:text="Some Title Here" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/lottie_dialog_tv_content"
             android:layout_width="@dimen/match_constraint"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium"
             android:layout_marginEnd="@dimen/medium"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textAppearance="@style/TextAppearance.LottieDialog.Content"
             app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_edt_input"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,18 +62,13 @@
 
         <EditText
             android:id="@+id/lottie_dialog_edt_input"
+            style="@style/Widget.LottieDialog.EditText"
             android:layout_width="@dimen/match_constraint"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium"
             android:layout_marginTop="@dimen/medium_fit"
             android:layout_marginEnd="@dimen/medium"
             android:layout_marginBottom="@dimen/medium"
-            android:background="@null"
-            android:imeOptions="actionNone"
-            android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:textColor="?attr/colorPrimary"
-            android:textCursorDrawable="@drawable/edit_text_cursor_color_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/lottie_dialog_btn_extra_action"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -99,12 +78,11 @@
 
         <ImageButton
             android:id="@+id/lottie_dialog_btn_extra_action"
+            style="@style/Widget.LottieDialog.Input.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/small"
-            android:background="@null"
             android:padding="@dimen/small"
-            android:tint="?attr/colorPrimary"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/lottie_dialog_edt_input"
             app:layout_constraintEnd_toStartOf="@+id/lottie_dialog_btn_clear"
@@ -114,13 +92,12 @@
 
         <ImageButton
             android:id="@+id/lottie_dialog_btn_clear"
+            style="@style/Widget.LottieDialog.Input.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/small"
-            android:background="@null"
             android:padding="@dimen/small"
-            android:src="@drawable/ic_round_close_24dp"
-            android:tint="?attr/colorPrimary"
+            android:src="@drawable/lottie_dialog_ic_round_close_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/lottie_dialog_edt_input"
             app:layout_constraintEnd_toStartOf="@+id/lottie_dialog_btn_done"
             app:layout_constraintStart_toEndOf="@+id/lottie_dialog_btn_extra_action"
@@ -129,13 +106,12 @@
 
         <ImageButton
             android:id="@+id/lottie_dialog_btn_done"
+            style="@style/Widget.LottieDialog.Input.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/medium"
-            android:background="@null"
             android:padding="@dimen/small"
-            android:src="@drawable/ic_round_done_24px"
-            android:tint="?attr/colorPrimary"
+            android:src="@drawable/lottie_dialog_ic_round_done_24px"
             app:layout_constraintBottom_toBottomOf="@+id/lottie_dialog_edt_input"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/lottie_dialog_btn_clear"

@@ -1,6 +1,6 @@
 @file:Suppress("TooManyFunctions", "unused")
 
-package io.github.achmadhafid.lottie_dialog
+package io.github.achmadhafid.lottie_dialog.core
 
 import android.app.Dialog
 import android.content.Context
@@ -21,6 +21,8 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
+import io.github.achmadhafid.lottie_dialog.R
+import io.github.achmadhafid.lottie_dialog.inflateView
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogCancelOption
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogImage
@@ -32,12 +34,12 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogOnShowListener
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
-import io.github.achmadhafid.zpack.ktx.ctx
+import io.github.achmadhafid.lottie_dialog.showLottieDialog
 import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.gone
 
 data class LottieInputDialog(
-    var type: LottieDialogType = LottieDialogType.DIALOG,
+    var type: LottieDialogType = LottieDialogType.BOTTOM_SHEET,
     var theme: LottieDialogTheme = LottieDialogTheme.DAY_NIGHT,
     internal var image: LottieDialogImage? = null,
     internal var animation: LottieDialogAnimation? = null,
@@ -55,16 +57,16 @@ data class LottieInputDialog(
         view: View,
         useInsideFragment: Boolean = false
     ): Dialog {
-        val illustrationLayout : FrameLayout         = view.f(R.id.lottie_dialog_illustration_layout)
-        val illustrationAnim   : LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
-        val illustrationImage  : ImageView           = view.f(R.id.lottie_dialog_view_image)
-        val btnClose           : ImageButton         = view.f(R.id.lottie_dialog_btn_close)
-        val tvTitle            : TextView            = view.f(R.id.lottie_dialog_tv_title)
-        val tvContent          : TextView            = view.f(R.id.lottie_dialog_tv_content)
-        val edtInput           : EditText            = view.f(R.id.lottie_dialog_edt_input)
-        val btnClear           : ImageButton         = view.f(R.id.lottie_dialog_btn_clear)
-        val btnDone            : ImageButton         = view.f(R.id.lottie_dialog_btn_done)
-        val btnExtra           : ImageButton         = view.f(R.id.lottie_dialog_btn_extra_action)
+        val illustrationLayout: FrameLayout = view.f(R.id.lottie_dialog_illustration_layout)
+        val illustrationAnim: LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
+        val illustrationImage: ImageView = view.f(R.id.lottie_dialog_view_image)
+        val btnClose: ImageButton = view.f(R.id.lottie_dialog_btn_close)
+        val tvTitle: TextView = view.f(R.id.lottie_dialog_tv_title)
+        val tvContent: TextView = view.f(R.id.lottie_dialog_tv_content)
+        val edtInput: EditText = view.f(R.id.lottie_dialog_edt_input)
+        val btnClear: ImageButton = view.f(R.id.lottie_dialog_btn_clear)
+        val btnDone: ImageButton = view.f(R.id.lottie_dialog_btn_done)
+        val btnExtra: ImageButton = view.f(R.id.lottie_dialog_btn_extra_action)
 
         animation?.invoke(illustrationLayout, illustrationAnim, btnClose, dialog, type) ?: run {
             illustrationAnim.gone()
@@ -91,7 +93,6 @@ data class LottieInputDialog(
         if (!useInsideFragment) {
             onDismissListener(dialog)
             onCancelListener(dialog)
-            dialog.show()
         }
 
         return dialog
@@ -104,11 +105,15 @@ data class LottieInputDialog(
             vararg builders: LottieInputDialog.() -> Unit
         ): Dialog {
             val lottieDialog = LottieInputDialog()
+
             builders.forEach { lottieDialog.apply(it) }
 
             val (dialog, view) = inflateView(
-                context, layoutInflater, R.layout.lottie_dialog_input,
-                lottieDialog.type, lottieDialog.theme
+                context,
+                layoutInflater,
+                R.layout.lottie_dialog_input,
+                lottieDialog.type,
+                lottieDialog.theme
             )
 
             return lottieDialog.invoke(dialog, view)
@@ -125,19 +130,33 @@ fun lottieInputDialogBuilder(builder: LottieInputDialog.() -> Unit) = builder
 
 @Suppress("SpreadOperator")
 fun AppCompatActivity.lottieInputDialog(
+    priority: Int,
     vararg builders: LottieInputDialog.() -> Unit,
     builder: LottieInputDialog.() -> Unit
-) = LottieInputDialog.create(this, layoutInflater, *builders, builder)
+) {
+    LottieInputDialog.create(
+        this,
+        layoutInflater,
+        *builders,
+        builder
+    ).let { showLottieDialog(it, priority) }
+}
 
 //endregion
 //region Fragment Extension
 
 @Suppress("SpreadOperator")
 fun Fragment.lottieInputDialog(
+    priority: Int,
     vararg builders: LottieInputDialog.() -> Unit,
     builder: LottieInputDialog.() -> Unit
-) = ctx?.let {
-    LottieInputDialog.create(it, layoutInflater, *builders, builder)
+) {
+    LottieInputDialog.create(
+        requireContext(),
+        layoutInflater,
+        *builders,
+        builder
+    ).let { showLottieDialog(it, priority) }
 }
 
 //endregion

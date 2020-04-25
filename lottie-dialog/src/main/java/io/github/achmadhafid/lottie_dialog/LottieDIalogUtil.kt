@@ -32,15 +32,15 @@ private fun createDialog(
     dialogTheme: LottieDialogTheme
 ): Dialog {
     val theme = when (dialogTheme) {
-        LottieDialogTheme.LIGHT     -> R.style.LottieDialogTheme_Dialog_Light
-        LottieDialogTheme.DARK      -> R.style.LottieDialogTheme_Dialog_Dark
-        LottieDialogTheme.DAY_NIGHT -> R.style.LottieDialogTheme_Dialog_DayNight
+        LottieDialogTheme.LIGHT     -> R.style.Theme_LottieDialog_Light
+        LottieDialogTheme.DARK      -> R.style.Theme_LottieDialog_Dark
+        LottieDialogTheme.DAY_NIGHT -> R.style.Theme_LottieDialog_DayNight
     }
     return MaterialAlertDialogBuilder(context, theme)
         .setView(view)
         .create()
         .apply {
-            window?.setBackgroundDrawableResource(R.drawable.lottie_dialog_bg_rounded_corner_dialog)
+            window?.setBackgroundDrawableResource(R.drawable.lottie_dialog_bg_rounded_corner)
         }
 }
 
@@ -50,9 +50,9 @@ private fun createBottomSheet(
     dialogTheme: LottieDialogTheme
 ): Dialog {
     val theme = when (dialogTheme) {
-        LottieDialogTheme.LIGHT     -> R.style.LottieDialogTheme_BottomSheet_Light
-        LottieDialogTheme.DARK      -> R.style.LottieDialogTheme_BottomSheet_Dark
-        LottieDialogTheme.DAY_NIGHT -> R.style.LottieDialogTheme_BottomSheet_DayNight
+        LottieDialogTheme.LIGHT     -> R.style.Theme_LottieDialog_BottomSheet_Light
+        LottieDialogTheme.DARK      -> R.style.Theme_LottieDialog_BottomSheet_Dark
+        LottieDialogTheme.DAY_NIGHT -> R.style.Theme_LottieDialog_BottomSheet_DayNight
     }
     return BottomSheetDialog(context, theme).apply { setContentView(view) }
 }

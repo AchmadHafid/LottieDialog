@@ -5,33 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <FrameLayout
+    <include
         android:id="@+id/lottie_dialog_illustration_layout"
-        android:layout_width="@dimen/empty"
+        layout="@layout/lottie_dialog_view_illustration"
+        android:layout_width="@dimen/match_constraint"
         android:layout_height="@dimen/lottie_dialog_animation_height_loading"
         app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_tv_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie_dialog_view_anim"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true" />
-
-        <ImageView
-            android:id="@+id/lottie_dialog_view_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="ContentDescription" />
-
-    </FrameLayout>
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/lottie_dialog_tv_title"
         android:layout_width="@dimen/empty"
         android:layout_height="wrap_content"
@@ -39,7 +24,7 @@
         android:layout_marginEnd="@dimen/medium"
         android:layout_marginBottom="@dimen/medium"
         android:gravity="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textAppearance="@style/TextAppearance.LottieDialog.Title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,11 +34,9 @@
 
     <ProgressBar
         android:id="@+id/lottie_dialog_progress_bar_timeout"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        style="@style/Widget.LottieDialog.ProgressBar"
         android:layout_width="@dimen/empty"
         android:layout_height="@dimen/very_small"
-        android:indeterminate="false"
-        android:progressTint="?attr/colorPrimary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

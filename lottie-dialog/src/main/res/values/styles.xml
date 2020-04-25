@@ -1,42 +1,41 @@
 <resources>
 
-    <style name="LottieDialogTheme.Dialog.DayNight" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert">
+    <!--    Theme-->
+
+    <style name="Theme.LottieDialog.DayNight" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="android:background">?android:colorBackground</item>
     </style>
 
-    <style name="LottieDialogTheme.Dialog.Light" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert">
+    <style name="Theme.LottieDialog.Light" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="android:background">?android:colorBackground</item>
     </style>
 
-    <style name="LottieDialogTheme.Dialog.Dark" parent="@style/Theme.MaterialComponents.Dialog.Alert">
+    <style name="Theme.LottieDialog.Dark" parent="@style/Theme.MaterialComponents.Dialog.Alert">
         <item name="android:background">?android:colorBackground</item>
     </style>
 
-    <style name="LottieDialogTheme.BottomSheet.DayNight" parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.DayNight" parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
+        <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
-    <style name="LottieDialogTheme.BottomSheet.Light" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.Light" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
+        <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
-    <style name="LottieDialogTheme.BottomSheet.Dark" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.Dark" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="bottomSheetStyle">@style/LottieDialogTheme.BottomSheet.Style</item>
+        <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
-    <style name="LottieDialogTheme.BottomSheet.Style" parent="@style/Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="shapeAppearanceOverlay">
-            @style/LottieDialogTheme.BottomSheet.ShapeAppearanceOverlay
-        </item>
-    </style>
+    <!--    endregion-->
+    <!--    ShapeAppearance-->
 
-    <style name="LottieDialogTheme.BottomSheet.ShapeAppearanceOverlay" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+    <style name="ShapeAppearance.LottieDialog.BottomSheet" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <item name="cornerFamilyTopLeft">rounded</item>
         <item name="cornerFamilyTopRight">rounded</item>
         <item name="cornerSizeTopLeft">@dimen/lottie_dialog_corner_radius_bottom_sheet</item>
@@ -44,5 +43,53 @@
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
+
+    <!--    endregion-->
+    <!--    region Text Appearance-->
+
+    <style name="TextAppearance.LottieDialog.Title" parent="TextAppearance.MaterialComponents.Headline6" />
+
+    <style name="TextAppearance.LottieDialog.Content" parent="TextAppearance.MaterialComponents.Body2" />
+
+    <!--    endregion-->
+    <!--    Widget-->
+
+    <style name="Widget.LottieDialog.BottomSheet" parent="@style/Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.LottieDialog.BottomSheet</item>
+    </style>
+
+    <style name="Widget.LottieDialog.AnimationView" parent="">
+        <item name="android:scaleType">centerInside</item>
+        <item name="lottie_autoPlay">true</item>
+        <item name="lottie_loop">true</item>
+    </style>
+
+    <style name="Widget.LottieDialog.ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:indeterminate">false</item>
+        <item name="android:progressTint">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.LottieDialog.EditText" parent="">
+        <item name="android:background">@null</item>
+        <item name="android:imeOptions">actionNone</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textCursorDrawable">@drawable/lottie_dialog_edit_text_cursor</item>
+        <item name="android:textAppearance">
+            @style/TextAppearance.MaterialComponents.Headline6
+        </item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.LottieDialog.CloseButton" parent="">
+        <item name="android:background">@null</item>
+        <item name="android:src">@drawable/lottie_dialog_ic_round_close_24dp</item>
+    </style>
+
+    <style name="Widget.LottieDialog.Input.ImageButton" parent="">
+        <item name="android:background">@null</item>
+        <item name="android:tint">?attr/colorPrimary</item>
+    </style>
+
+    <!--    endregion-->
 
 </resources>
