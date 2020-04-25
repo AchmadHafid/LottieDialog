@@ -39,7 +39,7 @@ import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.gone
 
 data class LottieInputDialog(
-    var type: LottieDialogType = LottieDialogType.DIALOG,
+    var type: LottieDialogType = LottieDialogType.BOTTOM_SHEET,
     var theme: LottieDialogTheme = LottieDialogTheme.DAY_NIGHT,
     internal var image: LottieDialogImage? = null,
     internal var animation: LottieDialogAnimation? = null,

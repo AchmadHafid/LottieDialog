@@ -42,7 +42,7 @@ import io.github.achmadhafid.zpack.ktx.gone
 import kotlinx.coroutines.CoroutineScope
 
 data class LottieConfirmationDialog(
-    var type: LottieDialogType = LottieDialogType.DIALOG,
+    var type: LottieDialogType = LottieDialogType.BOTTOM_SHEET,
     var theme: LottieDialogTheme = LottieDialogTheme.DAY_NIGHT,
     internal var image: LottieDialogImage? = null,
     internal var animation: LottieDialogAnimation? = null,

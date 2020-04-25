@@ -41,7 +41,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 
 data class LottieLoadingDialog(
-    var type: LottieDialogType = LottieDialogType.DIALOG,
+    var type: LottieDialogType = LottieDialogType.BOTTOM_SHEET,
     var theme: LottieDialogTheme = LottieDialogTheme.DAY_NIGHT,
     var timeout: Long? = null,
     var showTimeOutProgress: Boolean = true,
