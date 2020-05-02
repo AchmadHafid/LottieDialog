@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="lottie_dialog_animation_padding">16dp</dimen>
+    <dimen name="stroke_width">1dp</dimen>
+    <dimen name="lottie_dialog_loading_image_height">192dp</dimen>
+    <dimen name="text_small">14sp</dimen>
 
     <!-- region Global Setting -->
 

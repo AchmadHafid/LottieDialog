@@ -4,10 +4,9 @@ import android.app.Dialog
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.google.android.material.button.MaterialButton
-import io.github.achmadhafid.zpack.ktx.onSingleClick
-import io.github.achmadhafid.zpack.ktx.setIconRes
-import io.github.achmadhafid.zpack.ktx.setTextRes
-import io.github.achmadhafid.zpack.ktx.show
+import io.github.achmadhafid.zpack.extension.view.onSingleClick
+import io.github.achmadhafid.zpack.extension.view.setTextRes
+import io.github.achmadhafid.zpack.extension.view.show
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -31,7 +30,7 @@ data class LottieDialogButton(
     ) {
         textRes    ?.let { button.setTextRes(it) }
         text       ?.let { button.text = it }
-        iconRes    ?.let { button.setIconRes(it) }
+        iconRes    ?.let { button.setIconResource(it) }
         iconGravity?.let { button.iconGravity = it }
 
         with(button) {

@@ -9,13 +9,13 @@ import android.widget.ImageButton
 import androidx.core.widget.doAfterTextChanged
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import io.github.achmadhafid.lottie_dialog.R
-import io.github.achmadhafid.zpack.ktx.INPUT_TYPE_HIDDEN_PASSWORD
-import io.github.achmadhafid.zpack.ktx.clear
-import io.github.achmadhafid.zpack.ktx.hide
-import io.github.achmadhafid.zpack.ktx.onSingleClick
-import io.github.achmadhafid.zpack.ktx.setTextAndMoveCursor
-import io.github.achmadhafid.zpack.ktx.togglePasswordVisibility
-import io.github.achmadhafid.zpack.ktx.visibleOrInvisible
+import io.github.achmadhafid.zpack.extension.view.INPUT_TYPE_HIDDEN_PASSWORD
+import io.github.achmadhafid.zpack.extension.view.clear
+import io.github.achmadhafid.zpack.extension.view.invisible
+import io.github.achmadhafid.zpack.extension.view.onSingleClick
+import io.github.achmadhafid.zpack.extension.view.setText
+import io.github.achmadhafid.zpack.extension.view.togglePasswordVisibility
+import io.github.achmadhafid.zpack.extension.view.visibleOrInvisible
 
 data class LottieDialogInput(
     var inputType: Type = Type.TEXT,
@@ -70,10 +70,10 @@ data class LottieDialogInput(
             Type.PIN      -> InputType.TYPE_CLASS_TEXT.also {
                 editText.filters += InputFilter.AllCaps()
             }
-            Type.PASSWORD -> INPUT_TYPE_HIDDEN_PASSWORD.also { btnExtra.hide() }
+            Type.PASSWORD -> INPUT_TYPE_HIDDEN_PASSWORD.also { btnExtra.invisible() }
         }
         initialValue?.let {
-            editText.setTextAndMoveCursor(it)
+            editText.setText(it, true)
         }
 
         btnClear.onSingleClick {

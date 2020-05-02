@@ -6,7 +6,7 @@ import io.github.achmadhafid.lottie_dialog.core.lottieLoadingDialogBuilder
 import io.github.achmadhafid.lottie_dialog.core.onCancel
 import io.github.achmadhafid.lottie_dialog.core.onDismiss
 import io.github.achmadhafid.lottie_dialog.core.onShow
-import io.github.achmadhafid.zpack.ktx.d
+import io.github.achmadhafid.zpack.extension.d
 
 object BaseDialog {
 

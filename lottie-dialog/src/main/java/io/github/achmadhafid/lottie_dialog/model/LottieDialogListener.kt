@@ -3,7 +3,7 @@ package io.github.achmadhafid.lottie_dialog.model
 import android.app.Dialog
 import android.content.DialogInterface
 import android.widget.ProgressBar
-import io.github.achmadhafid.zpack.ktx.isVisible
+import androidx.core.view.isVisible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

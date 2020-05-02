@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.github.achmadhafid.lottie_dialog.R
-import io.github.achmadhafid.zpack.ktx.f
+import io.github.achmadhafid.zpack.extension.view.f
 
 abstract class LottieInputDialogFragment : BottomSheetDialogFragment() {
 

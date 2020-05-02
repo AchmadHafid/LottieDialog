@@ -7,9 +7,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
-import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -35,8 +32,12 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.showLottieDialog
-import io.github.achmadhafid.zpack.ktx.f
-import io.github.achmadhafid.zpack.ktx.gone
+import io.github.achmadhafid.zpack.extension.adjustKeyboard
+import io.github.achmadhafid.zpack.extension.areAllNull
+import io.github.achmadhafid.zpack.extension.view.f
+import io.github.achmadhafid.zpack.extension.view.gone
+
+//TODO("Input bottom sheet auto max expanded")
 
 data class LottieInputDialog(
     var type: LottieDialogType = LottieDialogType.BOTTOM_SHEET,
@@ -84,11 +85,13 @@ data class LottieInputDialog(
         cancelAbility(dialog)
         onShowListener(dialog)
 
-        val inputState = when {
-            type == LottieDialogType.DIALOG || (animation == null && image == null) -> SOFT_INPUT_STATE_VISIBLE
-            else -> SOFT_INPUT_STATE_HIDDEN
-        }
-        dialog.window?.setSoftInputMode(inputState or SOFT_INPUT_ADJUST_RESIZE)
+//        val inputState = when {
+//            type == LottieDialogType.DIALOG || (animation == null && image == null) -> SOFT_INPUT_STATE_VISIBLE
+//            else -> SOFT_INPUT_STATE_HIDDEN
+//        }
+//        dialog.window?.setSoftInputMode(inputState or SOFT_INPUT_ADJUST_RESIZE)
+
+        dialog.window?.adjustKeyboard(type == LottieDialogType.DIALOG || areAllNull(animation, image))
 
         if (!useInsideFragment) {
             onDismissListener(dialog)

@@ -34,11 +34,11 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.showLottieDialog
-import io.github.achmadhafid.zpack.ktx.clearConstraint
-import io.github.achmadhafid.zpack.ktx.constraintMarginEnd
-import io.github.achmadhafid.zpack.ktx.constraintMarginStart
-import io.github.achmadhafid.zpack.ktx.f
-import io.github.achmadhafid.zpack.ktx.gone
+import io.github.achmadhafid.zpack.extension.view.clearConstraint
+import io.github.achmadhafid.zpack.extension.view.constraintMarginEnd
+import io.github.achmadhafid.zpack.extension.view.constraintMarginStart
+import io.github.achmadhafid.zpack.extension.view.f
+import io.github.achmadhafid.zpack.extension.view.gone
 import kotlinx.coroutines.CoroutineScope
 
 data class LottieConfirmationDialog(

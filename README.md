@@ -18,15 +18,18 @@ Display a beautiful confirmation dialog with Lottie animation inside easily usin
 ![image](https://drive.google.com/uc?export=download&id=1T93iGEfESTVg1SsmMYLDzQBkw3iItIrs)
 <br />
 <br />
-[**Download Demo App Here**](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.5.1/LottieDialog.v3.5.1.apk)
+[**Download Demo App Here**](https://github.com/AchmadHafid/LottieDialog/releases/download/v4.1.0/LottieDialog.4.1.0.apk)
 
 Main Features
 --------
-* Create dialogs easily by using extension function for Activity & Fragment
-* Available for (conventional) alert dialog and bottom sheet based dialog
-* Full support of Material Components theme (e.g. light theme & dark theme)
-* Flexible customization options from corner radius to callback delay
-* Builder / base dialog template for more code simplification
+* Create dialogs easily by using __*extension functions*__ available for Activity & Fragment
+* Two Flavors: (conventional) __*alert dialog*__ and __*bottom sheet based dialog*__ (default)
+* Three Types: __*confirmation*__ (yes-no dialog), __*input*__ & __*loading progress*__
+* Full support of __*Material Components*__ theme (e.g. light theme & dark theme)
+* __*Flexible*__ customization options from corner radius to callback delay
+* __*Lifecycle aware, self contained reference*__. No need to declare a variable just to dismiss it later.
+* __*Priority option*__ available to prevent multiple overlapping dialogs show up at the same time (e.g. when multiple errors occured at the same time)
+* __*Builder*__ / base dialog template available for further code simplification
 
 
 Compatibility
@@ -55,21 +58,41 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:LottieDialog:3.7.2"
+  implementation "com.github.AchmadHafid:LottieDialog:4.1.0"
   ...
 }
 ```
 
 
-Live Template
+Quick Usage
 -------------
-Add live template for this library to your Android Studio to get started quickly. <br />
-[Download Live Template Here](https://github.com/AchmadHafid/LottieDialog/releases/download/v3.5.1/LottieDialog.v3.5.1_live_templates.zip)
-<br />
-Import via: `File` > `Import Settings...` <br />
 
-**Full API with detail documentation**
-![image](https://drive.google.com/uc?export=download&id=1GVyVsMo_AJs4nuBr-CDUuWtYOwZPtCTb)
+```kotlin
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
+//class MainFragment : Fragment(R.layout.fragment_main) {
+
+	fun showSomeDialog() {
+    	lottieConfirmationDialog(priority, baseBuilderIfAny) {
+        //lottieInputDialog(priority, baseBuilderIfAny) {
+        //lottieLoadingDialog(priority, baseBuilderIfAny) {
+
+        	// smaller priority (absolute) value -> take precedence
+            // set it to 0 for the most important dialog (no other dialogs can be shown when this dialog is still displayed)
+
+        	// customize your dialog here using DSL
+            // please use Android Studio auto complete feature to see all available API
+            // just type "this." then Android Studio will show you the complete list of it
+
+        }
+    }
+
+    fun dismissCurrentDialog() {
+    	dismissLottieDialog()
+    }
+
+}
+```
+
 <br />
 
 

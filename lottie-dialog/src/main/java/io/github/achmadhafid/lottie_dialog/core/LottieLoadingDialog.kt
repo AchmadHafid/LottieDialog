@@ -31,12 +31,12 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogText
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.showLottieDialog
-import io.github.achmadhafid.zpack.ktx.addNavigationBarPadding
-import io.github.achmadhafid.zpack.ktx.atLeastOreoMR1
-import io.github.achmadhafid.zpack.ktx.f
-import io.github.achmadhafid.zpack.ktx.gone
-import io.github.achmadhafid.zpack.ktx.hasSoftNavigationKeys
-import io.github.achmadhafid.zpack.ktx.visibleOrGone
+import io.github.achmadhafid.zpack.extension.atLeastOreoMR1
+import io.github.achmadhafid.zpack.extension.hasSoftNavigationKeys
+import io.github.achmadhafid.zpack.extension.navigationBarHeight
+import io.github.achmadhafid.zpack.extension.view.f
+import io.github.achmadhafid.zpack.extension.view.gone
+import io.github.achmadhafid.zpack.extension.view.visibleOrGone
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 
@@ -79,7 +79,9 @@ data class LottieLoadingDialog(
         }
         title(tvTitle.apply {
             if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && dialog.context.hasSoftNavigationKeys) {
-                addNavigationBarPadding()
+                context.navigationBarHeight?.let {
+                    setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom + it)
+                }
             }
         })
         cancelAbility(dialog)

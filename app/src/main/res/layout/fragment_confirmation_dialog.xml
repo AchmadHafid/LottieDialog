@@ -8,7 +8,7 @@
     app:cardCornerRadius="@dimen/very_small"
     app:contentPadding="@dimen/medium"
     app:strokeColor="?attr/colorPrimary"
-    app:strokeWidth="@dimen/very_tiny"
+    app:strokeWidth="@dimen/stroke_width"
     tools:context=".ConfirmationDialogFragment">
 
     <LinearLayout

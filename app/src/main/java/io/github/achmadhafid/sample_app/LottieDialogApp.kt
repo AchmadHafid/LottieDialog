@@ -4,7 +4,7 @@ import android.app.Application
 import io.github.achmadhafid.simplepref.lifecycle.SimplePrefApplication
 import io.github.achmadhafid.simplepref.lifecycle.SimplePrefLifecycleOwner
 import io.github.achmadhafid.simplepref.simplePref
-import io.github.achmadhafid.zpack.ktx.applyTheme
+import io.github.achmadhafid.zpack.extension.applyTheme
 
 @Suppress("unused")
 class LottieDialogApp : Application(), SimplePrefLifecycleOwner by SimplePrefApplication() {

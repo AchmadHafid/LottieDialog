@@ -30,8 +30,8 @@ import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
-import io.github.achmadhafid.zpack.ktx.d
-import io.github.achmadhafid.zpack.ktx.toastShort
+import io.github.achmadhafid.zpack.extension.d
+import io.github.achmadhafid.zpack.extension.toastShort
 
 class InputDialogFragment : Fragment(), SimplePref {
 
@@ -272,7 +272,7 @@ class InputDialogFragment : Fragment(), SimplePref {
                         showImage -> {
                             withImage {
                                 imageRes        = R.drawable.offline
-                                paddingRes      = R.dimen.lottie_dialog_animation_padding
+                                paddingTopRes   = R.dimen.medium
                                 showCloseButton = closeButton
                             }
                         }

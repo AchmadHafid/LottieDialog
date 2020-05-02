@@ -30,9 +30,9 @@ import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
-import io.github.achmadhafid.zpack.ktx.d
-import io.github.achmadhafid.zpack.ktx.resolveColor
-import io.github.achmadhafid.zpack.ktx.toastShort
+import io.github.achmadhafid.zpack.extension.d
+import io.github.achmadhafid.zpack.extension.resolveColor
+import io.github.achmadhafid.zpack.extension.toastShort
 import kotlin.math.floor
 
 class ConfirmationDialogFragment : Fragment(), SimplePref {
@@ -422,7 +422,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                             withAnimation {
                                 if (animationCentered) {
                                     fileRes = R.raw.lottie_animation_location
-                                    paddingRes = R.dimen.lottie_dialog_animation_padding
+                                    paddingTopRes = R.dimen.medium
                                 }
                                 if (animationFull) {
                                     fileRes = R.raw.lottie_animation_notification
@@ -434,7 +434,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
                         showImage -> {
                             withImage {
                                 imageRes = R.drawable.offline
-                                paddingRes = R.dimen.lottie_dialog_animation_padding
+                                paddingRes = R.dimen.medium
                                 showCloseButton = closeButton
                             }
                         }

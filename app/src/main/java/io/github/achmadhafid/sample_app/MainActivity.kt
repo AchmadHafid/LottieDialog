@@ -8,12 +8,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import io.github.achmadhafid.sample_app.databinding.ActivityMainBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.simplePref
-import io.github.achmadhafid.zpack.ktx.bindNavController
-import io.github.achmadhafid.zpack.ktx.setSelectedOnScrollDown
-import io.github.achmadhafid.zpack.ktx.toggleTheme
+import io.github.achmadhafid.zpack.extension.toggleTheme
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener, SimplePref {
 
@@ -27,7 +26,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     private lateinit var binding: ActivityMainBinding
 
-    private val navController: NavController by bindNavController(R.id.nav_host_fragment)
+    private val navController: NavController by lazy {
+        findNavController(R.id.nav_host_fragment)
+    }
 
     //endregion
     //region Lifecycle Callback
@@ -38,7 +39,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
-        binding.appBarLayout.setSelectedOnScrollDown(binding.scrollView)
         navController.addOnDestinationChangedListener(this)
 
         if (savedInstanceState == null)

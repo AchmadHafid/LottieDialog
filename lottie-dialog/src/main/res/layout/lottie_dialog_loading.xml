@@ -18,7 +18,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/lottie_dialog_tv_title"
-        android:layout_width="@dimen/empty"
+        android:layout_width="@dimen/match_constraint"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/medium"
         android:layout_marginEnd="@dimen/medium"
@@ -35,7 +35,7 @@
     <ProgressBar
         android:id="@+id/lottie_dialog_progress_bar_timeout"
         style="@style/Widget.LottieDialog.ProgressBar"
-        android:layout_width="@dimen/empty"
+        android:layout_width="@dimen/match_constraint"
         android:layout_height="@dimen/very_small"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
