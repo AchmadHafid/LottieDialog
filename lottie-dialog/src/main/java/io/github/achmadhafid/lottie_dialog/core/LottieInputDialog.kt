@@ -37,8 +37,6 @@ import io.github.achmadhafid.zpack.extension.areAllNull
 import io.github.achmadhafid.zpack.extension.view.f
 import io.github.achmadhafid.zpack.extension.view.gone
 
-//TODO("Input bottom sheet auto max expanded")
-
 data class LottieInputDialog(
     var type: LottieDialogType = LottieDialogType.BOTTOM_SHEET,
     var theme: LottieDialogTheme = LottieDialogTheme.DAY_NIGHT,
