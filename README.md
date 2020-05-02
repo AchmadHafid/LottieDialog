@@ -71,24 +71,24 @@ Quick Usage
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 //class MainFragment : Fragment(R.layout.fragment_main) {
 
-	fun showSomeDialog() {
-    	lottieConfirmationDialog(priority, baseBuilderIfAny) {
-        //lottieInputDialog(priority, baseBuilderIfAny) {
-        //lottieLoadingDialog(priority, baseBuilderIfAny) {
+  fun showSomeDialog() {
+    lottieConfirmationDialog(priority, baseBuilderIfAny) {
+    //lottieInputDialog(priority, baseBuilderIfAny) {
+    //lottieLoadingDialog(priority, baseBuilderIfAny) {
 
-        	// smaller priority (absolute) value -> take precedence
-            // set it to 0 for the most important dialog (no other dialogs can be shown when this dialog is still displayed)
+      // smaller priority (absolute) value -> take precedence
+      // set it to 0 for the most important dialog (no other dialogs can be shown when this dialog is still displayed)
 
-        	// customize your dialog here using DSL
-            // please use Android Studio auto complete feature to see all available API
-            // just type "this." then Android Studio will show you the complete list of it
+      // customize your dialog here using DSL
+      // please use Android Studio auto complete feature to see all available API
+      // just type "this." then Android Studio will show you the complete list of it
 
-        }
     }
+  }
 
-    fun dismissCurrentDialog() {
-    	dismissLottieDialog()
-    }
+  fun dismissCurrentDialog() {
+    dismissLottieDialog()
+  }
 
 }
 ```
