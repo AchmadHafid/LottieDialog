@@ -6,7 +6,7 @@ import androidx.annotation.StringRes
 import com.google.android.material.button.MaterialButton
 import io.github.achmadhafid.zpack.extension.view.onSingleClick
 import io.github.achmadhafid.zpack.extension.view.setTextRes
-import io.github.achmadhafid.zpack.extension.view.show
+import io.github.achmadhafid.zpack.extension.view.visible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -43,7 +43,7 @@ data class LottieDialogButton(
                 }
                 dialog.dismiss()
             }
-            show()
+            visible()
         }
     }
 }

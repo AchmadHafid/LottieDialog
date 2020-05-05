@@ -18,7 +18,7 @@ import io.github.achmadhafid.zpack.extension.view.onSingleClick
 import io.github.achmadhafid.zpack.extension.view.setBackgroundColorRes
 import io.github.achmadhafid.zpack.extension.view.setImageTintList
 import io.github.achmadhafid.zpack.extension.view.setPaddingRes
-import io.github.achmadhafid.zpack.extension.view.show
+import io.github.achmadhafid.zpack.extension.view.visible
 import io.github.achmadhafid.zpack.extension.view.visibleOrGone
 
 data class LottieDialogAnimation(
@@ -53,7 +53,7 @@ data class LottieDialogAnimation(
         type: LottieDialogType
     ) {
         fileRes?.let {
-            animationView.show()
+            animationView.visible()
             animationView.setAnimation(it)
             animationView.speed      = animationSpeed
             animationView.repeatMode = repeatMode
