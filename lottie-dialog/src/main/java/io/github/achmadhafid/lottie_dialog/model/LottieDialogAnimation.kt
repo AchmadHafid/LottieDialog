@@ -45,6 +45,7 @@ data class LottieDialogAnimation(
     @ColorRes @AttrRes
     var closeButtonColorRes: Int? = null
 ) {
+    @Suppress("ComplexMethod")
     operator fun invoke(
         animationLayout: FrameLayout,
         animationView: LottieAnimationView,

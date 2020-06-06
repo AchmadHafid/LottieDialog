@@ -41,6 +41,7 @@ data class LottieDialogImage(
     @ColorRes @AttrRes
     var closeButtonColorRes: Int? = null
 ) {
+    @Suppress("ComplexMethod")
     operator fun invoke(
         imageViewLayout: FrameLayout,
         imageView: ImageView,
