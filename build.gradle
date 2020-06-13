@@ -14,7 +14,7 @@ buildscript {
 plugins {
     id "com.github.dcendents.android-maven" version "2.1"
     id "com.github.ben-manes.versions" version "0.28.0"
-    id "io.gitlab.arturbosch.detekt" version "1.9.1"
+    id "io.gitlab.arturbosch.detekt" version "1.10.0-RC1"
 }
 
 allprojects {
@@ -37,7 +37,7 @@ subprojects {
 
 detekt {
     toolVersion = versions.detekt
-    config = files("$project.rootDir/config//detekt/detekt.yml")
+    config = files("$project.rootDir/config/detekt/detekt.yml")
     input  = files(
             "$project.rootDir/app/src/main/java",
             "$project.rootDir/lottie-dialog/src/main/java"
