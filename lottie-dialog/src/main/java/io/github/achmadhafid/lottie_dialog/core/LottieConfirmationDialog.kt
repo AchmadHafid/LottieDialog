@@ -36,7 +36,6 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.showLottieDialog
 import io.github.achmadhafid.zpack.extension.view.clearConstraint
 import io.github.achmadhafid.zpack.extension.view.constraintMarginEnd
-import io.github.achmadhafid.zpack.extension.view.constraintMarginStart
 import io.github.achmadhafid.zpack.extension.view.f
 import io.github.achmadhafid.zpack.extension.view.gone
 import kotlinx.coroutines.CoroutineScope
@@ -75,13 +74,13 @@ data class LottieConfirmationDialog(
             it(illustrationLayout, illustrationAnim, btnClose, dialog, type)
             tvTitle.gravity = Gravity.CENTER
             tvContent.gravity = Gravity.CENTER
-            if (negativeButton == null) {
-                btnPositive.layoutParams.width = 0
-                with(view.resources.getDimensionPixelSize(R.dimen.large)) {
-                    btnPositive.constraintMarginStart = this
-                    btnPositive.constraintMarginEnd = this
-                }
-            }
+//            if (negativeButton == null) {
+//                btnPositive.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+//                with(view.resources.getDimensionPixelSize(R.dimen.large)) {
+//                    btnPositive.constraintMarginStart = this
+//                    btnPositive.constraintMarginEnd = this
+//                }
+//            }
         } ?: run {
             illustrationAnim.gone()
             btnClose.gone()
@@ -90,13 +89,13 @@ data class LottieConfirmationDialog(
                 it(illustrationLayout, illustrationImage, btnClose, dialog, type)
                 tvTitle.gravity = Gravity.CENTER
                 tvContent.gravity = Gravity.CENTER
-                if (negativeButton == null) {
-                    btnPositive.layoutParams.width = 0
-                    with(view.resources.getDimensionPixelSize(R.dimen.large)) {
-                        btnPositive.constraintMarginStart = this
-                        btnPositive.constraintMarginEnd = this
-                    }
-                }
+//                if (negativeButton == null) {
+//                    btnPositive.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+//                    with(view.resources.getDimensionPixelSize(R.dimen.large)) {
+//                        btnPositive.constraintMarginStart = this
+//                        btnPositive.constraintMarginEnd = this
+//                    }
+//                }
             } ?: run {
                 illustrationImage.gone()
                 btnClose.gone()
