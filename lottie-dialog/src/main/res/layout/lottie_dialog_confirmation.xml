@@ -57,7 +57,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/lottie_dialog_btn_negative"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Widget.LottieDialog.Confirmation.NegativeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -69,7 +69,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/lottie_dialog_btn_positive"
-        style="@style/Widget.MaterialComponents.Button"
+        style="@style/Widget.LottieDialog.Confirmation.PositiveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large"

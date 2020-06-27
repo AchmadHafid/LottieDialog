@@ -85,6 +85,10 @@
         <item name="android:src">@drawable/lottie_dialog_ic_round_close_24dp</item>
     </style>
 
+    <style name="Widget.LottieDialog.Confirmation.PositiveButton" parent="Widget.MaterialComponents.Button" />
+
+    <style name="Widget.LottieDialog.Confirmation.NegativeButton" parent="Widget.MaterialComponents.Button.OutlinedButton" />
+
     <style name="Widget.LottieDialog.Input.ImageButton" parent="">
         <item name="android:background">@null</item>
         <item name="android:tint">?attr/colorPrimary</item>
