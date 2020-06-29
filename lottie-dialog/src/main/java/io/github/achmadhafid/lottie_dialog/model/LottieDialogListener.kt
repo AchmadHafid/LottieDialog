@@ -47,17 +47,17 @@ data class LottieDialogOnTimeoutListener(
         pbTimeout: ProgressBar,
         coroutineScope: CoroutineScope
     ): Job? {
-        val progressBarUpdateFrequency = 200
+        val progressBarUpdateFrequency = 100
 
         pbTimeout.max      = timeout.toInt()
         pbTimeout.progress = 0
 
         return coroutineScope.launch {
+            val delay = timeout / progressBarUpdateFrequency
             for (index in 1..progressBarUpdateFrequency) {
-                val length = timeout / progressBarUpdateFrequency
-                delay(length)
+                delay(delay)
                 if (pbTimeout.isVisible) {
-                    pbTimeout.progress = (index * length).toInt()
+                    pbTimeout.progress = (index * delay).toInt()
                 }
             }
             dialog.dismiss()
