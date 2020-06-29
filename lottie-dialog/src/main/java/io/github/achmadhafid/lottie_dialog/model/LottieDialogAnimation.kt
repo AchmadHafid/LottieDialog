@@ -10,7 +10,6 @@ import androidx.annotation.RawRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updatePadding
 import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieDrawable
 import io.github.achmadhafid.lottie_dialog.R
 import io.github.achmadhafid.zpack.extension.view.gone
 import io.github.achmadhafid.zpack.extension.view.makeRoundedCornerOnTop
@@ -38,12 +37,13 @@ data class LottieDialogAnimation(
     var paddingLeftRes: Int? = null,
     @DimenRes
     var paddingRightRes: Int? = null,
-    var animationSpeed: Float = 1f,
-    @LottieDrawable.RepeatMode
-    var repeatMode: Int = LottieDrawable.RESTART,
+//    var animationSpeed: Float = 1f,
+//    @LottieDrawable.RepeatMode
+//    var repeatMode: Int = LottieDrawable.RESTART,
     var showCloseButton: Boolean = true,
     @ColorRes @AttrRes
-    var closeButtonColorRes: Int? = null
+    var closeButtonColorRes: Int? = null,
+    var lottieAnimationProperties: LottieAnimationView.() -> Unit = {}
 ) {
     @Suppress("ComplexMethod")
     operator fun invoke(
@@ -56,8 +56,9 @@ data class LottieDialogAnimation(
         fileRes?.let {
             animationView.visible()
             animationView.setAnimation(it)
-            animationView.speed      = animationSpeed
-            animationView.repeatMode = repeatMode
+//            animationView.speed      = animationSpeed
+//            animationView.repeatMode = repeatMode
+            animationView.apply(lottieAnimationProperties)
         } ?: run {
             animationView.gone()
             btnClose?.gone()
@@ -98,4 +99,8 @@ data class LottieDialogAnimation(
             onSingleClick { dialog.cancel() }
         }
     }
+}
+
+fun LottieDialogAnimation.withProperties(properties: LottieAnimationView.() -> Unit) {
+    lottieAnimationProperties = properties
 }

@@ -33,4 +33,5 @@ dependencies {
     implementation deps.simplepref
     implementation deps.viewanimator
     implementation deps.fluidslider
+    implementation deps.lottie
 }

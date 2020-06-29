@@ -21,6 +21,7 @@ import io.github.achmadhafid.lottie_dialog.core.withoutAnimation
 import io.github.achmadhafid.lottie_dialog.core.withoutImage
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.lottie_dialog.model.withProperties
 import io.github.achmadhafid.sample_app.databinding.FragmentLoadingDialogBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
@@ -276,7 +277,9 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                         showAnimation -> {
                             withAnimation {
                                 fileRes        = R.raw.lottie_animation_loading
-                                animationSpeed = 2f
+                                withProperties {
+                                    speed = 2.0f
+                                }
                             }
                         }
                         showImage -> {
