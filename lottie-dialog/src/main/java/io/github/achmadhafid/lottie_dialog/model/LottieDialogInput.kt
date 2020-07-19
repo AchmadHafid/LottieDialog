@@ -12,7 +12,6 @@ import io.github.achmadhafid.lottie_dialog.R
 import io.github.achmadhafid.zpack.extension.view.INPUT_TYPE_HIDDEN_PASSWORD
 import io.github.achmadhafid.zpack.extension.view.clear
 import io.github.achmadhafid.zpack.extension.view.invisible
-import io.github.achmadhafid.zpack.extension.view.onSingleClick
 import io.github.achmadhafid.zpack.extension.view.setText
 import io.github.achmadhafid.zpack.extension.view.togglePasswordVisibility
 import io.github.achmadhafid.zpack.extension.view.visibleOrInvisible
@@ -57,17 +56,19 @@ data class LottieDialogInput(
         } ?: editText.doAfterTextChanged {
             input = it.toString()
             btnClear.visibleOrInvisible { it.toString().isNotEmpty() }
-            btnDone.visibleOrInvisible { inputValidator?.invoke(it.toString()) ?: it.toString().isNotEmpty()}
+            btnDone.visibleOrInvisible {
+                inputValidator?.invoke(it.toString()) ?: it.toString().isNotEmpty()
+            }
             if (inputType == Type.PASSWORD) {
                 togglePasswordVisibility(btnExtra, editText)
             }
         }
 
         editText.inputType = when (inputType) {
-            Type.TEXT     -> InputType.TYPE_CLASS_TEXT
-            Type.NUMERIC  -> InputType.TYPE_CLASS_NUMBER
-            Type.PHONE    -> InputType.TYPE_CLASS_PHONE
-            Type.PIN      -> InputType.TYPE_CLASS_TEXT.also {
+            Type.TEXT -> InputType.TYPE_CLASS_TEXT
+            Type.NUMERIC -> InputType.TYPE_CLASS_NUMBER
+            Type.PHONE -> InputType.TYPE_CLASS_PHONE
+            Type.PIN -> InputType.TYPE_CLASS_TEXT.also {
                 editText.filters += InputFilter.AllCaps()
             }
             Type.PASSWORD -> INPUT_TYPE_HIDDEN_PASSWORD.also { btnExtra.invisible() }
@@ -76,10 +77,10 @@ data class LottieDialogInput(
             editText.setText(it, true)
         }
 
-        btnClear.onSingleClick {
+        btnClear.setOnClickListener {
             editText.clear()
         }
-        btnDone.onSingleClick {
+        btnDone.setOnClickListener {
             input?.let { value ->
                 inputValidator?.let {
                     inputListener(dialog, value, it(value))
@@ -87,7 +88,7 @@ data class LottieDialogInput(
             }
         }
         if (inputType == Type.PASSWORD) {
-            btnExtra.onSingleClick {
+            btnExtra.setOnClickListener {
                 editText.togglePasswordVisibility()
                 togglePasswordVisibility(btnExtra, editText)
             }
