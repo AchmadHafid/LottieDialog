@@ -34,4 +34,6 @@ dependencies {
     implementation deps.viewanimator
     implementation deps.fluidslider
     implementation deps.lottie
+
+    debugImplementation deps.leakcanary
 }
