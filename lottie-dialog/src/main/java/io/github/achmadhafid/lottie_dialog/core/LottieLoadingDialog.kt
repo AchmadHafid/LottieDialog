@@ -117,7 +117,7 @@ data class LottieLoadingDialog(
             layoutInflater: LayoutInflater,
             coroutineScope: CoroutineScope,
             vararg builders: LottieLoadingDialog.() -> Unit
-        ): Dialog {
+        ): Pair<Dialog, ((DialogInterface) -> Unit)?>  {
             val lottieDialog = LottieLoadingDialog()
 
             builders.forEach { lottieDialog.apply(it) }
@@ -130,7 +130,7 @@ data class LottieLoadingDialog(
                 lottieDialog.theme
             )
 
-            return lottieDialog.invoke(dialog, view, coroutineScope)
+            return lottieDialog.invoke(dialog, view, coroutineScope) to lottieDialog.onDismissListener.onDismissListener
         }
     }
 }
@@ -154,7 +154,7 @@ fun AppCompatActivity.lottieLoadingDialog(
         lifecycleScope,
         *builders,
         builder
-    ).let { showLottieDialog(it, priority) }
+    ).let { showLottieDialog(it.first, it.second, priority) }
 }
 
 //endregion
@@ -172,7 +172,7 @@ fun Fragment.lottieLoadingDialog(
         viewLifecycleOwner.lifecycleScope,
         *builders,
         builder
-    ).let { showLottieDialog(it, priority) }
+    ).let { showLottieDialog(it.first, it.second, priority) }
 }
 
 //endregion

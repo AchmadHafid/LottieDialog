@@ -1,6 +1,7 @@
 package io.github.achmadhafid.lottie_dialog
 
 import android.app.Dialog
+import android.content.DialogInterface
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -11,8 +12,16 @@ import kotlin.math.absoluteValue
 internal val LottieDialogHolder   = hashMapOf<LifecycleOwner, Pair<Dialog, Int>>()
 internal val LottieObserverHolder = hashMapOf<LifecycleOwner, LifecycleObserver>()
 
-internal fun LifecycleOwner.showLottieDialog(dialog: Dialog, priority: Int) {
+internal fun LifecycleOwner.showLottieDialog(
+    dialog: Dialog,
+    onDismissListener: ((DialogInterface) -> Unit)? = null,
+    priority: Int
+) {
     fun showDialog() {
+        dialog.setOnDismissListener {
+            LottieDialogHolder.remove(this)
+            onDismissListener?.invoke(it)
+        }
         dialog.show()
         LottieDialogHolder[this] = dialog to priority.absoluteValue
     }
@@ -39,14 +48,18 @@ internal fun LifecycleOwner.showLottieDialog(dialog: Dialog, priority: Int) {
     }
 }
 
-internal fun Fragment.showLottieDialog(dialog: Dialog, priority: Int) =
-    viewLifecycleOwner.showLottieDialog(dialog, priority)
+internal fun Fragment.showLottieDialog(
+    dialog: Dialog,
+    onDismissListener: ((DialogInterface) -> Unit)? = null,
+    priority: Int
+) = viewLifecycleOwner.showLottieDialog(dialog, onDismissListener, priority)
 
 fun LifecycleOwner.dismissLottieDialog() {
-    LottieDialogHolder.let {
-        it[this]?.first?.dismiss()
-        it.remove(this)
-    }
+    LottieDialogHolder[this]?.first?.dismiss()
+//    LottieDialogHolder.let {
+//        it[this]?.first?.dismiss()
+//        it.remove(this)
+//    }
 }
 
 fun Fragment.dismissLottieDialog() = viewLifecycleOwner.dismissLottieDialog()

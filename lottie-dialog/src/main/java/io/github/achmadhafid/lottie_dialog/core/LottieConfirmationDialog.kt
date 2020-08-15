@@ -133,7 +133,7 @@ data class LottieConfirmationDialog(
             coroutineScope: CoroutineScope,
             layoutInflater: LayoutInflater,
             vararg builders: LottieConfirmationDialog.() -> Unit
-        ): Dialog {
+        ): Pair<Dialog, ((DialogInterface) -> Unit)?>  {
             val lottieDialog = LottieConfirmationDialog()
 
             builders.forEach { lottieDialog.apply(it) }
@@ -146,7 +146,7 @@ data class LottieConfirmationDialog(
                 lottieDialog.theme
             )
 
-            return lottieDialog(dialog, view, coroutineScope)
+            return lottieDialog(dialog, view, coroutineScope) to lottieDialog.onDismissListener.onDismissListener
         }
     }
 }
@@ -170,7 +170,7 @@ fun AppCompatActivity.lottieConfirmationDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it, priority) }
+    ).let { showLottieDialog(it.first, it.second, priority) }
 }
 
 //endregion
@@ -188,7 +188,7 @@ fun Fragment.lottieConfirmationDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it, priority) }
+    ).let { showLottieDialog(it.first, it.second, priority) }
 }
 
 //endregion

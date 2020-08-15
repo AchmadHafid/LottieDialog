@@ -104,7 +104,7 @@ data class LottieInputDialog(
             context: Context,
             layoutInflater: LayoutInflater,
             vararg builders: LottieInputDialog.() -> Unit
-        ): Dialog {
+        ): Pair<Dialog, ((DialogInterface) -> Unit)?>  {
             val lottieDialog = LottieInputDialog()
 
             builders.forEach { lottieDialog.apply(it) }
@@ -117,7 +117,7 @@ data class LottieInputDialog(
                 lottieDialog.theme
             )
 
-            return lottieDialog.invoke(dialog, view)
+            return lottieDialog.invoke(dialog, view) to lottieDialog.onDismissListener.onDismissListener
         }
     }
 }
@@ -140,7 +140,7 @@ fun AppCompatActivity.lottieInputDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it, priority) }
+    ).let { showLottieDialog(it.first, it.second, priority) }
 }
 
 //endregion
@@ -157,7 +157,7 @@ fun Fragment.lottieInputDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it, priority) }
+    ).let { showLottieDialog(it.first, it.second, priority) }
 }
 
 //endregion
