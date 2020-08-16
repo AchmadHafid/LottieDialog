@@ -1,8 +1,8 @@
 ext.versions = [
         //region Release
 
-        code              : 47,
-        name              : "4.5.0",
+        code              : 48,
+        name              : "4.5.1",
 
         //endregion
         //region SDK
@@ -42,9 +42,9 @@ ext.versions = [
         input_mask        : '6.0.0',
         leak_canary       : '2.4',
         lottie            : '3.4.1',
-        simple_pref       : '2.8.0',
+        simple_pref       : '2.8.1',
         view_animator     : '1.1.2',
-        zpack             : '1.2.0',
+        zpack             : '1.2.2',
 
         //endregion
         //region Testing Dependencies
