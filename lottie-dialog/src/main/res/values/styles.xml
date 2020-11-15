@@ -74,9 +74,7 @@
         <item name="android:imeOptions">actionNone</item>
         <item name="android:maxLines">1</item>
         <item name="android:textCursorDrawable">@drawable/lottie_dialog_edit_text_cursor</item>
-        <item name="android:textAppearance">
-            @style/TextAppearance.MaterialComponents.Headline6
-        </item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 

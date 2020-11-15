@@ -8,12 +8,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import io.github.achmadhafid.lottie_dialog.core.isValidInput
 import io.github.achmadhafid.lottie_dialog.core.lottieInputDialog
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogInput
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
-import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.core.onCancel
 import io.github.achmadhafid.lottie_dialog.core.onInvalidInput
 import io.github.achmadhafid.lottie_dialog.core.onValidInput
@@ -25,11 +22,15 @@ import io.github.achmadhafid.lottie_dialog.core.withInputSpec
 import io.github.achmadhafid.lottie_dialog.core.withTitle
 import io.github.achmadhafid.lottie_dialog.core.withoutAnimation
 import io.github.achmadhafid.lottie_dialog.core.withoutContent
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogInput
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.sample_app.databinding.FragmentInputDialogBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
+import io.github.achmadhafid.zpack.delegate.viewLifecycleVar
 import io.github.achmadhafid.zpack.extension.d
 import io.github.achmadhafid.zpack.extension.toastShort
 
@@ -57,11 +58,10 @@ class InputDialogFragment : Fragment(), SimplePref {
     //endregion
     //region View Binding
 
-    private var _binding: FragmentInputDialogBinding? = null
+    private var _binding: FragmentInputDialogBinding? by viewLifecycleVar()
     private val binding get() = _binding!!
 
     //endregion
-
     //region Lifecycle Callback
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,65 +85,50 @@ class InputDialogFragment : Fragment(), SimplePref {
     @Suppress("ComplexMethod", "LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //region setup dialog type options
+
+        binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
+            when (id) {
+                binding.btnDialogTypeDialog.id -> typeDialog = isChecked
+                binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
+            }
+        }
+        simplePrefLiveData(typeDialog, ::typeDialog).observe(viewLifecycleOwner, Observer {
+            binding.btnDialogTypeDialog.onCheckStateChange(it)
+        })
+        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner, Observer {
+            binding.btnDialogTypeBottomSheet.onCheckStateChange(it)
+        })
+
+        //endregion
         //region setup theme options
 
         binding.toggleButtonGroupTheme.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
                 binding.btnThemeDayNight.id -> themeDayNight = isChecked
-                binding.btnThemeLight.id    -> themeLight    = isChecked
-                binding.btnThemeDark.id     -> themeDark     = isChecked
+                binding.btnThemeLight.id -> themeLight = isChecked
+                binding.btnThemeDark.id -> themeDark = isChecked
             }
         }
-        simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner) {
-            binding.btnThemeDayNight.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
-        simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner) {
-            binding.btnThemeLight.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
-        simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner) {
-            binding.btnThemeDark.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
-
-        //endregion
-        //region setup dialog type options
-
-        binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
-            when (id) {
-                binding.btnDialogTypeDialog.id      -> typeDialog      = isChecked
-                binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
-            }
-        }
-        simplePrefLiveData(typeDialog, ::typeDialog).observe(viewLifecycleOwner) {
-            binding.btnDialogTypeDialog.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
-        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner) {
-            binding.btnDialogTypeBottomSheet.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
+        simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner, Observer {
+            binding.btnThemeDayNight.onCheckStateChange(it)
+        })
+        simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner, Observer {
+            binding.btnThemeLight.onCheckStateChange(it)
+        })
+        simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner, Observer {
+            binding.btnThemeDark.onCheckStateChange(it)
+        })
 
         //endregion
         //region setup input type options
 
         binding.toggleButtonGroupInputType.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                binding.btnInputTypeText.id     -> inputTypeText     = isChecked
-                binding.btnInputTypeNumeric.id  -> inputTypeNumeric  = isChecked
-                binding.btnInputTypePhone.id    -> inputTypePhone    = isChecked
-                binding.btnInputTypePin.id      -> inputTypePin      = isChecked
+                binding.btnInputTypeText.id -> inputTypeText = isChecked
+                binding.btnInputTypeNumeric.id -> inputTypeNumeric = isChecked
+                binding.btnInputTypePhone.id -> inputTypePhone = isChecked
+                binding.btnInputTypePin.id -> inputTypePin = isChecked
                 binding.btnInputTypePassword.id -> inputTypePassword = isChecked
             }
         }
@@ -154,12 +139,9 @@ class InputDialogFragment : Fragment(), SimplePref {
             Triple(binding.btnInputTypePin, inputTypePin, ::inputTypePin),
             Triple(binding.btnInputTypePassword, inputTypePassword, ::inputTypePassword)
         ).forEach { (btn, pref, prop) ->
-            simplePrefLiveData(pref, prop).observe(viewLifecycleOwner) {
-                btn.apply {
-                    isChecked   = it
-                    isCheckable = !it
-                }
-            }
+            simplePrefLiveData(pref, prop).observe(viewLifecycleOwner, Observer {
+                btn.onCheckStateChange(it)
+            })
         }
 
         //endregion
@@ -170,10 +152,10 @@ class InputDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowImage.isChecked = false
                 showAnimation = isChecked
             }
-            simplePrefLiveData(showAnimation, ::showAnimation).observe(viewLifecycleOwner) {
+            simplePrefLiveData(showAnimation, ::showAnimation).observe(viewLifecycleOwner, Observer {
                 isChecked = it
                 binding.smShowLottieAnimationCloseButton.isEnabled = isChecked || showImage
-            }
+            })
         }
 
         //endregion
@@ -184,10 +166,10 @@ class InputDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowLottieAnimation.isChecked = false
                 showImage = isChecked
             }
-            simplePrefLiveData(showImage, ::showImage).observe(viewLifecycleOwner) {
+            simplePrefLiveData(showImage, ::showImage).observe(viewLifecycleOwner, Observer {
                 isChecked = it
                 binding.smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
-            }
+            })
         }
 
         //endregion
@@ -197,9 +179,9 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 closeButton = isChecked
             }
-            simplePrefLiveData(closeButton, ::closeButton).observe(viewLifecycleOwner) {
+            simplePrefLiveData(closeButton, ::closeButton).observe(viewLifecycleOwner, Observer {
                 isChecked = it
-            }
+            })
         }
 
         //endregion
@@ -209,9 +191,9 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
-            simplePrefLiveData(useCustomText, ::useCustomText).observe(viewLifecycleOwner) {
+            simplePrefLiveData(useCustomText, ::useCustomText).observe(viewLifecycleOwner, Observer {
                 isChecked = it
-            }
+            })
         }
 
         //endregion
@@ -221,26 +203,21 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner, Observer {
                 isChecked = it
-            }
+            })
         }
 
         binding.smCancelOnTouchOutside.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner, Observer {
                 isChecked = it
-            }
+            })
         }
 
         //endregion
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     @Suppress("ComplexMethod", "LongMethod")
@@ -250,29 +227,29 @@ class InputDialogFragment : Fragment(), SimplePref {
                 lottieInputDialog(Int.MAX_VALUE, BaseDialog.askSomething) {
                     //region setup type
                     when {
-                        typeDialog      -> type = LottieDialogType.DIALOG
+                        typeDialog -> type = LottieDialogType.DIALOG
                         typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
                     }
                     //endregion
                     //region setup theme
                     when {
                         themeDayNight -> theme = LottieDialogTheme.DAY_NIGHT
-                        themeLight    -> theme = LottieDialogTheme.LIGHT
-                        themeDark     -> theme = LottieDialogTheme.DARK
+                        themeLight -> theme = LottieDialogTheme.LIGHT
+                        themeDark -> theme = LottieDialogTheme.DARK
                     }
                     //endregion
                     //region setup animation
                     when {
                         showAnimation -> {
                             withAnimation {
-                                fileRes         = R.raw.lottie_animation_input
+                                fileRes = R.raw.lottie_animation_input
                                 showCloseButton = closeButton
                             }
                         }
                         showImage -> {
                             withImage {
-                                imageRes        = R.drawable.offline
-                                paddingTopRes   = R.dimen.medium
+                                imageRes = R.drawable.offline
+                                paddingTopRes = R.dimen.medium
                                 showCloseButton = closeButton
                             }
                         }
@@ -285,15 +262,15 @@ class InputDialogFragment : Fragment(), SimplePref {
                     //region setup title
                     withTitle {
                         text = when {
-                            inputTypeText     -> "Enter your name"
-                            inputTypeNumeric  -> "Enter some number"
-                            inputTypePhone    -> "Enter your phone"
-                            inputTypePin      -> "Enter OTP"
+                            inputTypeText -> "Enter your name"
+                            inputTypeNumeric -> "Enter some number"
+                            inputTypePhone -> "Enter your phone"
+                            inputTypePin -> "Enter OTP"
                             inputTypePassword -> "Enter your password"
-                            else              -> null
+                            else -> null
                         }
                         if (useCustomText) {
-                            fontRes  = R.font.lobster_two_bold
+                            fontRes = R.font.lobster_two_bold
                             styleRes = R.style.AppTheme_TextAppearance
                         }
                     }
@@ -301,12 +278,12 @@ class InputDialogFragment : Fragment(), SimplePref {
                     //region setup content
                     withContent {
                         text = when {
-                            inputTypeText     -> "Please enter your full name"
-                            inputTypeNumeric  -> "It will be secret between us!"
-                            inputTypePhone    -> "We will contact you if we need to confirm your order"
-                            inputTypePin      -> "Please check your SMS inbox for to get the OTP"
+                            inputTypeText -> "Please enter your full name"
+                            inputTypeNumeric -> "It will be secret between us!"
+                            inputTypePhone -> "We will contact you if we need to confirm your order"
+                            inputTypePin -> "Please check your SMS inbox for to get the OTP"
                             inputTypePassword -> "Please consider to change it everyday!"
-                            else              -> null
+                            else -> null
                         }
                         if (useCustomText) {
                             fontRes = R.font.sofia
@@ -319,18 +296,18 @@ class InputDialogFragment : Fragment(), SimplePref {
                         //region sample input spec
                         when {
                             inputTypeText -> {
-                                inputType    = LottieDialogInput.Type.TEXT
+                                inputType = LottieDialogInput.Type.TEXT
                                 initialValue = "Your name"
                                 isValidInput { it.isNotEmpty() && it.length < 20 }
                             }
                             inputTypeNumeric -> {
-                                inputType   = LottieDialogInput.Type.NUMERIC
+                                inputType = LottieDialogInput.Type.NUMERIC
                                 inputFormat = "[000000]"
                                 isValidInput { it.startsWith("9") }
                             }
                             inputTypePhone -> {
-                                inputType    = LottieDialogInput.Type.PHONE
-                                inputFormat  = "{08}[00]-[0000]-[0099]"
+                                inputType = LottieDialogInput.Type.PHONE
+                                inputFormat = "{08}[00]-[0000]-[0099]"
                                 initialValue = "08"
                                 isValidInput { phone ->
                                     with(phone) {
@@ -341,11 +318,11 @@ class InputDialogFragment : Fragment(), SimplePref {
                                 }
                             }
                             inputTypePin -> {
-                                inputType   = LottieDialogInput.Type.PIN
+                                inputType = LottieDialogInput.Type.PIN
                                 inputFormat = "[______]"
                             }
                             inputTypePassword -> {
-                                inputType   = LottieDialogInput.Type.PASSWORD
+                                inputType = LottieDialogInput.Type.PASSWORD
                                 inputFormat = "[__________]"
                             }
                         }
@@ -354,7 +331,7 @@ class InputDialogFragment : Fragment(), SimplePref {
                     //endregion
                     //region setup cancel options
                     withCancelOption {
-                        onBackPressed  = cancelOnBackPressed
+                        onBackPressed = cancelOnBackPressed
                         onTouchOutside = cancelOnTouchOutside
                     }
                     //endregion

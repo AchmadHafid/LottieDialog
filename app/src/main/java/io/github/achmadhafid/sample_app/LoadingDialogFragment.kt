@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import com.github.florent37.viewanimator.ViewAnimator
 import io.github.achmadhafid.lottie_dialog.core.lottieLoadingDialog
 import io.github.achmadhafid.lottie_dialog.core.onCancel
@@ -27,6 +27,7 @@ import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
+import io.github.achmadhafid.zpack.delegate.viewLifecycleVar
 import io.github.achmadhafid.zpack.extension.d
 import io.github.achmadhafid.zpack.extension.resolveColor
 import io.github.achmadhafid.zpack.extension.toastShort
@@ -57,11 +58,10 @@ class LoadingDialogFragment : Fragment(), SimplePref {
     //endregion
     //region View Binding
 
-    private var _binding: FragmentLoadingDialogBinding? = null
+    private var _binding: FragmentLoadingDialogBinding? by viewLifecycleVar()
     private val binding get() = _binding!!
 
     //endregion
-
     //region Lifecycle Callback
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,22 +89,16 @@ class LoadingDialogFragment : Fragment(), SimplePref {
 
         binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
-                binding.btnDialogTypeDialog.id -> typeDialogL          = isChecked
+                binding.btnDialogTypeDialog.id -> typeDialogL = isChecked
                 binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
-        simplePrefLiveData(typeDialogL, ::typeDialogL).observe(viewLifecycleOwner) {
-            binding.btnDialogTypeDialog.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
-        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner) {
-            binding.btnDialogTypeBottomSheet.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
+        simplePrefLiveData(typeDialogL, ::typeDialogL).observe(viewLifecycleOwner, Observer {
+            binding.btnDialogTypeDialog.onCheckStateChange(it)
+        })
+        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner, Observer {
+            binding.btnDialogTypeBottomSheet.onCheckStateChange(it)
+        })
 
         //endregion
         //region setup theme
@@ -112,28 +106,19 @@ class LoadingDialogFragment : Fragment(), SimplePref {
         binding.toggleButtonGroupTheme.addOnButtonCheckedListener { _, id, isChecked ->
             when (id) {
                 binding.btnThemeDayNight.id -> themeDayNight = isChecked
-                binding.btnThemeLight.id    -> themeLight    = isChecked
-                binding.btnThemeDark.id     -> themeDark     = isChecked
+                binding.btnThemeLight.id -> themeLight = isChecked
+                binding.btnThemeDark.id -> themeDark = isChecked
             }
         }
-        simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner) {
-            binding.btnThemeLight.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
-        simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner) {
-            binding.btnThemeLight.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
-        simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner) {
-            binding.btnThemeDark.apply {
-                isChecked   = it
-                isCheckable = !it
-            }
-        }
+        simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner, Observer {
+            binding.btnThemeLight.onCheckStateChange(it)
+        })
+        simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner, Observer {
+            binding.btnThemeLight.onCheckStateChange(it)
+        })
+        simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner, Observer {
+            binding.btnThemeDark.onCheckStateChange(it)
+        })
 
         //endregion
         //region setup animation type options
@@ -143,9 +128,9 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowImage.isChecked = false
                 showAnimation = isChecked
             }
-            simplePrefLiveData(showAnimation, ::showAnimation).observe(viewLifecycleOwner) {
+            simplePrefLiveData(showAnimation, ::showAnimation).observe(viewLifecycleOwner, Observer {
                 isChecked = it
-            }
+            })
         }
 
         //endregion
@@ -156,9 +141,9 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowLottieAnimation.isChecked = false
                 showImage = isChecked
             }
-            simplePrefLiveData(showImage, ::showImage).observe(viewLifecycleOwner) {
+            simplePrefLiveData(showImage, ::showImage).observe(viewLifecycleOwner, Observer {
                 isChecked = it
-            }
+            })
         }
 
         //endregion
@@ -168,9 +153,9 @@ class LoadingDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
-            simplePrefLiveData(useCustomText, ::useCustomText).observe(viewLifecycleOwner) {
+            simplePrefLiveData(useCustomText, ::useCustomText).observe(viewLifecycleOwner, Observer {
                 isChecked = it
-            }
+            })
         }
 
         //endregion
@@ -180,18 +165,18 @@ class LoadingDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner, Observer {
                 isChecked = it
-            }
+            })
         }
 
         binding.smCancelOnTouchOutside.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner, Observer {
                 isChecked = it
-            }
+            })
         }
 
         //endregion
@@ -199,9 +184,9 @@ class LoadingDialogFragment : Fragment(), SimplePref {
 
         @Suppress("MagicNumber")
         with(binding.sbActionTimeout) {
-            colorBubble     = context.resolveColor(R.attr.colorPrimary)
+            colorBubble = context.resolveColor(R.attr.colorPrimary)
             colorBubbleText = context.resolveColor(R.attr.colorOnPrimary)
-            colorBar        = colorBubble
+            colorBar = colorBubble
 
             val partition = 100
             fun posValue() = (floor(maxTimeout * position / partition) * partition).toLong()
@@ -227,27 +212,21 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                 timeoutValue = posValue()
             }
 
-            simplePrefLiveData(timeoutValue, ::timeoutValue).observe(viewLifecycleOwner) {
-                position   = timeoutValue / maxTimeout.toFloat()
+            simplePrefLiveData(timeoutValue, ::timeoutValue).observe(viewLifecycleOwner, Observer {
+                position = timeoutValue / maxTimeout.toFloat()
                 bubbleText = "$timeoutValue"
-            }
+            })
         }
 
         binding.smShowTimeoutProgress.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 showTimeoutProgressView = isChecked
             }
-            simplePrefLiveData(showTimeoutProgressView, ::showTimeoutProgressView).observe(viewLifecycleOwner) {
-                isChecked = it
-            }
+            simplePrefLiveData(showTimeoutProgressView, ::showTimeoutProgressView)
+                .observe(viewLifecycleOwner, Observer { isChecked = it })
         }
 
         //endregion
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     @Suppress("ComplexMethod", "LongMethod")
@@ -257,15 +236,15 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                 lottieLoadingDialog(Int.MAX_VALUE, BaseDialog.doSomething) {
                     //region setup type
                     when {
-                        typeDialogL      -> type = LottieDialogType.DIALOG
+                        typeDialogL -> type = LottieDialogType.DIALOG
                         typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
                     }
                     //endregion
                     //region setup theme
                     when {
                         themeDayNight -> theme = LottieDialogTheme.DAY_NIGHT
-                        themeLight    -> theme = LottieDialogTheme.LIGHT
-                        themeDark     -> theme = LottieDialogTheme.DARK
+                        themeLight -> theme = LottieDialogTheme.LIGHT
+                        themeDark -> theme = LottieDialogTheme.DARK
                     }
                     //endregion
                     //region setup timeout
@@ -276,7 +255,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                     when {
                         showAnimation -> {
                             withAnimation {
-                                fileRes        = R.raw.lottie_animation_loading
+                                fileRes = R.raw.lottie_animation_loading
                                 withProperties {
                                     speed = 2.0f
                                 }
@@ -284,9 +263,9 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                         }
                         showImage -> {
                             withImage {
-                                imageRes   = R.drawable.offline
+                                imageRes = R.drawable.offline
                                 paddingRes = R.dimen.medium
-                                heightRes  = R.dimen.lottie_dialog_loading_image_height
+                                heightRes = R.dimen.lottie_dialog_loading_image_height
                             }
                         }
                         else -> {
@@ -299,14 +278,14 @@ class LoadingDialogFragment : Fragment(), SimplePref {
                     withTitle {
                         text = "Please wait..."
                         if (useCustomText) {
-                            fontRes  = R.font.lobster_two_bold
+                            fontRes = R.font.lobster_two_bold
                             styleRes = R.style.AppTheme_TextAppearance
                         }
                     }
                     //endregion
                     //region setup cancel options
                     withCancelOption {
-                        onBackPressed  = cancelOnBackPressed
+                        onBackPressed = cancelOnBackPressed
                         onTouchOutside = cancelOnTouchOutside
                     }
                     //endregion

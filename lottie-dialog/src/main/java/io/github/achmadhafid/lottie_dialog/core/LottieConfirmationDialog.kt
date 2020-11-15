@@ -16,6 +16,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -35,9 +36,9 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.showLottieDialog
 import io.github.achmadhafid.zpack.extension.view.clearConstraint
-import io.github.achmadhafid.zpack.extension.view.constraintMarginEnd
 import io.github.achmadhafid.zpack.extension.view.f
 import io.github.achmadhafid.zpack.extension.view.gone
+import io.github.achmadhafid.zpack.extension.view.setEndMargin
 import kotlinx.coroutines.CoroutineScope
 
 data class LottieConfirmationDialog(
@@ -61,6 +62,7 @@ data class LottieConfirmationDialog(
         coroutineScope: CoroutineScope,
         useInsideFragment: Boolean = false
     ): Dialog {
+        val root: ConstraintLayout = view.f(R.id.root)
         val illustrationLayout: FrameLayout = view.f(R.id.lottie_dialog_illustration_layout)
         val illustrationAnim: LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
         val illustrationImage: ImageView = view.f(R.id.lottie_dialog_view_image)
@@ -106,8 +108,10 @@ data class LottieConfirmationDialog(
                     clear(R.id.lottie_dialog_btn_negative, ConstraintSet.START)
                 }
                 with(view.resources.getDimensionPixelSize(R.dimen.medium)) {
-                    btnPositive.constraintMarginEnd = this
-                    btnNegative.constraintMarginEnd = this
+//                    btnPositive.constraintMarginEnd = this
+                    root.setEndMargin(R.id.lottie_dialog_btn_positive, this)
+//                    btnNegative.constraintMarginEnd = this
+                    root.setEndMargin(R.id.lottie_dialog_btn_negative, this)
                 }
             }
         }

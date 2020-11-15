@@ -34,6 +34,7 @@ import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 import io.github.achmadhafid.lottie_dialog.showLottieDialog
 import io.github.achmadhafid.zpack.extension.adjustKeyboard
 import io.github.achmadhafid.zpack.extension.areAllNull
+import io.github.achmadhafid.zpack.extension.atLeastQ
 import io.github.achmadhafid.zpack.extension.view.f
 import io.github.achmadhafid.zpack.extension.view.gone
 
@@ -90,6 +91,10 @@ data class LottieInputDialog(
 //        dialog.window?.setSoftInputMode(inputState or SOFT_INPUT_ADJUST_RESIZE)
 
         dialog.window?.adjustKeyboard(type == LottieDialogType.DIALOG || areAllNull(animation, image))
+
+        if (atLeastQ()) {
+            edtInput.requestFocus()
+        }
 
         if (!useInsideFragment) {
             onDismissListener(dialog)
