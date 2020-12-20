@@ -15,10 +15,10 @@ import io.github.achmadhafid.zpack.extension.view.gone
 import io.github.achmadhafid.zpack.extension.view.makeRoundedCornerOnTop
 import io.github.achmadhafid.zpack.extension.view.onSingleClick
 import io.github.achmadhafid.zpack.extension.view.setBackgroundColorRes
-import io.github.achmadhafid.zpack.extension.view.setImageTintList
 import io.github.achmadhafid.zpack.extension.view.setPaddingRes
 import io.github.achmadhafid.zpack.extension.view.visible
 import io.github.achmadhafid.zpack.extension.view.visibleOrGone
+import io.github.achmadhafid.zpack.extension.view.withTintRes
 
 data class LottieDialogAnimation(
     @RawRes
@@ -37,9 +37,6 @@ data class LottieDialogAnimation(
     var paddingLeftRes: Int? = null,
     @DimenRes
     var paddingRightRes: Int? = null,
-//    var animationSpeed: Float = 1f,
-//    @LottieDrawable.RepeatMode
-//    var repeatMode: Int = LottieDrawable.RESTART,
     var showCloseButton: Boolean = true,
     @ColorRes @AttrRes
     var closeButtonColorRes: Int? = null,
@@ -56,8 +53,6 @@ data class LottieDialogAnimation(
         fileRes?.let {
             animationView.visible()
             animationView.setAnimation(it)
-//            animationView.speed      = animationSpeed
-//            animationView.repeatMode = repeatMode
             animationView.apply(lottieAnimationProperties)
         } ?: run {
             animationView.gone()
@@ -95,7 +90,7 @@ data class LottieDialogAnimation(
         btnClose?.visibleOrGone { showCloseButton }
         btnClose?.apply {
             visibleOrGone { showCloseButton }
-            closeButtonColorRes?.let { setImageTintList(it) }
+            closeButtonColorRes?.let { withTintRes(it) }
             onSingleClick { dialog.cancel() }
         }
     }

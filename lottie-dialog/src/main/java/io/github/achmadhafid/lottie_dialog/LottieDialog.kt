@@ -56,10 +56,6 @@ internal fun Fragment.showLottieDialog(
 
 fun LifecycleOwner.dismissLottieDialog() {
     LottieDialogHolder[this]?.first?.dismiss()
-//    LottieDialogHolder.let {
-//        it[this]?.first?.dismiss()
-//        it.remove(this)
-//    }
 }
 
 fun Fragment.dismissLottieDialog() = viewLifecycleOwner.dismissLottieDialog()

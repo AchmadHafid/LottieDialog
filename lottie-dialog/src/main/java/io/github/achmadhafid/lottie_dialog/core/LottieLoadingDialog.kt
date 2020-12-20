@@ -92,7 +92,7 @@ data class LottieLoadingDialog(
         timeout?.let {
             if (it > 0) {
                 pbTimeout.visibleOrGone { showTimeOutProgress }
-                onTimeoutListener(dialog, it, pbTimeout, coroutineScope)?.let { job ->
+                onTimeoutListener(dialog, it, pbTimeout, coroutineScope).let { job ->
                     jobs.add(job)
                 }
             }

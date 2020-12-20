@@ -98,10 +98,9 @@ data class LottieDialogInput(
     private fun togglePasswordVisibility(btnToggle: ImageButton, editText: EditText) {
         btnToggle.visibleOrInvisible { input?.isNotEmpty() ?: false }
         btnToggle.setImageResource(
-            if (editText.inputType == INPUT_TYPE_HIDDEN_PASSWORD)
+            if (editText.inputType == INPUT_TYPE_HIDDEN_PASSWORD) {
                 R.drawable.lottie_dialog_ic_round_visibility_24dp
-            else
-                R.drawable.lottie_dialog_ic_round_visibility_off_24dp
+            } else R.drawable.lottie_dialog_ic_round_visibility_off_24dp
         )
     }
 

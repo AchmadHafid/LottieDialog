@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import io.github.achmadhafid.lottie_dialog.core.isValidInput
 import io.github.achmadhafid.lottie_dialog.core.lottieInputDialog
 import io.github.achmadhafid.lottie_dialog.core.onCancel
@@ -77,7 +76,7 @@ class InputDialogFragment : Fragment(), SimplePref {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentInputDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -93,12 +92,12 @@ class InputDialogFragment : Fragment(), SimplePref {
                 binding.btnDialogTypeBottomSheet.id -> typeBottomSheet = isChecked
             }
         }
-        simplePrefLiveData(typeDialog, ::typeDialog).observe(viewLifecycleOwner, Observer {
+        simplePrefLiveData(typeDialog, ::typeDialog).observe(viewLifecycleOwner) {
             binding.btnDialogTypeDialog.onCheckStateChange(it)
-        })
-        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner, Observer {
+        }
+        simplePrefLiveData(typeBottomSheet, ::typeBottomSheet).observe(viewLifecycleOwner) {
             binding.btnDialogTypeBottomSheet.onCheckStateChange(it)
-        })
+        }
 
         //endregion
         //region setup theme options
@@ -110,15 +109,15 @@ class InputDialogFragment : Fragment(), SimplePref {
                 binding.btnThemeDark.id -> themeDark = isChecked
             }
         }
-        simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner, Observer {
+        simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner) {
             binding.btnThemeDayNight.onCheckStateChange(it)
-        })
-        simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner, Observer {
+        }
+        simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner) {
             binding.btnThemeLight.onCheckStateChange(it)
-        })
-        simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner, Observer {
+        }
+        simplePrefLiveData(themeDark, ::themeDark).observe(viewLifecycleOwner) {
             binding.btnThemeDark.onCheckStateChange(it)
-        })
+        }
 
         //endregion
         //region setup input type options
@@ -139,9 +138,9 @@ class InputDialogFragment : Fragment(), SimplePref {
             Triple(binding.btnInputTypePin, inputTypePin, ::inputTypePin),
             Triple(binding.btnInputTypePassword, inputTypePassword, ::inputTypePassword)
         ).forEach { (btn, pref, prop) ->
-            simplePrefLiveData(pref, prop).observe(viewLifecycleOwner, Observer {
+            simplePrefLiveData(pref, prop).observe(viewLifecycleOwner) {
                 btn.onCheckStateChange(it)
-            })
+            }
         }
 
         //endregion
@@ -152,10 +151,10 @@ class InputDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowImage.isChecked = false
                 showAnimation = isChecked
             }
-            simplePrefLiveData(showAnimation, ::showAnimation).observe(viewLifecycleOwner, Observer {
+            simplePrefLiveData(showAnimation, ::showAnimation).observe(viewLifecycleOwner) {
                 isChecked = it
                 binding.smShowLottieAnimationCloseButton.isEnabled = isChecked || showImage
-            })
+            }
         }
 
         //endregion
@@ -166,10 +165,10 @@ class InputDialogFragment : Fragment(), SimplePref {
                 if (isChecked) binding.smShowLottieAnimation.isChecked = false
                 showImage = isChecked
             }
-            simplePrefLiveData(showImage, ::showImage).observe(viewLifecycleOwner, Observer {
+            simplePrefLiveData(showImage, ::showImage).observe(viewLifecycleOwner) {
                 isChecked = it
                 binding.smShowLottieAnimationCloseButton.isEnabled = showAnimation || showImage
-            })
+            }
         }
 
         //endregion
@@ -179,9 +178,9 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 closeButton = isChecked
             }
-            simplePrefLiveData(closeButton, ::closeButton).observe(viewLifecycleOwner, Observer {
+            simplePrefLiveData(closeButton, ::closeButton).observe(viewLifecycleOwner) {
                 isChecked = it
-            })
+            }
         }
 
         //endregion
@@ -191,9 +190,9 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 useCustomText = isChecked
             }
-            simplePrefLiveData(useCustomText, ::useCustomText).observe(viewLifecycleOwner, Observer {
+            simplePrefLiveData(useCustomText, ::useCustomText).observe(viewLifecycleOwner) {
                 isChecked = it
-            })
+            }
         }
 
         //endregion
@@ -203,18 +202,18 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner, Observer {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
                 isChecked = it
-            })
+            }
         }
 
         binding.smCancelOnTouchOutside.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner, Observer {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
                 isChecked = it
-            })
+            }
         }
 
         //endregion

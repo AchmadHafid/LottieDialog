@@ -108,9 +108,7 @@ data class LottieConfirmationDialog(
                     clear(R.id.lottie_dialog_btn_negative, ConstraintSet.START)
                 }
                 with(view.resources.getDimensionPixelSize(R.dimen.medium)) {
-//                    btnPositive.constraintMarginEnd = this
                     root.setEndMargin(R.id.lottie_dialog_btn_positive, this)
-//                    btnNegative.constraintMarginEnd = this
                     root.setEndMargin(R.id.lottie_dialog_btn_negative, this)
                 }
             }

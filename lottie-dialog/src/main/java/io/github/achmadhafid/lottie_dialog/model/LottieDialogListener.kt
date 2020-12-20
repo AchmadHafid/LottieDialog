@@ -46,7 +46,7 @@ data class LottieDialogOnTimeoutListener(
         timeout: Long,
         pbTimeout: ProgressBar,
         coroutineScope: CoroutineScope
-    ): Job? {
+    ): Job {
         val progressBarUpdateFrequency = 100
 
         pbTimeout.max      = timeout.toInt()

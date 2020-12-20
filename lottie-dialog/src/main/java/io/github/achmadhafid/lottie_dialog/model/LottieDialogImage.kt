@@ -15,10 +15,10 @@ import io.github.achmadhafid.zpack.extension.view.gone
 import io.github.achmadhafid.zpack.extension.view.makeRoundedCornerOnTop
 import io.github.achmadhafid.zpack.extension.view.onSingleClick
 import io.github.achmadhafid.zpack.extension.view.setBackgroundColorRes
-import io.github.achmadhafid.zpack.extension.view.setImageTintList
 import io.github.achmadhafid.zpack.extension.view.setPaddingRes
 import io.github.achmadhafid.zpack.extension.view.visible
 import io.github.achmadhafid.zpack.extension.view.visibleOrGone
+import io.github.achmadhafid.zpack.extension.view.withTintRes
 
 data class LottieDialogImage(
     @DrawableRes
@@ -88,7 +88,7 @@ data class LottieDialogImage(
         btnClose?.visibleOrGone { showCloseButton }
         btnClose?.apply {
             visibleOrGone { showCloseButton }
-            closeButtonColorRes?.let { setImageTintList(it) }
+            closeButtonColorRes?.let { withTintRes(it) }
             onSingleClick { dialog.cancel() }
         }
     }

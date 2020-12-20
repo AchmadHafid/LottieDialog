@@ -84,12 +84,6 @@ data class LottieInputDialog(
         cancelAbility(dialog)
         onShowListener(dialog)
 
-//        val inputState = when {
-//            type == LottieDialogType.DIALOG || (animation == null && image == null) -> SOFT_INPUT_STATE_VISIBLE
-//            else -> SOFT_INPUT_STATE_HIDDEN
-//        }
-//        dialog.window?.setSoftInputMode(inputState or SOFT_INPUT_ADJUST_RESIZE)
-
         dialog.window?.adjustKeyboard(type == LottieDialogType.DIALOG || areAllNull(animation, image))
 
         if (atLeastQ()) {

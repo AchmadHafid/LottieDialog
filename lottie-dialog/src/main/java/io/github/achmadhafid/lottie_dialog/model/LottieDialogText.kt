@@ -4,9 +4,9 @@ import android.widget.TextView
 import androidx.annotation.FontRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
-import io.github.achmadhafid.zpack.extension.view.setFontRes
-import io.github.achmadhafid.zpack.extension.view.setTextAppearanceRes
-import io.github.achmadhafid.zpack.extension.view.setTextRes
+import io.github.achmadhafid.zpack.extension.view.withFontRes
+import io.github.achmadhafid.zpack.extension.view.withTextAppearanceRes
+import io.github.achmadhafid.zpack.extension.view.withTextRes
 
 data class LottieDialogText(
     var text: CharSequence? = null,
@@ -18,9 +18,9 @@ data class LottieDialogText(
     var fontRes: Int? = null
 ) {
     operator fun invoke(textView: TextView) {
-        textRes ?.let { textView.setTextRes(it) }
         text    ?.let { textView.text     = it }
-        styleRes?.let { textView.setTextAppearanceRes(it) }
-        fontRes ?.let { textView.setFontRes(it) }
+        textRes ?.let { textView withTextRes it }
+        styleRes?.let { textView withTextAppearanceRes it }
+        fontRes ?.let { textView withFontRes it }
     }
 }
