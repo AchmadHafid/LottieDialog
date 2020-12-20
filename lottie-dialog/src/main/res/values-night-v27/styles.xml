@@ -5,7 +5,7 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">@color/lottie_dialog_color_navigation_bar_dark</item>
         <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
@@ -23,7 +23,7 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">@color/lottie_dialog_color_navigation_bar_dark</item>
         <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
