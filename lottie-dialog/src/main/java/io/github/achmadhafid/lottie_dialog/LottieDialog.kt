@@ -19,7 +19,9 @@ internal fun LifecycleOwner.showLottieDialog(
 ) {
     fun showDialog() {
         dialog.setOnDismissListener {
-            LottieDialogHolder.remove(this)
+            if (LottieDialogHolder[this]?.first == it) {
+                LottieDialogHolder.remove(this)
+            }
             onDismissListener?.invoke(it)
         }
         dialog.show()
