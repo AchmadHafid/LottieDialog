@@ -37,6 +37,7 @@ internal fun LifecycleOwner.showLottieDialog(
 
     if (!LottieObserverHolder.containsKey(this)) {
         object : LifecycleObserver {
+            @Suppress("unused")
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun onDestroy() {
                 dismissLottieDialog()
@@ -60,4 +61,5 @@ fun LifecycleOwner.dismissLottieDialog() {
     LottieDialogHolder[this]?.first?.dismiss()
 }
 
+@Suppress("unused")
 fun Fragment.dismissLottieDialog() = viewLifecycleOwner.dismissLottieDialog()

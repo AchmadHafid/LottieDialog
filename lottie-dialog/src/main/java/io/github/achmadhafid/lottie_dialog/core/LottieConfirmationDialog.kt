@@ -162,7 +162,7 @@ fun lottieConfirmationDialogBuilder(builder: LottieConfirmationDialog.() -> Unit
 
 @Suppress("SpreadOperator")
 fun AppCompatActivity.lottieConfirmationDialog(
-    priority: Int,
+    priority: Int = 0,
     vararg builders: LottieConfirmationDialog.() -> Unit,
     builder: LottieConfirmationDialog.() -> Unit
 ) {
@@ -180,7 +180,7 @@ fun AppCompatActivity.lottieConfirmationDialog(
 
 @Suppress("SpreadOperator")
 fun Fragment.lottieConfirmationDialog(
-    priority: Int,
+    priority: Int = 0,
     vararg builders: LottieConfirmationDialog.() -> Unit,
     builder: LottieConfirmationDialog.() -> Unit
 ) {

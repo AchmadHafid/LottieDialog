@@ -144,7 +144,7 @@ fun lottieLoadingDialogBuilder(builder: LottieLoadingDialog.() -> Unit) = builde
 
 @Suppress("SpreadOperator")
 fun AppCompatActivity.lottieLoadingDialog(
-    priority: Int,
+    priority: Int = 0,
     vararg builders: LottieLoadingDialog.() -> Unit,
     builder: LottieLoadingDialog.() -> Unit
 ) {
@@ -162,7 +162,7 @@ fun AppCompatActivity.lottieLoadingDialog(
 
 @Suppress("SpreadOperator")
 fun Fragment.lottieLoadingDialog(
-    priority: Int,
+    priority: Int = 0,
     vararg builders: LottieLoadingDialog.() -> Unit,
     builder: LottieLoadingDialog.() -> Unit
 ) {
