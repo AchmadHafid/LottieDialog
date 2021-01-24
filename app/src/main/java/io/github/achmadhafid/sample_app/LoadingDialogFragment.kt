@@ -110,7 +110,7 @@ class LoadingDialogFragment : Fragment(), SimplePref {
             }
         }
         simplePrefLiveData(themeDayNight, ::themeDayNight).observe(viewLifecycleOwner) {
-            binding.btnThemeLight.onCheckStateChange(it)
+            binding.btnThemeDayNight.onCheckStateChange(it)
         }
         simplePrefLiveData(themeLight, ::themeLight).observe(viewLifecycleOwner) {
             binding.btnThemeLight.onCheckStateChange(it)
