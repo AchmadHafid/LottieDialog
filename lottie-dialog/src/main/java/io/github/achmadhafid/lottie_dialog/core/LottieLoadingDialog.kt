@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import io.github.achmadhafid.lottie_dialog.R
 import io.github.achmadhafid.lottie_dialog.inflateView
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
@@ -68,7 +68,7 @@ data class LottieLoadingDialog(
         val illustrationAnim: LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
         val illustrationImage: ImageView = view.f(R.id.lottie_dialog_view_image)
         val tvTitle: TextView = view.f(R.id.lottie_dialog_tv_title)
-        val pbTimeout: ProgressBar = view.f(R.id.lottie_dialog_progress_bar_timeout)
+        val pbTimeout: LinearProgressIndicator = view.f(R.id.lottie_dialog_progress_bar_timeout)
 
         animation?.invoke(illustrationLayout, illustrationAnim, null, dialog, type) ?: run {
             illustrationAnim.gone()
