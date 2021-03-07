@@ -57,16 +57,16 @@ data class LottieInputDialog(
         view: View,
         useInsideFragment: Boolean = false
     ): Dialog {
-        val illustrationLayout: FrameLayout = view.f(R.id.lottie_dialog_illustration_layout)
-        val illustrationAnim: LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
-        val illustrationImage: ImageView = view.f(R.id.lottie_dialog_view_image)
-        val btnClose: ImageButton = view.f(R.id.lottie_dialog_btn_close)
-        val tvTitle: TextView = view.f(R.id.lottie_dialog_tv_title)
-        val tvContent: TextView = view.f(R.id.lottie_dialog_tv_content)
-        val edtInput: EditText = view.f(R.id.lottie_dialog_edt_input)
-        val btnClear: ImageButton = view.f(R.id.lottie_dialog_btn_clear)
-        val btnDone: ImageButton = view.f(R.id.lottie_dialog_btn_done)
-        val btnExtra: ImageButton = view.f(R.id.lottie_dialog_btn_extra_action)
+        val illustrationLayout: FrameLayout = view f R.id.lottie_dialog_illustration_layout
+        val illustrationAnim: LottieAnimationView = view f R.id.lottie_dialog_view_anim
+        val illustrationImage: ImageView = view f R.id.lottie_dialog_view_image
+        val btnClose: ImageButton = view f R.id.lottie_dialog_btn_close
+        val tvTitle: TextView = view f R.id.lottie_dialog_tv_title
+        val tvContent: TextView = view f R.id.lottie_dialog_tv_content
+        val edtInput: EditText = view f R.id.lottie_dialog_edt_input
+        val btnClear: ImageButton = view f R.id.lottie_dialog_btn_clear
+        val btnDone: ImageButton = view f R.id.lottie_dialog_btn_done
+        val btnExtra: ImageButton = view f R.id.lottie_dialog_btn_extra_action
 
         animation?.invoke(illustrationLayout, illustrationAnim, btnClose, dialog, type) ?: run {
             illustrationAnim.gone()

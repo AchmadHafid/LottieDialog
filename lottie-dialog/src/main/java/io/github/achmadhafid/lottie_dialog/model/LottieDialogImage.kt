@@ -85,7 +85,6 @@ data class LottieDialogImage(
             }
         }
 
-//        btnClose?.visibleOrGone { showCloseButton }
         btnClose?.apply {
             visibleOrGone { showCloseButton }
             closeButtonColorRes?.let { withTintRes(it) }

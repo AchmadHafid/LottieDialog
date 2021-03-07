@@ -29,8 +29,7 @@ abstract class LottieInputDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        inputDialog = LottieInputDialog()
-            .apply(dialogBuilder)
+        inputDialog = LottieInputDialog().apply(dialogBuilder)
         dialog?.let {
             inputDialog!!.invoke(it, view, true)
         } ?: Log.d("LottieDialog", "no dialog attached")

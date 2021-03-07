@@ -62,27 +62,20 @@ data class LottieConfirmationDialog(
         coroutineScope: CoroutineScope,
         useInsideFragment: Boolean = false
     ): Dialog {
-        val root: ConstraintLayout = view.f(R.id.root)
-        val illustrationLayout: FrameLayout = view.f(R.id.lottie_dialog_illustration_layout)
-        val illustrationAnim: LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
-        val illustrationImage: ImageView = view.f(R.id.lottie_dialog_view_image)
-        val btnClose: ImageButton = view.f(R.id.lottie_dialog_btn_close)
-        val tvTitle: TextView = view.f(R.id.lottie_dialog_tv_title)
-        val tvContent: TextView = view.f(R.id.lottie_dialog_tv_content)
-        val btnPositive: MaterialButton = view.f(R.id.lottie_dialog_btn_positive)
-        val btnNegative: MaterialButton = view.f(R.id.lottie_dialog_btn_negative)
+        val root: ConstraintLayout = view f R.id.root
+        val illustrationLayout: FrameLayout = view f R.id.lottie_dialog_illustration_layout
+        val illustrationAnim: LottieAnimationView = view f R.id.lottie_dialog_view_anim
+        val illustrationImage: ImageView = view f R.id.lottie_dialog_view_image
+        val btnClose: ImageButton = view f R.id.lottie_dialog_btn_close
+        val tvTitle: TextView = view f R.id.lottie_dialog_tv_title
+        val tvContent: TextView = view f R.id.lottie_dialog_tv_content
+        val btnPositive: MaterialButton = view f R.id.lottie_dialog_btn_positive
+        val btnNegative: MaterialButton = view f R.id.lottie_dialog_btn_negative
 
         animation?.let {
             it(illustrationLayout, illustrationAnim, btnClose, dialog, type)
             tvTitle.gravity = Gravity.CENTER
             tvContent.gravity = Gravity.CENTER
-//            if (negativeButton == null) {
-//                btnPositive.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
-//                with(view.resources.getDimensionPixelSize(R.dimen.large)) {
-//                    btnPositive.constraintMarginStart = this
-//                    btnPositive.constraintMarginEnd = this
-//                }
-//            }
         } ?: run {
             illustrationAnim.gone()
             btnClose.gone()
@@ -91,13 +84,6 @@ data class LottieConfirmationDialog(
                 it(illustrationLayout, illustrationImage, btnClose, dialog, type)
                 tvTitle.gravity = Gravity.CENTER
                 tvContent.gravity = Gravity.CENTER
-//                if (negativeButton == null) {
-//                    btnPositive.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
-//                    with(view.resources.getDimensionPixelSize(R.dimen.large)) {
-//                        btnPositive.constraintMarginStart = this
-//                        btnPositive.constraintMarginEnd = this
-//                    }
-//                }
             } ?: run {
                 illustrationImage.gone()
                 btnClose.gone()

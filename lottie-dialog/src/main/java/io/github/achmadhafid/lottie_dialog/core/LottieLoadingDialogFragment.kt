@@ -26,8 +26,7 @@ abstract class LottieLoadingDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadingDialog = LottieLoadingDialog()
-            .apply(dialogBuilder)
+        loadingDialog = LottieLoadingDialog().apply(dialogBuilder)
         dialog?.let {
             loadingDialog!!.invoke(it, view, viewLifecycleOwner.lifecycleScope, true)
         } ?: Log.d("LottieDialog", "no dialog attached")
