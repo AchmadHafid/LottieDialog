@@ -1,9 +1,0 @@
-<resources>
-
-    <style name="Theme.LottieDialog.DayNight" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert" />
-
-    <style name="Theme.LottieDialog.Light" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert" />
-
-    <style name="Theme.LottieDialog.Dark" parent="@style/Theme.MaterialComponents.Dialog.Alert" />
-
-</resources>
