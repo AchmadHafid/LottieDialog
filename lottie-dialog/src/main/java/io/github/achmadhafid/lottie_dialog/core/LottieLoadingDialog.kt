@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
@@ -64,11 +65,11 @@ data class LottieLoadingDialog(
         coroutineScope: CoroutineScope,
         useInsideFragment: Boolean = false
     ): Dialog {
-        val illustrationLayout: FrameLayout = view.f(R.id.lottie_dialog_illustration_layout)
-        val illustrationAnim: LottieAnimationView = view.f(R.id.lottie_dialog_view_anim)
-        val illustrationImage: ImageView = view.f(R.id.lottie_dialog_view_image)
-        val tvTitle: TextView = view.f(R.id.lottie_dialog_tv_title)
-        val pbTimeout: LinearProgressIndicator = view.f(R.id.lottie_dialog_progress_bar_timeout)
+        val illustrationLayout: FrameLayout = view f R.id.lottie_dialog_illustration_layout
+        val illustrationAnim: LottieAnimationView = view f R.id.lottie_dialog_view_anim
+        val illustrationImage: ImageView = view f R.id.lottie_dialog_view_image
+        val tvTitle: TextView = view f R.id.lottie_dialog_tv_title
+        val pbTimeout: LinearProgressIndicator = view f R.id.lottie_dialog_progress_bar_timeout
 
         animation?.invoke(illustrationLayout, illustrationAnim, null, dialog, type) ?: run {
             illustrationAnim.gone()
@@ -79,6 +80,10 @@ data class LottieLoadingDialog(
         }
         title(tvTitle.apply {
             if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && dialog.context.hasSoftNavigationKeys) {
+                dialog.window?.setFlags(
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                )
                 context.navigationBarHeight?.let {
                     setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom + it)
                 }
@@ -96,11 +101,6 @@ data class LottieLoadingDialog(
                     jobs.add(job)
                 }
             }
-        }
-
-        if (atLeastOreoMR1()) {
-            view.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         }
 
         if (!useInsideFragment) {
