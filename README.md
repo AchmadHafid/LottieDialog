@@ -6,7 +6,7 @@ LottieDialog
 
 **Assalamu'alaikum brothers and sisters, peace be upon you!**
 
-Display a beautiful confirmation dialog with Lottie animation inside easily using new material design components.
+Display beautiful dialogs with Lottie animation inside easily using new material design components.
 
 ![image](https://drive.google.com/uc?export=download&id=1S3JFiB7ubROiWDSOY0ofz-BVjIEtU19a)
 ![image](https://drive.google.com/uc?export=download&id=1_S4Au5aF6DbOFQdX0L-nWHr2xK3wcqj_)
@@ -27,15 +27,15 @@ Main Features
 * Three Types: __*confirmation*__ (yes-no dialog), __*input*__ & __*loading progress*__
 * Full support of __*Material Components*__ theme (e.g. light theme & dark theme)
 * __*Flexible*__ customization options from corner radius to callback delay
-* __*Lifecycle aware, self contained reference*__. No need to declare a variable just to dismiss it later.
-* __*Priority option*__ available to prevent multiple overlapping dialogs show up at the same time (e.g. when multiple errors occured at the same time)
-* __*Builder*__ / base dialog template available for further code simplification
+* __*Lifecycle aware, self contained reference*__. No need to declare a variable to reference a dialog, just to dismiss it later.
+* __*Priority option*__ available to prevent multiple overlapping dialogs show up at the same time (e.g. when multiple error dialogs shows up at the same time)
+* __*Builder*__ / base dialog template available for further code reuse
 
 
 Compatibility
 -------------
 
-This library is compatible from API 21 (Android 5.0 Lollipop) & AndroidX.
+This library is compatible from API 21 and above & AndroidX.
 
 
 Download
@@ -58,7 +58,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:LottieDialog:4.6.0"
+  implementation "com.github.AchmadHafid:LottieDialog:4.6.1"
   ...
 }
 ```
@@ -71,7 +71,7 @@ Quick Usage
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 //class MainFragment : Fragment(R.layout.fragment_main) {
 
-  fun showSomeDialog() {
+  fun showADialog() {
     lottieConfirmationDialog(priority, baseBuilderIfAny) {
     //lottieInputDialog(priority, baseBuilderIfAny) {
     //lottieLoadingDialog(priority, baseBuilderIfAny) {
