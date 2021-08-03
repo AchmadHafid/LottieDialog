@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     //region Preference
 
     private var appTheme: Int? by simplePref()
-    private var currentFragment by simplePref { navController.graph.startDestination }
+    private var currentFragment by simplePref { navController.graph.startDestinationId }
 
     //endregion
     //region View Binding
@@ -88,21 +88,21 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         }
         supportActionBar?.subtitle = when (destination.id) {
             R.id.confirmationDialogFragment -> "Confirmation"
-            R.id.loadingDialogFragment      -> "Loading"
-            R.id.inputDialogFragment        -> "Input"
-            else                            -> ""
+            R.id.loadingDialogFragment -> "Loading"
+            R.id.inputDialogFragment -> "Input"
+            else -> ""
         }
     }
 
     private fun loadLastDestination() {
-        if (navController.graph.startDestination != currentFragment) {
+        if (navController.graph.startDestinationId != currentFragment) {
             val navOptions = NavOptions.Builder()
-                .setPopUpTo(navController.graph.startDestination, true)
+                .setPopUpTo(navController.graph.startDestinationId, true)
                 .build()
             when (currentFragment) {
                 R.id.confirmationDialogFragment -> R.id.action_confirmation_dialog
-                R.id.loadingDialogFragment      -> R.id.action_loading_dialog
-                R.id.inputDialogFragment        -> R.id.action_input_dialog
+                R.id.loadingDialogFragment -> R.id.action_loading_dialog
+                R.id.inputDialogFragment -> R.id.action_input_dialog
                 else -> null
             }?.let { navController.navigate(it, null, navOptions) }
         }

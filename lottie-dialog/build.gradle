@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 
 apply from: '../shared_build.gradle'
 
@@ -16,4 +16,17 @@ dependencies {
     implementation deps.coroutines
     implementation deps.lottie
     implementation deps.input_mask
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.AchmadHafid'
+                artifactId = 'lottie-dialog'
+                version = '4.7.0'
+            }
+        }
+    }
 }
