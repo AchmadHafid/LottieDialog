@@ -3,10 +3,9 @@ package io.github.achmadhafid.lottie_dialog
 import android.app.Dialog
 import android.content.DialogInterface
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import kotlin.math.absoluteValue
 
 internal val LottieDialogHolder   = hashMapOf<LifecycleOwner, Pair<Dialog, Int>>()
@@ -36,18 +35,28 @@ internal fun LifecycleOwner.showLottieDialog(
     } ?: showDialog()
 
     if (!LottieObserverHolder.containsKey(this)) {
-        object : LifecycleObserver {
-            @Suppress("unused")
-            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-            fun onDestroy() {
+        val lifecycleObserver = object : DefaultLifecycleObserver {
+            override fun onDestroy(owner: LifecycleOwner) {
                 dismissLottieDialog()
                 lifecycle.removeObserver(this)
                 LottieObserverHolder.remove(this@showLottieDialog)
             }
-        }.let {
-            lifecycle.addObserver(it)
-            LottieObserverHolder[this] = it
         }
+        lifecycle.addObserver(lifecycleObserver)
+        LottieObserverHolder[this] = lifecycleObserver
+        
+//        object : LifecycleObserver {
+//            @Suppress("unused")
+//            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+//            fun onDestroy() {
+//                dismissLottieDialog()
+//                lifecycle.removeObserver(this)
+//                LottieObserverHolder.remove(this@showLottieDialog)
+//            }
+//        }.let {
+//            lifecycle.addObserver(it)
+//            LottieObserverHolder[this] = it
+//        }
     }
 }
 
