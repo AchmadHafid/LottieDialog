@@ -1,6 +1,7 @@
 package io.github.achmadhafid.lottie_dialog.model
 
 import android.app.Dialog
+import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.google.android.material.button.MaterialButton
@@ -21,6 +22,8 @@ data class LottieDialogButton(
     @MaterialButton.IconGravity
     var iconGravity: Int? = null,
     var actionDelay: Long? = null,
+    @DimenRes
+    var cornerRadiusRes: Int? = null,
     internal var onClickListener: ((Dialog) -> Unit)? = null
 ) {
     internal operator fun invoke(
@@ -28,10 +31,11 @@ data class LottieDialogButton(
         button: MaterialButton,
         coroutineScope: CoroutineScope
     ) {
-        textRes    ?.let { button withTextRes it }
-        text       ?.let { button.text = it }
-        iconRes    ?.let { button.setIconResource(it) }
+        textRes?.let { button withTextRes it }
+        text?.let { button.text = it }
+        iconRes?.let { button.setIconResource(it) }
         iconGravity?.let { button.iconGravity = it }
+        cornerRadiusRes?.let { button.setCornerRadiusResource(it) }
 
         with(button) {
             onSingleClick {
