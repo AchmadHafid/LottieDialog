@@ -1,8 +1,8 @@
 ext.versions = [
         //region Release
 
-        code              : 56,
-        name              : "4.7.0",
+        code              : 57,
+        name              : "4.8.0",
 
         //endregion
         //region SDK
