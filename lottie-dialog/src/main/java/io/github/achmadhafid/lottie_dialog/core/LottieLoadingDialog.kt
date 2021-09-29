@@ -130,7 +130,11 @@ data class LottieLoadingDialog(
                 lottieDialog.theme
             )
 
-            return lottieDialog.invoke(dialog, view, coroutineScope) to lottieDialog.onDismissListener.onDismissListener
+            return lottieDialog.invoke(dialog, view, coroutineScope) to {
+                lottieDialog.jobs.forEach { job -> job.cancel() }
+                lottieDialog.jobs.clear()
+                lottieDialog.onDismissListener.onDismissListener?.invoke(it) 
+            }
         }
     }
 }

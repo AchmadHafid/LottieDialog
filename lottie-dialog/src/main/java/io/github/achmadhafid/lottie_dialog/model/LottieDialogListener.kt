@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 data class LottieDialogOnShowListener(
@@ -56,6 +57,9 @@ data class LottieDialogOnTimeoutListener(
             val delay = timeout / progressBarUpdateFrequency
             for (index in 1..progressBarUpdateFrequency) {
                 delay(delay)
+                if (isActive.not()) {
+                    return@launch
+                }
                 if (pbTimeout.isVisible) {
                     pbTimeout.progress = (index * delay).toInt()
                 }
