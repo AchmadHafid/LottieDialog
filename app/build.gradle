@@ -6,7 +6,7 @@ apply(from: "../shared_build.gradle")
 
 android {
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
     defaultConfig {
         applicationId = "io.github.achmadhafid.sample_app"
