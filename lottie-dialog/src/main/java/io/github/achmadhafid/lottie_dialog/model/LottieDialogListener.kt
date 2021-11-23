@@ -2,8 +2,8 @@ package io.github.achmadhafid.lottie_dialog.model
 
 import android.app.Dialog
 import android.content.DialogInterface
-import android.widget.ProgressBar
 import androidx.core.view.isVisible
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -45,25 +45,29 @@ data class LottieDialogOnTimeoutListener(
     operator fun invoke(
         dialog: Dialog,
         timeout: Long,
-        pbTimeout: ProgressBar,
+        pbTimeout: LinearProgressIndicator,
         coroutineScope: CoroutineScope
     ): Job {
-        val progressBarUpdateFrequency = 100
-
-        pbTimeout.max      = timeout.toInt()
+        val oneSecond = 1000L
+        pbTimeout.max = timeout.toInt()
         pbTimeout.progress = 0
 
         return coroutineScope.launch {
-            val delay = timeout / progressBarUpdateFrequency
-            for (index in 1..progressBarUpdateFrequency) {
-                delay(delay)
+            var timeLeft = timeout
+            while (timeLeft > 0) {
                 if (isActive.not()) {
                     return@launch
                 }
+
+                val delayDuration = if (timeLeft > oneSecond) oneSecond else timeLeft
+                delay(delayDuration)
+                timeLeft -= delayDuration
+
                 if (pbTimeout.isVisible) {
-                    pbTimeout.progress = (index * delay).toInt()
+                    pbTimeout.setProgressCompat(timeout.toInt() - timeLeft.toInt(), true)
                 }
             }
+            delay(oneSecond / 2)
             dialog.dismiss()
             onTimeoutListener?.invoke()
         }

@@ -44,19 +44,6 @@ internal fun LifecycleOwner.showLottieDialog(
         }
         lifecycle.addObserver(lifecycleObserver)
         LottieObserverHolder[this] = lifecycleObserver
-        
-//        object : LifecycleObserver {
-//            @Suppress("unused")
-//            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-//            fun onDestroy() {
-//                dismissLottieDialog()
-//                lifecycle.removeObserver(this)
-//                LottieObserverHolder.remove(this@showLottieDialog)
-//            }
-//        }.let {
-//            lifecycle.addObserver(it)
-//            LottieObserverHolder[this] = it
-//        }
     }
 }
 

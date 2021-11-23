@@ -50,6 +50,7 @@ data class LottieLoadingDialog(
     internal var image: LottieDialogImage? = null,
     internal var animation: LottieDialogAnimation? = null,
     internal var title: LottieDialogText = LottieDialogText(),
+    internal var content: LottieDialogText? = null,
     internal var cancelAbility: LottieDialogCancelOption = LottieDialogCancelOption(),
     internal var onShowListener: LottieDialogOnShowListener = LottieDialogOnShowListener(),
     internal var onDismissListener: LottieDialogOnDismissListener = LottieDialogOnDismissListener(),
@@ -69,6 +70,7 @@ data class LottieLoadingDialog(
         val illustrationAnim: LottieAnimationView = view f R.id.lottie_dialog_view_anim
         val illustrationImage: ImageView = view f R.id.lottie_dialog_view_image
         val tvTitle: TextView = view f R.id.lottie_dialog_tv_title
+        val tvContent: TextView = view f R.id.lottie_dialog_tv_content
         val pbTimeout: LinearProgressIndicator = view f R.id.lottie_dialog_progress_bar_timeout
 
         animation?.invoke(illustrationLayout, illustrationAnim, null, dialog, type) ?: run {
@@ -79,7 +81,7 @@ data class LottieLoadingDialog(
             }
         }
         title(tvTitle.apply {
-            if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && dialog.context.hasSoftNavigationKeys) {
+            if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && dialog.context.hasSoftNavigationKeys && content == null) {
                 dialog.window?.setFlags(
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -89,6 +91,17 @@ data class LottieLoadingDialog(
                 }
             }
         })
+        content?.invoke(tvContent.apply {
+            if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && dialog.context.hasSoftNavigationKeys) {
+                dialog.window?.setFlags(
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                )
+                context.navigationBarHeight?.let {
+                    setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom + it)
+                }
+            }
+        }) ?: tvContent.gone()
         cancelAbility(dialog)
         onShowListener(dialog)
 
@@ -245,6 +258,31 @@ fun LottieLoadingDialog.withTitle(text: CharSequence) {
 
 fun LottieLoadingDialog.withTitle(builder: LottieDialogText.() -> Unit) {
     title.apply(builder)
+}
+
+fun LottieLoadingDialog.withContent(@StringRes textRes: Int) {
+    if (content == null) {
+        content = LottieDialogText()
+    }
+    content!!.textRes = textRes
+}
+
+fun LottieLoadingDialog.withContent(text: CharSequence) {
+    if (content == null) {
+        content = LottieDialogText()
+    }
+    content!!.text = text
+}
+
+fun LottieLoadingDialog.withContent(builder: LottieDialogText.() -> Unit) {
+    if (content == null) {
+        content = LottieDialogText()
+    }
+    content!!.apply(builder)
+}
+
+fun LottieLoadingDialog.withoutContent() {
+    content = null
 }
 
 //endregion

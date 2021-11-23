@@ -23,15 +23,31 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/medium"
         android:layout_marginEnd="@dimen/medium"
-        android:layout_marginBottom="@dimen/medium"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.LottieDialog.Title"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/lottie_dialog_tv_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lottie_dialog_illustration_layout"
+        app:layout_goneMarginBottom="@dimen/medium"
         app:layout_goneMarginTop="@dimen/medium"
         tools:text="Title" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/lottie_dialog_tv_content"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small"
+        android:layout_marginBottom="@dimen/medium"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/large"
+        android:textAppearance="@style/TextAppearance.LottieDialog.Content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lottie_dialog_tv_title"
+        tools:text="This is a long dialog content message" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/lottie_dialog_progress_bar_timeout"
