@@ -14,33 +14,33 @@ ext.versions = [
         //endregion
         //region Plugin
 
-        agp               : '7.0.3',
-        kotlin            : '1.6.0',
+        agp               : '7.0.4',
+        kotlin            : '1.6.10',
 
         //endregion
         //region Core Dependencies
 
-        coroutine         : '1.6.0-RC',
+        coroutine         : '1.6.0',
         material          : '1.5.0-beta01',
 
         //endregion
         //region JetPack Dependencies
 
         activity          : '1.4.0',
-        appcompat         : '1.4.0',
+        appcompat         : '1.4.1',
         constraintlayout  : '2.1.2',
         core              : '1.7.0',
         fragment          : '1.4.0',
         lifecycle         : '2.4.0',
-        navigation        : '2.4.0-beta02',
+        navigation        : '2.4.0-rc01',
 
         //endregion
         //region Extra Dependencies
 
         fluid_slider      : '0.3.1',
         input_mask        : '6.0.0',
-        leak_canary       : '2.7',
-        lottie            : '4.2.1',
+        leak_canary       : '2.8.1',
+        lottie            : '4.2.2',
         view_animator     : '1.1.2',
         simplepref        : '2.9.0',
         zpack             : '1.5.1',
