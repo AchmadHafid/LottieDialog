@@ -64,7 +64,7 @@ internal fun Fragment.showLottieDialog(
 fun LifecycleOwner.dismissLottieDialog(dialogId: String = "") {
 //        LottieDialogHolder[this]?.first?.dismiss()
     LottieDialogHolder[this]?.let { (dialog, _, id) ->
-        if (id.isBlank() || dialogId == id) {
+        if (dialogId.isBlank() || dialogId == id) {
             dialog.dismiss()
         }
     }
