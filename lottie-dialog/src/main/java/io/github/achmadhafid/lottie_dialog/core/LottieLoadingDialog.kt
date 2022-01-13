@@ -162,6 +162,7 @@ fun lottieLoadingDialogBuilder(builder: LottieLoadingDialog.() -> Unit) = builde
 @Suppress("SpreadOperator")
 fun AppCompatActivity.lottieLoadingDialog(
     priority: Int = 0,
+    id: String = "",
     vararg builders: LottieLoadingDialog.() -> Unit,
     builder: LottieLoadingDialog.() -> Unit
 ) {
@@ -171,11 +172,42 @@ fun AppCompatActivity.lottieLoadingDialog(
         lifecycleScope,
         *builders,
         builder
-    ).let { showLottieDialog(it.first, it.second, priority) }
+    ).let { showLottieDialog(it.first, id, it.second, priority) }
+}
+
+@Suppress("SpreadOperator")
+fun AppCompatActivity.lottieLoadingDialog(
+    priority: Int = 0,
+    vararg builders: LottieLoadingDialog.() -> Unit,
+    builder: LottieLoadingDialog.() -> Unit
+) {
+    LottieLoadingDialog.create(
+        this,
+        layoutInflater,
+        lifecycleScope,
+        *builders,
+        builder
+    ).let { showLottieDialog(it.first, "", it.second, priority) }
 }
 
 //endregion
 //region Fragment Extension
+
+@Suppress("SpreadOperator")
+fun Fragment.lottieLoadingDialog(
+    priority: Int = 0,
+    id: String = "",
+    vararg builders: LottieLoadingDialog.() -> Unit,
+    builder: LottieLoadingDialog.() -> Unit
+) {
+    LottieLoadingDialog.create(
+        requireContext(),
+        layoutInflater,
+        viewLifecycleOwner.lifecycleScope,
+        *builders,
+        builder
+    ).let { showLottieDialog(it.first, id, it.second, priority) }
+}
 
 @Suppress("SpreadOperator")
 fun Fragment.lottieLoadingDialog(
@@ -189,7 +221,7 @@ fun Fragment.lottieLoadingDialog(
         viewLifecycleOwner.lifecycleScope,
         *builders,
         builder
-    ).let { showLottieDialog(it.first, it.second, priority) }
+    ).let { showLottieDialog(it.first, "", it.second, priority) }
 }
 
 //endregion

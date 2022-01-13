@@ -373,7 +373,7 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_show_dialog -> {
-                lottieConfirmationDialog(Int.MAX_VALUE, BaseDialog.requestSomething) {
+                lottieConfirmationDialog(Int.MAX_VALUE, "confirmation", BaseDialog.requestSomething) {
                     //region setup type
                     when {
                         typeDialog -> type = LottieDialogType.DIALOG

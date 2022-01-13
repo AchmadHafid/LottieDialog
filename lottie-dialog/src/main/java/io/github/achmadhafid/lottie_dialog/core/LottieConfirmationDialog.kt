@@ -149,6 +149,7 @@ fun lottieConfirmationDialogBuilder(builder: LottieConfirmationDialog.() -> Unit
 @Suppress("SpreadOperator")
 fun AppCompatActivity.lottieConfirmationDialog(
     priority: Int = 0,
+    id: String = "",
     vararg builders: LottieConfirmationDialog.() -> Unit,
     builder: LottieConfirmationDialog.() -> Unit
 ) {
@@ -158,7 +159,22 @@ fun AppCompatActivity.lottieConfirmationDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it.first, it.second, priority) }
+    ).let { showLottieDialog(it.first, id, it.second, priority) }
+}
+
+@Suppress("SpreadOperator")
+fun AppCompatActivity.lottieConfirmationDialog(
+    priority: Int = 0,
+    vararg builders: LottieConfirmationDialog.() -> Unit,
+    builder: LottieConfirmationDialog.() -> Unit
+) {
+    LottieConfirmationDialog.create(
+        this,
+        lifecycleScope,
+        layoutInflater,
+        *builders,
+        builder
+    ).let { showLottieDialog(it.first, "", it.second, priority) }
 }
 
 //endregion
@@ -176,7 +192,23 @@ fun Fragment.lottieConfirmationDialog(
         layoutInflater,
         *builders,
         builder
-    ).let { showLottieDialog(it.first, it.second, priority) }
+    ).let { showLottieDialog(it.first, "", it.second, priority) }
+}
+
+@Suppress("SpreadOperator")
+fun Fragment.lottieConfirmationDialog(
+    priority: Int = 0,
+    id: String = "",
+    vararg builders: LottieConfirmationDialog.() -> Unit,
+    builder: LottieConfirmationDialog.() -> Unit
+) {
+    LottieConfirmationDialog.create(
+        requireContext(),
+        viewLifecycleOwner.lifecycleScope,
+        layoutInflater,
+        *builders,
+        builder
+    ).let { showLottieDialog(it.first, id, it.second, priority) }
 }
 
 //endregion

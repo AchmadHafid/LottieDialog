@@ -8,15 +8,18 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import kotlin.math.absoluteValue
 
-internal val LottieDialogHolder   = hashMapOf<LifecycleOwner, Pair<Dialog, Int>>()
+//internal val LottieDialogHolder = hashMapOf<LifecycleOwner, Pair<Dialog, Int>>()
+internal val LottieDialogHolder = hashMapOf<LifecycleOwner, Triple<Dialog, Int, String>>()
 internal val LottieObserverHolder = hashMapOf<LifecycleOwner, LifecycleObserver>()
 
 internal fun LifecycleOwner.showLottieDialog(
     dialog: Dialog,
+    id: String = "",
     onDismissListener: ((DialogInterface) -> Unit)? = null,
     priority: Int
 ) {
-    fun showDialog() {
+    //    fun showDialog() {
+    fun showDialog(id: String) {
         dialog.setOnDismissListener {
             if (LottieDialogHolder[this]?.first == it) {
                 LottieDialogHolder.remove(this)
@@ -24,15 +27,18 @@ internal fun LifecycleOwner.showLottieDialog(
             onDismissListener?.invoke(it)
         }
         dialog.show()
-        LottieDialogHolder[this] = dialog to priority.absoluteValue
+//        LottieDialogHolder[this] = dialog to priority.absoluteValue
+        LottieDialogHolder[this] = Triple(dialog, priority.absoluteValue, id)
     }
 
     LottieDialogHolder[this]?.let {
         if (priority.absoluteValue <= it.second) {
             it.first.dismiss()
-            showDialog()
+//            showDialog()
+            showDialog(it.third)
         }
-    } ?: showDialog()
+//    } ?: showDialog()
+    } ?: showDialog(id)
 
     if (!LottieObserverHolder.containsKey(this)) {
         val lifecycleObserver = object : DefaultLifecycleObserver {
@@ -49,13 +55,21 @@ internal fun LifecycleOwner.showLottieDialog(
 
 internal fun Fragment.showLottieDialog(
     dialog: Dialog,
+    id: String = "",
     onDismissListener: ((DialogInterface) -> Unit)? = null,
     priority: Int
-) = viewLifecycleOwner.showLottieDialog(dialog, onDismissListener, priority)
+) = viewLifecycleOwner.showLottieDialog(dialog, id, onDismissListener, priority)
 
-fun LifecycleOwner.dismissLottieDialog() {
-    LottieDialogHolder[this]?.first?.dismiss()
+//fun LifecycleOwner.dismissLottieDialog() {
+fun LifecycleOwner.dismissLottieDialog(dialogId: String = "") {
+//        LottieDialogHolder[this]?.first?.dismiss()
+    LottieDialogHolder[this]?.let { (dialog, _, id) ->
+        if (id.isBlank() || dialogId == id) {
+            dialog.dismiss()
+        }
+    }
 }
 
 @Suppress("unused")
-fun Fragment.dismissLottieDialog() = viewLifecycleOwner.dismissLottieDialog()
+//fun Fragment.dismissLottieDialog() = viewLifecycleOwner.dismissLottieDialog(id)
+fun Fragment.dismissLottieDialog(id: String = "") = viewLifecycleOwner.dismissLottieDialog(id)
