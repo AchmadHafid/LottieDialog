@@ -20,11 +20,11 @@ android {
             includeAndroidResources = true
         }
     }
-    lintOptions {
+    lint {
         abortOnError false
+        checkDependencies true
+        checkGeneratedSources true
         warningsAsErrors true
-        checkDependencies = true
-        checkGeneratedSources = true
     }
     sourceSets {
         androidTest {
@@ -35,8 +35,10 @@ android {
         }
     }
     packagingOptions {
-        pickFirst("META-INF/atomicfu.kotlin_module")
-        exclude 'META-INF/LICENSE'
+        resources {
+            excludes += ['META-INF/LICENSE']
+            pickFirsts += ['META-INF/atomicfu.kotlin_module']
+        }
     }
 }
 
