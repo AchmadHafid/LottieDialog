@@ -8,7 +8,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import kotlin.math.absoluteValue
 
-//internal val LottieDialogHolder = hashMapOf<LifecycleOwner, Pair<Dialog, Int>>()
 internal val LottieDialogHolder = hashMapOf<LifecycleOwner, Triple<Dialog, Int, String>>()
 internal val LottieObserverHolder = hashMapOf<LifecycleOwner, LifecycleObserver>()
 
@@ -18,7 +17,6 @@ internal fun LifecycleOwner.showLottieDialog(
     onDismissListener: ((DialogInterface) -> Unit)? = null,
     priority: Int
 ) {
-    //    fun showDialog() {
     fun showDialog(id: String) {
         dialog.setOnDismissListener {
             if (LottieDialogHolder[this]?.first == it) {
@@ -27,17 +25,14 @@ internal fun LifecycleOwner.showLottieDialog(
             onDismissListener?.invoke(it)
         }
         dialog.show()
-//        LottieDialogHolder[this] = dialog to priority.absoluteValue
         LottieDialogHolder[this] = Triple(dialog, priority.absoluteValue, id)
     }
 
     LottieDialogHolder[this]?.let {
         if (priority.absoluteValue <= it.second) {
             it.first.dismiss()
-//            showDialog()
             showDialog(it.third)
         }
-//    } ?: showDialog()
     } ?: showDialog(id)
 
     if (!LottieObserverHolder.containsKey(this)) {
@@ -60,9 +55,7 @@ internal fun Fragment.showLottieDialog(
     priority: Int
 ) = viewLifecycleOwner.showLottieDialog(dialog, id, onDismissListener, priority)
 
-//fun LifecycleOwner.dismissLottieDialog() {
 fun LifecycleOwner.dismissLottieDialog(dialogId: String = "") {
-//        LottieDialogHolder[this]?.first?.dismiss()
     LottieDialogHolder[this]?.let { (dialog, _, id) ->
         if (dialogId.isBlank() || dialogId == id) {
             dialog.dismiss()
@@ -71,5 +64,4 @@ fun LifecycleOwner.dismissLottieDialog(dialogId: String = "") {
 }
 
 @Suppress("unused")
-//fun Fragment.dismissLottieDialog() = viewLifecycleOwner.dismissLottieDialog(id)
 fun Fragment.dismissLottieDialog(id: String = "") = viewLifecycleOwner.dismissLottieDialog(id)

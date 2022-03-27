@@ -353,7 +353,7 @@ class InputDialogFragment : Fragment(), SimplePref {
                 simplePrefClearAllLocal()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
     }
 
