@@ -13,7 +13,6 @@ buildscript {
 plugins {
     id "maven-publish"
     id "com.github.ben-manes.versions" version "0.41.0"
-    id "io.gitlab.arturbosch.detekt" version "1.19.0"
 }
 
 allprojects {
@@ -32,14 +31,3 @@ subprojects {
         }
     }
 }
-
-detekt {
-    buildUponDefaultConfig = true
-    input  = files("$projectDir")
-    reports {
-        xml.enabled = true
-        txt.enabled = true
-    }
-}
-
-tasks.detekt.jvmTarget = "1.8"
