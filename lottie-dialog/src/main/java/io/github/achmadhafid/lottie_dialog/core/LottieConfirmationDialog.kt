@@ -1,4 +1,4 @@
-@file:Suppress("TooManyFunctions", "unused")
+@file:Suppress("PackageNaming", "TooManyFunctions", "unused")
 
 package io.github.achmadhafid.lottie_dialog.core
 

@@ -1,3 +1,5 @@
+@file:Suppress("PackageNaming")
+
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
@@ -7,7 +9,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import io.github.achmadhafid.lottie_dialog.core.isValidInput
 import io.github.achmadhafid.lottie_dialog.core.lottieInputDialog
 import io.github.achmadhafid.lottie_dialog.core.onCancel
@@ -63,15 +67,6 @@ class InputDialogFragment : Fragment(), SimplePref {
     //endregion
     //region Lifecycle Callback
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.fragment_action_bar, menu)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -84,6 +79,153 @@ class InputDialogFragment : Fragment(), SimplePref {
     @Suppress("ComplexMethod", "LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //region setup toolbar menu
+
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.fragment_action_bar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_show_dialog -> {
+                        lottieInputDialog(Int.MAX_VALUE, BaseDialog.askSomething) {
+                            //region setup type
+                            when {
+                                typeDialog -> type = LottieDialogType.DIALOG
+                                typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
+                            }
+                            //endregion
+                            //region setup theme
+                            when {
+                                themeDayNight -> theme = LottieDialogTheme.DAY_NIGHT
+                                themeLight -> theme = LottieDialogTheme.LIGHT
+                                themeDark -> theme = LottieDialogTheme.DARK
+                            }
+                            //endregion
+                            //region setup animation
+                            when {
+                                showAnimation -> {
+                                    withAnimation {
+                                        fileRes = R.raw.lottie_animation_input
+                                        showCloseButton = closeButton
+                                    }
+                                }
+                                showImage -> {
+                                    withImage {
+                                        imageRes = R.drawable.offline
+                                        paddingTopRes = R.dimen.medium
+                                        showCloseButton = closeButton
+                                    }
+                                }
+                                else -> {
+                                    withoutAnimation()
+                                    withoutContent()
+                                }
+                            }
+                            //endregion
+                            //region setup title
+                            withTitle {
+                                text = when {
+                                    inputTypeText -> "Enter your name"
+                                    inputTypeNumeric -> "Enter some number"
+                                    inputTypePhone -> "Enter your phone"
+                                    inputTypePin -> "Enter OTP"
+                                    inputTypePassword -> "Enter your password"
+                                    else -> null
+                                }
+                                if (useCustomText) {
+                                    fontRes = R.font.lobster_two_bold
+                                    styleRes = R.style.AppTheme_TextAppearance
+                                }
+                            }
+                            //endregion
+                            //region setup content
+                            withContent {
+                                text = when {
+                                    inputTypeText -> "Please enter your full name"
+                                    inputTypeNumeric -> "It will be secret between us!"
+                                    inputTypePhone -> "We will contact you if we need to confirm your order"
+                                    inputTypePin -> "Please check your SMS inbox for to get the OTP"
+                                    inputTypePassword -> "Please consider to change it everyday!"
+                                    else -> null
+                                }
+                                if (useCustomText) {
+                                    fontRes = R.font.sofia
+                                }
+                            }
+                            //endregion
+                            //region setup input spec
+                            @Suppress("MagicNumber")
+                            withInputSpec {
+                                //region sample input spec
+                                when {
+                                    inputTypeText -> {
+                                        inputType = LottieDialogInput.Type.TEXT
+                                        initialValue = "Your name"
+                                        isValidInput { it.isNotEmpty() && it.length < 20 }
+                                    }
+                                    inputTypeNumeric -> {
+                                        inputType = LottieDialogInput.Type.NUMERIC
+                                        inputFormat = "[000000]"
+                                        isValidInput { it.startsWith("9") }
+                                    }
+                                    inputTypePhone -> {
+                                        inputType = LottieDialogInput.Type.PHONE
+                                        inputFormat = "{08}[00]-[0000]-[0099]"
+                                        initialValue = "08"
+                                        isValidInput { phone ->
+                                            with(phone) {
+                                                startsWith("08") &&
+                                                    length >= 10 &&
+                                                    length <= 12
+                                            }
+                                        }
+                                    }
+                                    inputTypePin -> {
+                                        inputType = LottieDialogInput.Type.PIN
+                                        inputFormat = "[______]"
+                                    }
+                                    inputTypePassword -> {
+                                        inputType = LottieDialogInput.Type.PASSWORD
+                                        inputFormat = "[__________]"
+                                    }
+                                }
+                                //endregion
+                            }
+                            //endregion
+                            //region setup cancel options
+                            withCancelOption {
+                                onBackPressed = cancelOnBackPressed
+                                onTouchOutside = cancelOnTouchOutside
+                            }
+                            //endregion
+                            //region setup listener
+                            onCancel {
+                                d("loading dialog canceled")
+                                toastShort("You canceled the dialog")
+                            }
+                            onValidInput { input ->
+                                toastShort("You entered: $input")
+                            }
+                            onInvalidInput {
+                                toastShort("Invalid input")
+                            }
+                            //endregion
+                        }
+                        true
+                    }
+                    R.id.action_reset_preferences -> {
+                        simplePrefClearAllLocal()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        //endregion
         //region setup dialog type options
 
         binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
@@ -202,7 +344,9 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(
+                viewLifecycleOwner
+            ) {
                 isChecked = it
             }
         }
@@ -211,150 +355,14 @@ class InputDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(
+                viewLifecycleOwner
+            ) {
                 isChecked = it
             }
         }
 
         //endregion
-    }
-
-    @Suppress("ComplexMethod", "LongMethod")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_show_dialog -> {
-                lottieInputDialog(Int.MAX_VALUE, BaseDialog.askSomething) {
-                    //region setup type
-                    when {
-                        typeDialog -> type = LottieDialogType.DIALOG
-                        typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
-                    }
-                    //endregion
-                    //region setup theme
-                    when {
-                        themeDayNight -> theme = LottieDialogTheme.DAY_NIGHT
-                        themeLight -> theme = LottieDialogTheme.LIGHT
-                        themeDark -> theme = LottieDialogTheme.DARK
-                    }
-                    //endregion
-                    //region setup animation
-                    when {
-                        showAnimation -> {
-                            withAnimation {
-                                fileRes = R.raw.lottie_animation_input
-                                showCloseButton = closeButton
-                            }
-                        }
-                        showImage -> {
-                            withImage {
-                                imageRes = R.drawable.offline
-                                paddingTopRes = R.dimen.medium
-                                showCloseButton = closeButton
-                            }
-                        }
-                        else -> {
-                            withoutAnimation()
-                            withoutContent()
-                        }
-                    }
-                    //endregion
-                    //region setup title
-                    withTitle {
-                        text = when {
-                            inputTypeText -> "Enter your name"
-                            inputTypeNumeric -> "Enter some number"
-                            inputTypePhone -> "Enter your phone"
-                            inputTypePin -> "Enter OTP"
-                            inputTypePassword -> "Enter your password"
-                            else -> null
-                        }
-                        if (useCustomText) {
-                            fontRes = R.font.lobster_two_bold
-                            styleRes = R.style.AppTheme_TextAppearance
-                        }
-                    }
-                    //endregion
-                    //region setup content
-                    withContent {
-                        text = when {
-                            inputTypeText -> "Please enter your full name"
-                            inputTypeNumeric -> "It will be secret between us!"
-                            inputTypePhone -> "We will contact you if we need to confirm your order"
-                            inputTypePin -> "Please check your SMS inbox for to get the OTP"
-                            inputTypePassword -> "Please consider to change it everyday!"
-                            else -> null
-                        }
-                        if (useCustomText) {
-                            fontRes = R.font.sofia
-                        }
-                    }
-                    //endregion
-                    //region setup input spec
-                    @Suppress("MagicNumber")
-                    withInputSpec {
-                        //region sample input spec
-                        when {
-                            inputTypeText -> {
-                                inputType = LottieDialogInput.Type.TEXT
-                                initialValue = "Your name"
-                                isValidInput { it.isNotEmpty() && it.length < 20 }
-                            }
-                            inputTypeNumeric -> {
-                                inputType = LottieDialogInput.Type.NUMERIC
-                                inputFormat = "[000000]"
-                                isValidInput { it.startsWith("9") }
-                            }
-                            inputTypePhone -> {
-                                inputType = LottieDialogInput.Type.PHONE
-                                inputFormat = "{08}[00]-[0000]-[0099]"
-                                initialValue = "08"
-                                isValidInput { phone ->
-                                    with(phone) {
-                                        startsWith("08") &&
-                                                length >= 10 &&
-                                                length <= 12
-                                    }
-                                }
-                            }
-                            inputTypePin -> {
-                                inputType = LottieDialogInput.Type.PIN
-                                inputFormat = "[______]"
-                            }
-                            inputTypePassword -> {
-                                inputType = LottieDialogInput.Type.PASSWORD
-                                inputFormat = "[__________]"
-                            }
-                        }
-                        //endregion
-                    }
-                    //endregion
-                    //region setup cancel options
-                    withCancelOption {
-                        onBackPressed = cancelOnBackPressed
-                        onTouchOutside = cancelOnTouchOutside
-                    }
-                    //endregion
-                    //region setup listener
-                    onCancel {
-                        d("loading dialog canceled")
-                        toastShort("You canceled the dialog")
-                    }
-                    onValidInput { input ->
-                        toastShort("You entered: $input")
-                    }
-                    onInvalidInput {
-                        toastShort("Invalid input")
-                    }
-                    //endregion
-                }
-                true
-            }
-            R.id.action_reset_preferences -> {
-                simplePrefClearAllLocal()
-                true
-            }
-            else -> false
-        }
     }
 
     //endregion

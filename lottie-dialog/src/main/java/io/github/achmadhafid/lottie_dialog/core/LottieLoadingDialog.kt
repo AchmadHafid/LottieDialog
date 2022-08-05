@@ -1,4 +1,4 @@
-@file:Suppress("TooManyFunctions", "unused")
+@file:Suppress("PackageNaming", "TooManyFunctions", "unused")
 
 package io.github.achmadhafid.lottie_dialog.core
 
@@ -81,7 +81,12 @@ data class LottieLoadingDialog(
             }
         }
         title(tvTitle.apply {
-            if (atLeastOreoMR1() && type == LottieDialogType.BOTTOM_SHEET && dialog.context.hasSoftNavigationKeys && content == null) {
+            val shouldDrawBehindNavBar = atLeastOreoMR1() &&
+                type == LottieDialogType.BOTTOM_SHEET &&
+                dialog.context.hasSoftNavigationKeys &&
+                content == null
+
+            if (shouldDrawBehindNavBar) {
                 dialog.window?.setFlags(
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -130,7 +135,7 @@ data class LottieLoadingDialog(
             layoutInflater: LayoutInflater,
             coroutineScope: CoroutineScope,
             vararg builders: LottieLoadingDialog.() -> Unit
-        ): Pair<Dialog, ((DialogInterface) -> Unit)?>  {
+        ): Pair<Dialog, ((DialogInterface) -> Unit)?> {
             val lottieDialog = LottieLoadingDialog()
 
             builders.forEach { lottieDialog.apply(it) }
@@ -146,7 +151,7 @@ data class LottieLoadingDialog(
             return lottieDialog.invoke(dialog, view, coroutineScope) to {
                 lottieDialog.jobs.forEach { job -> job.cancel() }
                 lottieDialog.jobs.clear()
-                lottieDialog.onDismissListener.onDismissListener?.invoke(it) 
+                lottieDialog.onDismissListener.onDismissListener?.invoke(it)
             }
         }
     }

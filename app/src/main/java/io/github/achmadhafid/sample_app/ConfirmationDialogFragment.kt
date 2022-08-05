@@ -1,3 +1,5 @@
+@file:Suppress("PackageNaming")
+
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
@@ -7,7 +9,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import com.github.florent37.viewanimator.ViewAnimator
 import io.github.achmadhafid.lottie_dialog.core.lottieConfirmationDialog
 import io.github.achmadhafid.lottie_dialog.core.onCancel
@@ -67,15 +71,6 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
     //endregion
     //region Lifecycle Callback
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.fragment_action_bar, menu)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -88,6 +83,143 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
     @Suppress("ComplexMethod", "LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //region setup toolbar menu
+
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_action_bar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_show_dialog -> {
+                        lottieConfirmationDialog(
+                            Int.MAX_VALUE,
+                            "confirmation",
+                            BaseDialog.requestSomething
+                        ) {
+                            //region setup type
+                            when {
+                                typeDialog -> type = LottieDialogType.DIALOG
+                                typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
+                            }
+                            //endregion
+                            //region setup theme
+                            when {
+                                themeDayNight -> theme = LottieDialogTheme.DAY_NIGHT
+                                themeLight -> theme = LottieDialogTheme.LIGHT
+                                themeDark -> theme = LottieDialogTheme.DARK
+                            }
+                            //endregion
+                            //region setup animation or image
+                            when {
+                                showAnimation -> {
+                                    withAnimation {
+                                        if (animationCentered) {
+                                            fileRes = R.raw.lottie_animation_location
+                                            paddingTopRes = R.dimen.medium
+                                        }
+                                        if (animationFull) {
+                                            fileRes = R.raw.lottie_animation_notification
+                                            bgColorRes = R.color.bg_dialog_notification
+                                        }
+                                        showCloseButton = closeButton
+                                    }
+                                }
+                                showImage -> {
+                                    withImage {
+                                        imageRes = R.drawable.offline
+                                        paddingRes = R.dimen.medium
+                                        showCloseButton = closeButton
+                                    }
+                                }
+                                else -> {
+                                    withoutAnimation()
+                                    withoutImage()
+                                }
+                            }
+                            //endregion
+                            //region setup title
+                            withTitle {
+                                textRes = when {
+                                    animationCentered -> R.string.dialog_location_title
+                                    animationFull -> R.string.dialog_notification_title
+                                    else -> R.string.dialog_location_title
+                                }
+                                if (useCustomText) {
+                                    fontRes = R.font.lobster_two_bold
+                                    styleRes = R.style.AppTheme_TextAppearance
+                                }
+                            }
+                            //endregion
+                            //region setup content
+                            withContent {
+                                textRes = when {
+                                    animationCentered -> R.string.dialog_location_content
+                                    animationFull -> R.string.dialog_notification_content
+                                    else -> R.string.dialog_location_content
+                                }
+                                if (useCustomText) {
+                                    fontRes = R.font.sofia
+                                }
+                            }
+                            //endregion
+                            //region setup positive button
+                            withPositiveButton {
+                                textRes = android.R.string.ok
+                                actionDelay = this@ConfirmationDialogFragment.actionDelay
+                                if (showIcon) {
+                                    when {
+                                        iconSvg -> iconRes = R.drawable.ic_check_black_18dp_svg
+                                        iconBitmap -> iconRes = R.drawable.ic_check_black_18dp
+                                    }
+                                }
+                                onClick { toastShort(R.string.message_on_positive) }
+                            }
+                            //endregion
+                            //region setup negative button
+                            if (negativeButton) {
+                                withNegativeButton {
+                                    textRes = R.string.negative_button
+                                    actionDelay = this@ConfirmationDialogFragment.actionDelay
+                                    if (showIcon) {
+                                        when {
+                                            iconSvg -> iconRes = R.drawable.ic_close_black_18dp_svg
+                                            iconBitmap -> iconRes = R.drawable.ic_close_black_18dp
+                                        }
+                                    }
+                                    onClick { toastShort(R.string.message_on_negative) }
+                                }
+                            } else {
+                                withoutNegativeButton()
+                            }
+                            //endregion
+                            //region setup cancel options
+                            withCancelOption {
+                                onBackPressed = cancelOnBackPressed
+                                onTouchOutside = cancelOnTouchOutside
+                            }
+                            //endregion
+                            //region setup listener
+                            onCancel {
+                                d("permission dialog canceled")
+                                toastShort("You cancelled the dialog")
+                            }
+                            //endregion
+                        }
+                        true
+                    }
+                    R.id.action_reset_preferences -> {
+                        simplePrefClearAllLocal()
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        //endregion
         //region setup dialog type options
 
         binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
@@ -352,7 +484,9 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(
+                viewLifecycleOwner
+            ) {
                 isChecked = it
             }
         }
@@ -361,136 +495,14 @@ class ConfirmationDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(
+                viewLifecycleOwner
+            ) {
                 isChecked = it
             }
         }
 
         //endregion
-    }
-
-    @Suppress("ComplexMethod", "LongMethod")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_show_dialog -> {
-                lottieConfirmationDialog(Int.MAX_VALUE, "confirmation", BaseDialog.requestSomething) {
-                    //region setup type
-                    when {
-                        typeDialog -> type = LottieDialogType.DIALOG
-                        typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
-                    }
-                    //endregion
-                    //region setup theme
-                    when {
-                        themeDayNight -> theme = LottieDialogTheme.DAY_NIGHT
-                        themeLight -> theme = LottieDialogTheme.LIGHT
-                        themeDark -> theme = LottieDialogTheme.DARK
-                    }
-                    //endregion
-                    //region setup animation or image
-                    when {
-                        showAnimation -> {
-                            withAnimation {
-                                if (animationCentered) {
-                                    fileRes = R.raw.lottie_animation_location
-                                    paddingTopRes = R.dimen.medium
-                                }
-                                if (animationFull) {
-                                    fileRes = R.raw.lottie_animation_notification
-                                    bgColorRes = R.color.bg_dialog_notification
-                                }
-                                showCloseButton = closeButton
-                            }
-                        }
-                        showImage -> {
-                            withImage {
-                                imageRes = R.drawable.offline
-                                paddingRes = R.dimen.medium
-                                showCloseButton = closeButton
-                            }
-                        }
-                        else -> {
-                            withoutAnimation()
-                            withoutImage()
-                        }
-                    }
-                    //endregion
-                    //region setup title
-                    withTitle {
-                        textRes = when {
-                            animationCentered -> R.string.dialog_location_title
-                            animationFull -> R.string.dialog_notification_title
-                            else -> R.string.dialog_location_title
-                        }
-                        if (useCustomText) {
-                            fontRes = R.font.lobster_two_bold
-                            styleRes = R.style.AppTheme_TextAppearance
-                        }
-                    }
-                    //endregion
-                    //region setup content
-                    withContent {
-                        textRes = when {
-                            animationCentered -> R.string.dialog_location_content
-                            animationFull -> R.string.dialog_notification_content
-                            else -> R.string.dialog_location_content
-                        }
-                        if (useCustomText) {
-                            fontRes = R.font.sofia
-                        }
-                    }
-                    //endregion
-                    //region setup positive button
-                    withPositiveButton {
-                        textRes = android.R.string.ok
-                        actionDelay = this@ConfirmationDialogFragment.actionDelay
-                        if (showIcon) {
-                            when {
-                                iconSvg -> iconRes = R.drawable.ic_check_black_18dp_svg
-                                iconBitmap -> iconRes = R.drawable.ic_check_black_18dp
-                            }
-                        }
-                        onClick { toastShort(R.string.message_on_positive) }
-                    }
-                    //endregion
-                    //region setup negative button
-                    if (negativeButton) {
-                        withNegativeButton {
-                            textRes = R.string.negative_button
-                            actionDelay = this@ConfirmationDialogFragment.actionDelay
-                            if (showIcon) {
-                                when {
-                                    iconSvg -> iconRes = R.drawable.ic_close_black_18dp_svg
-                                    iconBitmap -> iconRes = R.drawable.ic_close_black_18dp
-                                }
-                            }
-                            onClick { toastShort(R.string.message_on_negative) }
-                        }
-                    } else {
-                        withoutNegativeButton()
-                    }
-                    //endregion
-                    //region setup cancel options
-                    withCancelOption {
-                        onBackPressed = cancelOnBackPressed
-                        onTouchOutside = cancelOnTouchOutside
-                    }
-                    //endregion
-                    //region setup listener
-                    onCancel {
-                        d("permission dialog canceled")
-                        toastShort("You cancelled the dialog")
-                    }
-                    //endregion
-                }
-                true
-            }
-            R.id.action_reset_preferences -> {
-                simplePrefClearAllLocal()
-                true
-            }
-            else -> false
-        }
     }
 
     //endregion

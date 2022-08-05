@@ -1,3 +1,5 @@
+@file:Suppress("PackageNaming")
+
 package io.github.achmadhafid.sample_app
 
 import android.app.Application

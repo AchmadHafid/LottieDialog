@@ -1,3 +1,5 @@
+@file:Suppress("PackageNaming")
+
 package io.github.achmadhafid.sample_app
 
 import android.os.Bundle
@@ -7,7 +9,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import com.github.florent37.viewanimator.ViewAnimator
 import io.github.achmadhafid.lottie_dialog.core.lottieLoadingDialog
 import io.github.achmadhafid.lottie_dialog.core.onCancel
@@ -63,15 +67,6 @@ class LoadingDialogFragment : Fragment(), SimplePref {
     //endregion
     //region Lifecycle Callback
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.fragment_action_bar, menu)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -84,6 +79,95 @@ class LoadingDialogFragment : Fragment(), SimplePref {
     @Suppress("ComplexMethod", "LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //region setup toolbar menu
+
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.fragment_action_bar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_show_dialog -> {
+                        lottieLoadingDialog(Int.MAX_VALUE, BaseDialog.doSomething) {
+                            //region setup type
+                            when {
+                                typeDialogL -> type = LottieDialogType.DIALOG
+                                typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
+                            }
+                            //endregion
+                            //region setup theme
+                            when {
+                                themeDayNight -> theme = LottieDialogTheme.DAY_NIGHT
+                                themeLight -> theme = LottieDialogTheme.LIGHT
+                                themeDark -> theme = LottieDialogTheme.DARK
+                            }
+                            //endregion
+                            //region setup timeout
+                            timeout = timeoutValue
+                            showTimeOutProgress = showTimeoutProgressView
+                            //endregion
+                            //region setup animation
+                            when {
+                                showAnimation -> {
+                                    withAnimation {
+                                        fileRes = R.raw.lottie_animation_loading
+                                        withProperties {
+                                            speed = 2.0f
+                                        }
+                                    }
+                                }
+                                showImage -> {
+                                    withImage {
+                                        imageRes = R.drawable.offline
+                                        paddingRes = R.dimen.medium
+                                        heightRes = R.dimen.lottie_dialog_loading_image_height
+                                    }
+                                }
+                                else -> {
+                                    withoutAnimation()
+                                    withoutImage()
+                                }
+                            }
+                            //endregion
+                            //region setup title
+                            withTitle {
+                                text = "Please wait..."
+                                if (useCustomText) {
+                                    fontRes = R.font.lobster_two_bold
+                                    styleRes = R.style.AppTheme_TextAppearance
+                                }
+                            }
+                            //endregion
+                            //region setup cancel options
+                            withCancelOption {
+                                onBackPressed = cancelOnBackPressed
+                                onTouchOutside = cancelOnTouchOutside
+                            }
+                            //endregion
+                            //region setup listener
+                            onCancel {
+                                d("loading dialog canceled")
+                                toastShort("You canceled the dialog")
+                            }
+                            onTimeout {
+                                toastShort("Timeout")
+                            }
+                            //endregion
+                        }
+                        true
+                    }
+                    R.id.action_reset_preferences -> {
+                        simplePrefClearAllLocal()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        //endregion
         //region setup dialog type
 
         binding.toggleButtonGroupDialogType.addOnButtonCheckedListener { _, id, isChecked ->
@@ -164,7 +248,9 @@ class LoadingDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnBackPressed = isChecked
             }
-            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnBackPressed, ::cancelOnBackPressed).observe(
+                viewLifecycleOwner
+            ) {
                 isChecked = it
             }
         }
@@ -173,7 +259,9 @@ class LoadingDialogFragment : Fragment(), SimplePref {
             setOnCheckedChangeListener { _, isChecked ->
                 cancelOnTouchOutside = isChecked
             }
-            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(viewLifecycleOwner) {
+            simplePrefLiveData(cancelOnTouchOutside, ::cancelOnTouchOutside).observe(
+                viewLifecycleOwner
+            ) {
                 isChecked = it
             }
         }
@@ -226,86 +314,6 @@ class LoadingDialogFragment : Fragment(), SimplePref {
         }
 
         //endregion
-    }
-
-    @Suppress("ComplexMethod", "LongMethod")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_show_dialog -> {
-                lottieLoadingDialog(Int.MAX_VALUE, BaseDialog.doSomething) {
-                    //region setup type
-                    when {
-                        typeDialogL -> type = LottieDialogType.DIALOG
-                        typeBottomSheet -> type = LottieDialogType.BOTTOM_SHEET
-                    }
-                    //endregion
-                    //region setup theme
-                    when {
-                        themeDayNight -> theme = LottieDialogTheme.DAY_NIGHT
-                        themeLight -> theme = LottieDialogTheme.LIGHT
-                        themeDark -> theme = LottieDialogTheme.DARK
-                    }
-                    //endregion
-                    //region setup timeout
-                    timeout = timeoutValue
-                    showTimeOutProgress = showTimeoutProgressView
-                    //endregion
-                    //region setup animation
-                    when {
-                        showAnimation -> {
-                            withAnimation {
-                                fileRes = R.raw.lottie_animation_loading
-                                withProperties {
-                                    speed = 2.0f
-                                }
-                            }
-                        }
-                        showImage -> {
-                            withImage {
-                                imageRes = R.drawable.offline
-                                paddingRes = R.dimen.medium
-                                heightRes = R.dimen.lottie_dialog_loading_image_height
-                            }
-                        }
-                        else -> {
-                            withoutAnimation()
-                            withoutImage()
-                        }
-                    }
-                    //endregion
-                    //region setup title
-                    withTitle {
-                        text = "Please wait..."
-                        if (useCustomText) {
-                            fontRes = R.font.lobster_two_bold
-                            styleRes = R.style.AppTheme_TextAppearance
-                        }
-                    }
-                    //endregion
-                    //region setup cancel options
-                    withCancelOption {
-                        onBackPressed = cancelOnBackPressed
-                        onTouchOutside = cancelOnTouchOutside
-                    }
-                    //endregion
-                    //region setup listener
-                    onCancel {
-                        d("loading dialog canceled")
-                        toastShort("You canceled the dialog")
-                    }
-                    onTimeout {
-                        toastShort("Timeout")
-                    }
-                    //endregion
-                }
-                true
-            }
-            R.id.action_reset_preferences -> {
-                simplePrefClearAllLocal()
-                true
-            }
-            else -> false
-        }
     }
 
     //endregion

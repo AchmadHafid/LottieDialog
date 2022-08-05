@@ -1,3 +1,5 @@
+@file:Suppress("PackageNaming")
+
 package io.github.achmadhafid.sample_app
 
 import io.github.achmadhafid.lottie_dialog.core.lottieConfirmationDialogBuilder

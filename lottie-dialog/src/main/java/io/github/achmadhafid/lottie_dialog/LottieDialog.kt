@@ -1,3 +1,5 @@
+@file:Suppress("PackageNaming", "unused")
+
 package io.github.achmadhafid.lottie_dialog
 
 import android.app.Dialog
