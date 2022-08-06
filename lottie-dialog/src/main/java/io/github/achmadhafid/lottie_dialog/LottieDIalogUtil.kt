@@ -41,7 +41,7 @@ private fun createDialog(
         LottieDialogTheme.DARK      -> R.style.Theme_LottieDialog_Dark
         LottieDialogTheme.DAY_NIGHT -> R.style.Theme_LottieDialog_DayNight
     }
-    val cornerSize = context.resources.getDimension(R.dimen.medium)
+    val cornerSize = context.resources.getDimension(R.dimen.lottie_dialog_corner_radius_dialog)
     val bgShape = RoundRectShape(
         floatArrayOf(cornerSize, cornerSize, cornerSize, cornerSize, cornerSize, cornerSize, cornerSize, cornerSize),
         null,
