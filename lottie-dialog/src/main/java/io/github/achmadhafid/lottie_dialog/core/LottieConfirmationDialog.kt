@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.elevation.SurfaceColors
 import io.github.achmadhafid.lottie_dialog.R
 import io.github.achmadhafid.lottie_dialog.inflateView
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogAnimation
@@ -111,6 +112,8 @@ data class LottieConfirmationDialog(
             onDismissListener(dialog)
             onCancelListener(dialog)
         }
+
+        dialog.window?.navigationBarColor = SurfaceColors.SURFACE_3.getColor(view.context)
 
         return dialog
     }

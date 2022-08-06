@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.elevation.SurfaceColors
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import io.github.achmadhafid.lottie_dialog.R
 import io.github.achmadhafid.lottie_dialog.inflateView
@@ -125,6 +126,8 @@ data class LottieLoadingDialog(
             onDismissListener.invoke(dialog, jobs)
             onCancelListener(dialog)
         }
+
+        dialog.window?.navigationBarColor = SurfaceColors.SURFACE_3.getColor(view.context)
 
         return dialog
     }

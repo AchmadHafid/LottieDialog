@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.LottieDialog.BottomSheet.DayNight" parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.DayNight" parent="@style/Theme.Material3.DayNight.BottomSheetDialog">
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
-    <style name="Theme.LottieDialog.BottomSheet.Light" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.Light" parent="@style/Theme.Material3.Light.BottomSheetDialog">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
-    <style name="Theme.LottieDialog.BottomSheet.Dark" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.Dark" parent="@style/Theme.Material3.Dark.BottomSheetDialog">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.elevation.SurfaceColors
 import io.github.achmadhafid.lottie_dialog.R
 
 abstract class LottieLoadingDialogFragment : BottomSheetDialogFragment() {
@@ -29,6 +30,7 @@ abstract class LottieLoadingDialogFragment : BottomSheetDialogFragment() {
         loadingDialog = LottieLoadingDialog().apply(dialogBuilder)
         dialog?.let {
             loadingDialog!!.invoke(it, view, viewLifecycleOwner.lifecycleScope, true)
+            it.window?.navigationBarColor = SurfaceColors.SURFACE_3.getColor(view.context)
         } ?: Log.d("LottieDialog", "no dialog attached")
     }
 

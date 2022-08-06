@@ -4,11 +4,14 @@ package io.github.achmadhafid.lottie_dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.RoundRectShape
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.LayoutRes
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.elevation.SurfaceColors
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogTheme
 import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
 
@@ -38,11 +41,19 @@ private fun createDialog(
         LottieDialogTheme.DARK      -> R.style.Theme_LottieDialog_Dark
         LottieDialogTheme.DAY_NIGHT -> R.style.Theme_LottieDialog_DayNight
     }
+    val cornerSize = context.resources.getDimension(R.dimen.medium)
+    val bgShape = RoundRectShape(
+        floatArrayOf(cornerSize, cornerSize, cornerSize, cornerSize, cornerSize, cornerSize, cornerSize, cornerSize),
+        null,
+        null
+    )
+    val bgDrawable = ShapeDrawable(bgShape).apply { paint.color = SurfaceColors.SURFACE_3.getColor(view.context) }
+
     return MaterialAlertDialogBuilder(context, theme)
         .setView(view)
         .create()
         .apply {
-            window?.setBackgroundDrawableResource(R.drawable.lottie_dialog_bg_rounded_corner)
+            window?.setBackgroundDrawable(bgDrawable)
         }
 }
 

@@ -2,20 +2,12 @@
 
     <!--region Activity Theme-->
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar" />
 
     <!--endregion-->
     <!--region View Theme-->
 
-    <style name="AppTheme.Toolbar" parent="AppTheme">
-        <item name="android:background">?attr/colorSurface</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
-
-    <style name="AppTheme.TextAppearance" parent="@style/TextAppearance.MaterialComponents.Headline6" >
+    <style name="AppTheme.TextAppearance" parent="@style/TextAppearance.Material3.TitleLarge" >
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textAllCaps">true</item>
     </style>

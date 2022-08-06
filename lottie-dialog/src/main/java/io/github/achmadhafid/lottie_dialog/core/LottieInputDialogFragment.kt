@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.elevation.SurfaceColors
 import io.github.achmadhafid.lottie_dialog.R
 import io.github.achmadhafid.zpack.extension.view.f
 
@@ -32,6 +33,7 @@ abstract class LottieInputDialogFragment : BottomSheetDialogFragment() {
         inputDialog = LottieInputDialog().apply(dialogBuilder)
         dialog?.let {
             inputDialog!!.invoke(it, view, true)
+            it.window?.navigationBarColor = SurfaceColors.SURFACE_3.getColor(view.context)
         } ?: Log.d("LottieDialog", "no dialog attached")
     }
 

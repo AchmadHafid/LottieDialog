@@ -2,28 +2,28 @@
 
     <!--region Theme-->
 
-    <style name="Theme.LottieDialog.DayNight" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert" />
+    <style name="Theme.LottieDialog.DayNight" parent="@style/Theme.Material3.DayNight.Dialog.Alert" />
 
-    <style name="Theme.LottieDialog.Light" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert" />
+    <style name="Theme.LottieDialog.Light" parent="@style/Theme.Material3.Light.Dialog.Alert" />
 
-    <style name="Theme.LottieDialog.Dark" parent="@style/Theme.MaterialComponents.Dialog.Alert" />
+    <style name="Theme.LottieDialog.Dark" parent="@style/Theme.Material3.Dark.Dialog.Alert" />
 
-    <style name="Theme.LottieDialog.BottomSheet.DayNight" parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.DayNight" parent="@style/Theme.Material3.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
-    <style name="Theme.LottieDialog.BottomSheet.Light" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.Light" parent="@style/Theme.Material3.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
-    <style name="Theme.LottieDialog.BottomSheet.Dark" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+    <style name="Theme.LottieDialog.BottomSheet.Dark" parent="@style/Theme.Material3.Dark.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.LottieDialog.BottomSheet</item>
     </style>
 
     <!--endregion-->
     <!--region ShapeAppearance-->
 
-    <style name="ShapeAppearance.LottieDialog.BottomSheet" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+    <style name="ShapeAppearance.LottieDialog.BottomSheet" parent="ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamilyTopLeft">rounded</item>
         <item name="cornerFamilyTopRight">rounded</item>
         <item name="cornerSizeTopLeft">@dimen/lottie_dialog_corner_radius_bottom_sheet</item>
@@ -35,14 +35,14 @@
     <!--endregion-->
     <!--region Text Appearance-->
 
-    <style name="TextAppearance.LottieDialog.Title" parent="TextAppearance.MaterialComponents.Headline6" />
+    <style name="TextAppearance.LottieDialog.Title" parent="TextAppearance.Material3.TitleLarge" />
 
-    <style name="TextAppearance.LottieDialog.Content" parent="TextAppearance.MaterialComponents.Body2" />
+    <style name="TextAppearance.LottieDialog.Content" parent="TextAppearance.Material3.BodyMedium" />
 
     <!--endregion-->
     <!--region Widget-->
 
-    <style name="Widget.LottieDialog.BottomSheet" parent="@style/Widget.MaterialComponents.BottomSheet.Modal">
+    <style name="Widget.LottieDialog.BottomSheet" parent="@style/Widget.Material3.BottomSheet.Modal">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.LottieDialog.BottomSheet</item>
     </style>
 
@@ -52,7 +52,7 @@
         <item name="lottie_loop">true</item>
     </style>
 
-    <style name="Widget.LottieDialog.ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="Widget.LottieDialog.ProgressBar" parent="Widget.Material3.LinearProgressIndicator">
         <item name="android:indeterminate">false</item>
         <item name="android:progressTint">?attr/colorPrimary</item>
     </style>
@@ -62,7 +62,8 @@
         <item name="android:imeOptions">actionNone</item>
         <item name="android:maxLines">1</item>
         <item name="android:textCursorDrawable">@drawable/lottie_dialog_edit_text_cursor</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
+        </item>
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
@@ -71,9 +72,9 @@
         <item name="android:src">@drawable/lottie_dialog_ic_round_close_24dp</item>
     </style>
 
-    <style name="Widget.LottieDialog.Confirmation.PositiveButton" parent="Widget.MaterialComponents.Button" />
+    <style name="Widget.LottieDialog.Confirmation.PositiveButton" parent="Widget.Material3.Button" />
 
-    <style name="Widget.LottieDialog.Confirmation.NegativeButton" parent="Widget.MaterialComponents.Button.OutlinedButton" />
+    <style name="Widget.LottieDialog.Confirmation.NegativeButton" parent="Widget.Material3.Button.OutlinedButton" />
 
     <style name="Widget.LottieDialog.Input.ImageButton" parent="">
         <item name="android:background">@null</item>
