@@ -25,7 +25,7 @@ Main Features
 * Create dialogs easily by using __*extension functions*__ available for Activity & Fragment
 * Two Flavors: (conventional) __*alert dialog*__ and __*bottom sheet based dialog*__ (default)
 * Three Types: __*confirmation*__ (yes-no dialog), __*input*__ & __*loading progress*__
-* Full support of __*Material Components*__ theme (e.g. light theme & dark theme)
+* Full support of __*Material3*__ theme (light & dark)
 * __*Flexible*__ customization options from corner radius to callback delay
 * __*Lifecycle aware, self contained reference*__. No need to declare a variable to reference a dialog, just to dismiss it later.
 * __*Priority option*__ available to prevent multiple overlapping dialogs show up at the same time (e.g. when multiple error dialogs shows up at the same time)
@@ -35,7 +35,8 @@ Main Features
 Compatibility
 -------------
 
-This library is compatible from API 21 and above & AndroidX.
+* This library is compatible from API 21 and above & AndroidX.
+* This Library support Material3 by default. For Material 2, use version below 5.0.0
 
 
 Download
@@ -58,7 +59,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:LottieDialog:4.12.0"
+  implementation "com.github.AchmadHafid:LottieDialog:5.0.0"
   ...
 }
 ```
