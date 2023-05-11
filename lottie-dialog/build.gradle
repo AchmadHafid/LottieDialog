@@ -7,8 +7,14 @@ apply from: '../shared_build.gradle'
 group = 'com.github.AchmadHafid'
 
 android {
+    namespace = 'io.github.achmadhafid.lottie_dialog'
     defaultConfig {
         consumerProguardFiles 'consumer-rules.pro'
+    }
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
     }
 }
 
@@ -18,14 +24,15 @@ dependencies {
     implementation deps.input_mask
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'com.github.AchmadHafid'
+            artifactId = 'lottie-dialog'
+            version = '5.1.0'
+
+            afterEvaluate {
                 from components.release
-                groupId = 'com.github.AchmadHafid'
-                artifactId = 'lottie-dialog'
-                version = '4.11.1'
             }
         }
     }

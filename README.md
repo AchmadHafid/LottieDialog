@@ -35,7 +35,7 @@ Main Features
 Compatibility
 -------------
 
-* This library is compatible from API 21 and above & AndroidX.
+* This library is compatible from API 26 and above & AndroidX.
 * This Library support Material3 by default. For Material 2, use version below 5.0.0
 
 
@@ -59,7 +59,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:LottieDialog:5.0.0"
+  implementation "com.github.AchmadHafid:LottieDialog:5.1.0"
   ...
 }
 ```

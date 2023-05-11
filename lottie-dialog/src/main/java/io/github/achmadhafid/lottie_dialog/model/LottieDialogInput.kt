@@ -41,7 +41,8 @@ data class LottieDialogInput(
                     override fun onTextChanged(
                         maskFilled: Boolean,
                         extractedValue: String,
-                        formattedValue: String
+                        formattedValue: String,
+                        tailPlaceholder: String
                     ) {
                         input = extractedValue
                         btnClear.visibleOrInvisible {
@@ -73,6 +74,7 @@ data class LottieDialogInput(
             Type.PIN -> InputType.TYPE_CLASS_TEXT.also {
                 editText.filters += InputFilter.AllCaps()
             }
+
             Type.PASSWORD -> INPUT_TYPE_HIDDEN_PASSWORD.also { btnExtra.invisible() }
         }
         initialValue?.let {
